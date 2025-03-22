@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useState } from "react"
 import {
   Github,
   Upload,
@@ -14,8 +17,11 @@ import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
 import { SocialIcon } from "@/components/social-icon"
 import { TechStack } from "@/components/tech-stack"
+import { AboutSection } from "@/components/about-section"
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
+
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -75,44 +81,65 @@ export default function Home() {
               </div>
 
               <nav className="flex gap-4 items-center">
-                <a
-                  href="#projects"
-                  className="bg-blue-200 px-8 py-2 rounded-md text-blue-800 font-medium hover:bg-blue-300 transition-colors"
+                <button
+                  onClick={() => setActiveSection("projects")}
+                  className={`px-8 py-2 rounded-md font-medium transition-colors ${
+                    activeSection === "projects"
+                      ? "bg-blue-400 text-white"
+                      : "bg-blue-200 text-blue-800 hover:bg-blue-300"
+                  }`}
                 >
                   Projects
-                </a>
-                <a
-                  href="#about"
-                  className="bg-blue-200 px-8 py-2 rounded-md text-blue-800 font-medium hover:bg-blue-300 transition-colors"
+                </button>
+                <button
+                  onClick={() => setActiveSection("about")}
+                  className={`px-8 py-2 rounded-md font-medium transition-colors ${
+                    activeSection === "about" ? "bg-blue-400 text-white" : "bg-blue-200 text-blue-800 hover:bg-blue-300"
+                  }`}
                 >
                   About
-                </a>
+                </button>
               </nav>
             </div>
 
-            {/* Projects Section */}
-            <div id="projects" className="mb-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ProjectCard title="Puppet Workshop" description="Create your own customizable puppet" icon="🪵" />
+            {/* Content Sections */}
+            <div className="mb-8">
+              {/* Projects Section */}
+              {activeSection === "projects" && (
+                <div className="transition-all duration-300 ease-in-out">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <ProjectCard title="Puppet Workshop" description="Create your own customizable puppet" icon="🪵" />
 
-                <ProjectCard
-                  title="Truth Detector"
-                  description="Measure how much your nose grows when you lie!"
-                  icon="👃"
-                />
+                    <ProjectCard
+                      title="Truth Detector"
+                      description="Measure how much your nose grows when you lie!"
+                      icon="👃"
+                    />
 
-                <ProjectCard
-                  title="Wish Generator"
-                  description="Generate and track your wishes upon a star"
-                  icon="⭐"
-                />
+                    <ProjectCard
+                      title="Wish Generator"
+                      description="Generate and track your wishes upon a star"
+                      icon="⭐"
+                    />
 
-                <ProjectCard title="Conscience Keeper" description="Let Jiminy Cricket be your guide" icon="🦗" />
-              </div>
+                    <ProjectCard title="Conscience Keeper" description="Let Jiminy Cricket be your guide" icon="🦗" />
+                  </div>
+                </div>
+              )}
+
+              {/* About Section */}
+              {activeSection === "about" && (
+                <div className="transition-all duration-300 ease-in-out mb-8">
+                  <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h2 className="text-xl font-semibold mb-4 text-blue-900">About Me</h2>
+                    <AboutSection />
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* GitHub Contributions */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-12 border border-gray-200">
+            {/* GitHub Contributions - Always Visible */}
+            <div className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
               <h2 className="text-xl font-semibold mb-4 text-blue-900">My GitHub Contributions</h2>
               <GitHubCalendar />
             </div>

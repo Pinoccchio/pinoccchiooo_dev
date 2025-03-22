@@ -25,7 +25,7 @@ export default function Home() {
                 <div className="w-44 h-44 sm:w-52 sm:h-52 lg:w-60 lg:h-60 relative overflow-hidden rounded-full">
                   <Image
                     src="/pinocchio-avatar.png"
-                    alt="Jan Miko Avatar"
+                    alt="Pinoccchiooo Avatar"
                     width={240}
                     height={240}
                     className="object-cover"
@@ -38,7 +38,7 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold mt-4 pinocchio-name text-center">Jan Miko</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mt-4 pinocchio-name text-center">Pinoccchiooo</h1>
             <div className="flex items-center mt-2 text-blue-500 dark:text-blue-400">
               <MapPin size={18} className="mr-2" />
               <span>Digos City, Philippines</span>

@@ -12,62 +12,66 @@ export function TechStack() {
       name: "Next.js",
       logo: "/tech/nextjs.png",
       url: "https://nextjs.org",
+      size: 32,
     },
     {
       name: "TypeScript",
       logo: "/tech/typescript.png",
       url: "https://www.typescriptlang.org",
+      size: 32,
     },
     {
       name: "Dart",
       logo: "/tech/dart.png",
       url: "https://dart.dev",
+      size: 32,
     },
     {
       name: "Flutter",
       logo: "/tech/flutter.png",
       url: "https://flutter.dev",
+      size: 32,
     },
     {
       name: "Java",
       logo: "/tech/java.png",
       url: "https://www.java.com",
-    },
-    {
-      name: "Kotlin",
-      logo: "/tech/kotlin.png",
-      url: "https://kotlinlang.org",
+      size: 32,
     },
     {
       name: "Python",
       logo: "/tech/python.png",
       url: "https://www.python.org",
+      size: 32,
     },
     {
       name: "Jupyter",
       logo: "/tech/jupyter.png",
       url: "https://jupyter.org",
+      size: 32,
     },
     {
       name: "Supabase",
       logo: "/tech/supabase.png",
       url: "https://supabase.com",
+      size: 32,
     },
     {
       name: "Firebase",
       logo: "/tech/firebase.png",
       url: "https://firebase.google.com",
+      size: 32,
     },
   ]
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-5 gap-4 max-w-md">
+      <div className="flex flex-wrap gap-6 items-center justify-center">
         {technologies.map((tech, index) => (
           <motion.div
             key={index}
             className="relative"
-            whileHover={{ y: 5 }}
+            whileHover={{ y: -5 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             {hoveredTech === tech.name && (
@@ -84,15 +88,15 @@ export function TechStack() {
               href={tech.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center bg-white p-2 rounded-full shadow-sm border border-gray-200 w-12 h-12 hover:shadow-md transition-shadow duration-300"
+              className="transition-all duration-300 hover:opacity-80"
               onMouseEnter={() => setHoveredTech(tech.name)}
               onMouseLeave={() => setHoveredTech(null)}
             >
               <Image
                 src={tech.logo || "/placeholder.svg"}
                 alt={tech.name}
-                width={24}
-                height={24}
+                width={tech.size}
+                height={tech.size}
                 className="object-contain"
               />
             </a>

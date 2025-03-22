@@ -26,20 +26,30 @@ export function GitHubCalendar() {
     )
   }
 
+  // Define color themes that match GitHub's original design
+  const colorTheme = {
+    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+  }
+
   return (
     <div className="overflow-x-auto py-2">
-      <CalendarComponent
-        username={username}
-        colorScheme={theme === "dark" ? "dark" : "light"}
-        labels={{
-          totalCount: "{{count}} contributions in the last year",
-        }}
-        hideColorLegend
-        hideMonthLabels={false}
-        className="w-full"
-        blockSize={12}
-        blockMargin={4}
-      />
+      <div className="min-w-[750px] lg:min-w-0">
+        <CalendarComponent
+          username={username}
+          colorScheme={theme === "dark" ? "dark" : "light"}
+          theme={colorTheme}
+          labels={{
+            totalCount: "{{count}} contributions in the last year",
+          }}
+          hideColorLegend
+          hideMonthLabels={false}
+          className="w-full"
+          blockSize={10}
+          blockMargin={4}
+          fontSize={12}
+        />
+      </div>
       <div className="text-center mt-4 text-sm pinocchio-text">
         <a
           href={`https://github.com/${username}`}

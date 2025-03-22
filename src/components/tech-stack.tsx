@@ -66,7 +66,7 @@ export function TechStack() {
 
   return (
     <div className="relative">
-      <div className="flex flex-wrap gap-6 items-center justify-center">
+      <div className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center">
         {technologies.map((tech, index) => (
           <motion.div
             key={index}

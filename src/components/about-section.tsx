@@ -91,22 +91,22 @@ export function AboutSection() {
     <div className="space-y-8">
       {/* Personal Info */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold pinocchio-primary mb-2">Jan Miko A. Guevarra</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+        <h2 className="text-xl sm:text-2xl font-bold pinocchio-primary mb-2">Jan Miko A. Guevarra</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
           {contactInfo.map((item, index) => (
             <div key={index} className="flex items-center">
               <span className="font-medium pinocchio-primary mr-2">{item.label}:</span>
               {item.link ? (
                 <a
                   href={item.link}
-                  className="pinocchio-accent hover:underline"
+                  className="pinocchio-accent hover:underline text-sm sm:text-base break-all"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {item.value}
                 </a>
               ) : (
-                <span className="pinocchio-text">{item.value}</span>
+                <span className="pinocchio-text text-sm sm:text-base break-all">{item.value}</span>
               )}
             </div>
           ))}
@@ -144,7 +144,7 @@ export function AboutSection() {
           {skills.map((skill, index) => (
             <span
               key={index}
-              className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+              className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm"
             >
               {skill}
             </span>

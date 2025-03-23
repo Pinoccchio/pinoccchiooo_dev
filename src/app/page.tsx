@@ -1,6 +1,4 @@
 "use client"
-
-import Image from "next/image"
 import { useState } from "react"
 import { Github, Mail, Facebook, Instagram, Youtube, MapPin } from "lucide-react"
 import { GitHubCalendar } from "@/components/github-calendar"
@@ -10,6 +8,7 @@ import { TechStack } from "@/components/tech-stack"
 import { AboutSection } from "@/components/about-section"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ChatBot } from "@/components/chat-bot"
+import { AnimatedProfile } from "@/components/animated-profile"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
@@ -23,16 +22,7 @@ export default function Home() {
           <div className="w-full lg:w-80 xl:w-96 flex flex-col items-center">
             <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-44 h-44 sm:w-52 sm:h-52 lg:w-60 lg:h-60 relative overflow-hidden rounded-full">
-                  <Image
-                    src="/pinocchio-avatar.png"
-                    alt="Pinoccchiooo Avatar"
-                    width={240}
-                    height={240}
-                    className="object-cover"
-                    priority
-                  />
-                </div>
+                <AnimatedProfile />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 avatar-border rounded-full"></div>

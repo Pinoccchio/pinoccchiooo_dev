@@ -9,6 +9,7 @@ import { SocialIcon } from "@/components/social-icon"
 import { TechStack } from "@/components/tech-stack"
 import { AboutSection } from "@/components/about-section"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ChatBot } from "@/components/chat-bot"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
@@ -179,6 +180,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <ChatBot />
     </div>
   )
 }

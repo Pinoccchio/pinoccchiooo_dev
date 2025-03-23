@@ -124,30 +124,38 @@ export default function Home() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                       <ProjectCard
-                        title="Puppet Workshop"
-                        description="Create your own customizable puppet"
-                        icon="🪵"
+                        title="A'ezzy Grammar Correction"
+                        description="An intelligent online bot for grammar correction and text improvement"
+                        icon="📝"
+                        link="https://aezzy-grammar-corrector.vercel.app/"
                       />
                     </div>
 
                     <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                       <ProjectCard
-                        title="Truth Detector"
-                        description="Measure how much your nose grows when you lie!"
-                        icon="👃"
+                        title="E-Reserve System"
+                        description="Venue reservation platform for the Local Government of Libmanan"
+                        icon="🏢"
+                        link="https://e-reserve-web-based-system-v1.vercel.app/"
                       />
                     </div>
 
                     <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                       <ProjectCard
-                        title="Wish Generator"
-                        description="Generate and track your wishes upon a star"
-                        icon="⭐"
+                        title="MHealth Web App"
+                        description="Healthcare management application with patient tracking features"
+                        icon="🏥"
+                        link="https://mhealth-web-app-nine.vercel.app/"
                       />
                     </div>
 
                     <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                      <ProjectCard title="Conscience Keeper" description="Let Jiminy Cricket be your guide" icon="🦗" />
+                      <ProjectCard
+                        title="Procurement Management System"
+                        description="Comprehensive solution for managing procurement processes"
+                        icon="📊"
+                        link="https://www.procurement-ms.com/"
+                      />
                     </div>
                   </div>
                 </div>

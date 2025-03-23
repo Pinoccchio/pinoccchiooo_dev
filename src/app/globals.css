@@ -85,3 +85,15 @@ body {
   box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
 }
 
+/* Add this new style for project screenshots */
+.project-screenshot {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-screenshot {
+  opacity: 1;
+  transform: translateY(0);
+}
+

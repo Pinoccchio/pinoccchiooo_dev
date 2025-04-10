@@ -1,5 +1,6 @@
 "use client"
-import { useState } from "react"
+
+import { useState, useCallback } from "react"
 import { Github, Mail, Facebook, Instagram, Youtube, MapPin } from "lucide-react"
 import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
@@ -12,6 +13,17 @@ import { AnimatedProfile } from "@/components/animated-profile"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
+  const [projectCategory, setProjectCategory] = useState<"web" | "app">("web")
+
+  // Memoize the category change handler to prevent unnecessary re-renders
+  const handleCategoryChange = useCallback(
+    (category: "web" | "app") => {
+      if (category !== projectCategory) {
+        setProjectCategory(category)
+      }
+    },
+    [projectCategory],
+  )
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
@@ -112,43 +124,158 @@ export default function Home() {
               {/* Projects Section - Responsive grid */}
               {activeSection === "projects" && (
                 <div className="transition-all duration-300 ease-in-out">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                    <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                      <ProjectCard
-                        title="A'ezzy Grammar Correction"
-                        description="An intelligent online bot for grammar correction and text improvement"
-                        icon="📝"
-                        link="https://aezzy-grammar-corrector.vercel.app/"
-                      />
-                    </div>
-
-                    <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                      <ProjectCard
-                        title="E-Reserve System"
-                        description="Venue reservation platform for the Local Government of Libmanan"
-                        icon="🏢"
-                        link="https://e-reserve-web-based-system-v1.vercel.app/"
-                      />
-                    </div>
-
-                    <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                      <ProjectCard
-                        title="MHealth Web App"
-                        description="Healthcare management application with patient tracking features"
-                        icon="🏥"
-                        link="https://mhealth-web-app-nine.vercel.app/"
-                      />
-                    </div>
-
-                    <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                      <ProjectCard
-                        title="Procurement Management System"
-                        description="Comprehensive solution for managing procurement processes"
-                        icon="📊"
-                        link="https://www.procurement-ms.com/"
-                      />
+                  {/* Project Category Selector */}
+                  <div className="flex justify-center mb-6">
+                    <div className="inline-flex rounded-md shadow-sm" role="group">
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("web")}
+                        className={`px-4 py-2 text-sm font-medium rounded-l-lg transition-colors duration-200 ${
+                          projectCategory === "web"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        Web Projects
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("app")}
+                        className={`px-4 py-2 text-sm font-medium rounded-r-lg transition-colors duration-200 ${
+                          projectCategory === "app"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        App Projects
+                      </button>
                     </div>
                   </div>
+
+                  {/* Web Projects */}
+                  {projectCategory === "web" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="A'ezzy Grammar Correction"
+                          description="An intelligent online bot for grammar correction and text improvement"
+                          icon="📝"
+                          demoLink="https://aezzy-grammar-corrector.vercel.app/"
+                          demoText="Visit Website"
+                          type="web"
+                        />
+                      </div>
+
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="E-Reserve System"
+                          description="Venue reservation platform for the Local Government of Libmanan"
+                          icon="🏢"
+                          demoLink="https://e-reserve-web-based-system-v1.vercel.app/"
+                          demoText="Visit Website"
+                          type="web"
+                        />
+                      </div>
+
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="MHealth Web App"
+                          description="Healthcare management application with patient tracking features"
+                          icon="🏥"
+                          demoLink="https://mhealth-web-app-nine.vercel.app/"
+                          demoText="Visit Website"
+                          type="web"
+                        />
+                      </div>
+
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Procurement Management System"
+                          description="Comprehensive solution for managing procurement processes"
+                          icon="📊"
+                          demoLink="https://www.procurement-ms.com/"
+                          demoText="Visit Website"
+                          type="web"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* App Projects - Reordered as requested */}
+                  {projectCategory === "app" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      {/* 1. Scan My Soil */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Scan My Soil"
+                          description="AI-powered application using Gemini for soil analysis, providing agricultural recommendations and insights based on soil composition"
+                          icon="🌱"
+                          githubLink="https://github.com/Pinoccchio/scan_my_soil"
+                          videoLink="https://drive.google.com/file/d/1k9x9oGSP-PO0DNTonA7s-wmJOaeAhdu9/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* 2. EnviroSpeak */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="EnviroSpeak"
+                          description="AI-powered application using Gemini that processes voice input to describe surroundings, eliminating the need for typing with voice-to-text and text-to-voice capabilities"
+                          icon="🌍"
+                          githubLink="https://github.com/Pinoccchio"
+                          videoLink="https://drive.google.com/file/d/1k-uS8cehsSWc2Gq22VUX_2AcUE-QxsmT/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* 3. TalkToHand */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="TalkToHand"
+                          description="Machine learning application powered by MediaPipe that translates sign language gestures into readable text, bridging communication gaps for the hearing impaired"
+                          icon="👋"
+                          videoLink="https://drive.google.com/file/d/1jvLiSPp5QttF01L2UbvV-qE1o254Jc9n/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* 4. Econaga */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Econaga"
+                          description="Waste management application allowing users to submit garbage collection or burial requests with location tracking, enabling drivers to efficiently collect and transport waste"
+                          icon="♻️"
+                          githubLink="https://github.com/Pinoccchio/econaga"
+                          videoLink="https://drive.google.com/file/d/1jvdjkWWiDaeVf8jWFT36e7i2ZfIUfS2C/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* 5. SienaTalk */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="SienaTalk V1"
+                          description="Platform for students to book counselor appointments, exchange messages, send voice recordings, with comprehensive admin oversight of student-counselor interactions"
+                          icon="💬"
+                          githubLink="https://github.com/Pinoccchio/SienaTalkV1"
+                          videoLink="https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* 6. Eatease */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Eatease"
+                          description="Streamlined food delivery application with a simplified interface, allowing users to browse restaurants and order meals"
+                          icon="🍔"
+                          githubLink="https://github.com/Pinoccchio/eatease_app_web"
+                          videoLink="https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -174,4 +301,3 @@ export default function Home() {
     </div>
   )
 }
-

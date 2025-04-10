@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "tailwindcss";
 
 :root {
@@ -63,8 +67,6 @@ body {
 .avatar-border {
   border: 4px solid var(--pinocchio-primary);
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-  z-index: 10;
-  pointer-events: none;
 }
 
 .nav-button {
@@ -87,24 +89,16 @@ body {
   box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
 }
 
-/* Add this new style for project screenshots */
-.project-screenshot {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
+/* Transition styles for project category switching */
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-card:hover .project-screenshot {
-  opacity: 1;
-  transform: translateY(0);
+.duration-300 {
+  transition-duration: 300ms;
 }
 
-/* Animation styles */
-.profile-animation {
-  transition: all 0.5s ease;
+.pointer-events-none {
+  pointer-events: none;
 }
-
-.profile-animation:hover {
-  transform: scale(1.05);
-}
-

@@ -21,6 +21,7 @@ export function ProjectCard({
   demoLink,
   demoText = "Live Demo",
   videoLink,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type = "web",
 }: ProjectCardProps) {
   // Format Google Drive link for optimal viewing

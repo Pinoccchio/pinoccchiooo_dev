@@ -251,6 +251,17 @@ export default function Home() {
                         />
                       </div>
 
+                      {/* QR Code Based Attendance System */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="QR Code Based Attendance System"
+                          description="Android application for tracking attendance using QR code scanning"
+                          icon="📱"
+                          videoLink="https://drive.google.com/file/d/1aPWLWykOcmT3baCXQsODnHdzD9BBmy8D/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
                       {/* 5. SienaTalk */}
                       <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                         <ProjectCard

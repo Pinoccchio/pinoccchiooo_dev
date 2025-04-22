@@ -25,7 +25,7 @@ export function AboutSection() {
       degree: "Bachelor of Science in Computer Science",
       institution: "Cor Jesu College, Inc.",
       location: "Digos City, Philippines",
-      year: "Expected Graduation: 2026",
+      year: "",
     },
   ]
 
@@ -199,4 +199,3 @@ export function AboutSection() {
     </div>
   )
 }
-

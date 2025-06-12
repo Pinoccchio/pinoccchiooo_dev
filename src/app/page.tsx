@@ -13,11 +13,11 @@ import { AnimatedProfile } from "@/components/animated-profile"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
-  const [projectCategory, setProjectCategory] = useState<"web" | "app">("web")
+  const [projectCategory, setProjectCategory] = useState<"web" | "app" | "hybrid">("web")
 
   // Memoize the category change handler to prevent unnecessary re-renders
   const handleCategoryChange = useCallback(
-    (category: "web" | "app") => {
+    (category: "web" | "app" | "hybrid") => {
       if (category !== projectCategory) {
         setProjectCategory(category)
       }
@@ -141,13 +141,24 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("app")}
-                        className={`px-4 py-2 text-sm font-medium rounded-r-lg transition-colors duration-200 ${
+                        className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
                           projectCategory === "app"
                             ? "bg-blue-500 dark:bg-blue-600 text-white"
                             : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
                         }`}
                       >
                         App Projects
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("hybrid")}
+                        className={`px-4 py-2 text-sm font-medium rounded-r-lg transition-colors duration-200 ${
+                          projectCategory === "hybrid"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        Web & App
                       </button>
                     </div>
                   </div>
@@ -204,6 +215,28 @@ export default function Home() {
                   {/* App Projects - Reordered as requested */}
                   {projectCategory === "app" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      {/* SnakeBuddy */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="SnakeBuddy"
+                          description="An AI-powered mobile tool for identifying snakes from photos using Google's Gemini 1.5 Pro for detailed analysis."
+                          icon="🐍"
+                          videoLink="https://drive.google.com/file/d/1RF9ZJQC7ewUPSobTj41g_OIASBd27lzI/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
+                      {/* Better Bites */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Better Bites"
+                          description="An AI android application designed to help users make informed dietary choices by analyzing food product ingredients."
+                          icon="🍎"
+                          videoLink="https://drive.google.com/file/d/125EuRkh_k2smk1mhN1Or74CMc875aTwR/view?usp=sharing"
+                          type="app"
+                        />
+                      </div>
+
                       {/* 1. Scan My Soil */}
                       <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                         <ProjectCard
@@ -283,6 +316,26 @@ export default function Home() {
                           githubLink="https://github.com/Pinoccchio/eatease_app_web"
                           videoLink="https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing"
                           type="app"
+                        />
+                      </div>
+
+
+                    </div>
+                  )}
+
+                  {/* Hybrid Projects */}
+                  {projectCategory === "hybrid" && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="LawBot"
+                          description="An AI legal assistant platform. The Android app features AI chat, legal resources, chat history, notifications, and user profiles, while the web admin panel includes a dashboard, analytics, user management, case reviews, and support."
+                          icon="⚖️"
+                          videoLink="https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing"
+                          videoLinkText="Watch App Demo"
+                          demoLink="https://drive.google.com/file/d/1Qy48z_Ve36DWUHewRYai2nDU8IiCrrr0/view?usp=sharing"
+                          demoText="Watch Web Demo"
+                          type="hybrid"
                         />
                       </div>
                     </div>

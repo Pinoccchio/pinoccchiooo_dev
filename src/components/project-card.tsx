@@ -10,7 +10,8 @@ interface ProjectCardProps {
   demoLink?: string
   demoText?: string
   videoLink?: string
-  type?: "web" | "app"
+  videoLinkText?: string
+  type?: "web" | "app" | "hybrid"
 }
 
 export function ProjectCard({
@@ -21,6 +22,7 @@ export function ProjectCard({
   demoLink,
   demoText = "Live Demo",
   videoLink,
+  videoLinkText = "Watch Demo",
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type = "web",
 }: ProjectCardProps) {
@@ -101,7 +103,7 @@ export function ProjectCard({
                 className="inline-flex items-center text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:underline"
               >
                 <Play size={16} className="mr-1" />
-                Watch Demo
+                {videoLinkText}
               </button>
             )}
           </div>

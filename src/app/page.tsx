@@ -215,6 +215,18 @@ export default function Home() {
                   {/* App Projects - Reordered as requested */}
                   {projectCategory === "app" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                      {/* Yummify Recipe Finder */}
+                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <ProjectCard
+                          title="Yummify Recipe Finder"
+                          description="A modern Flutter app that helps users discover and generate personalized recipes using Gemini AI and the Spoonacular API."
+                          icon="🍳"
+                          videoLink="https://drive.google.com/file/d/1SNMK_7fW5-mlBQF8jLWPcTClgxBi2MdK/view?usp=sharing"
+                          videoLinkText="Watch Demo"
+                          type="app"
+                        />
+                      </div>
+
                       {/* SnakeBuddy */}
                       <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
                         <ProjectCard
@@ -243,7 +255,6 @@ export default function Home() {
                           title="Scan My Soil"
                           description="AI-powered application using Gemini for soil analysis, providing agricultural recommendations and insights based on soil composition"
                           icon="🌱"
-                          githubLink="https://github.com/Pinoccchio/scan_my_soil"
                           videoLink="https://drive.google.com/file/d/1k9x9oGSP-PO0DNTonA7s-wmJOaeAhdu9/view?usp=sharing"
                           type="app"
                         />
@@ -255,7 +266,6 @@ export default function Home() {
                           title="EnviroSpeak"
                           description="AI-powered application using Gemini that processes voice input to describe surroundings, eliminating the need for typing with voice-to-text and text-to-voice capabilities"
                           icon="🌍"
-                          githubLink="https://github.com/Pinoccchio"
                           videoLink="https://drive.google.com/file/d/1k-uS8cehsSWc2Gq22VUX_2AcUE-QxsmT/view?usp=sharing"
                           type="app"
                         />
@@ -278,7 +288,6 @@ export default function Home() {
                           title="Econaga"
                           description="Waste management application allowing users to submit garbage collection or burial requests with location tracking, enabling drivers to efficiently collect and transport waste"
                           icon="♻️"
-                          githubLink="https://github.com/Pinoccchio/econaga"
                           videoLink="https://drive.google.com/file/d/1jvdjkWWiDaeVf8jWFT36e7i2ZfIUfS2C/view?usp=sharing"
                           type="app"
                         />
@@ -301,7 +310,6 @@ export default function Home() {
                           title="SienaTalk V1"
                           description="Platform for students to book counselor appointments, exchange messages, send voice recordings, with comprehensive admin oversight of student-counselor interactions"
                           icon="💬"
-                          githubLink="https://github.com/Pinoccchio/SienaTalkV1"
                           videoLink="https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing"
                           type="app"
                         />
@@ -313,12 +321,10 @@ export default function Home() {
                           title="Eatease"
                           description="Streamlined food delivery application with a simplified interface, allowing users to browse restaurants and order meals"
                           icon="🍔"
-                          githubLink="https://github.com/Pinoccchio/eatease_app_web"
                           videoLink="https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing"
                           type="app"
                         />
                       </div>
-
 
                     </div>
                   )}

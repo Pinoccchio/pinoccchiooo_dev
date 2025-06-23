@@ -118,23 +118,7 @@ export function AboutSection() {
       <div>
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Professional Profile</h3>
         <p className="mb-4 pinocchio-text">
-          I am a versatile developer with expertise in both mobile and web technologies. Since beginning my development
-          journey in 2022, I've built a diverse portfolio of applications ranging from straightforward utility tools to
-          comprehensive solutions for various clients. When projects require enhanced capabilities, I implement AI APIs
-          and machine learning algorithms to create more intelligent, data-driven experiences.
-        </p>
-        <p className="mb-4 pinocchio-text">
-          My development experience began with Flutter for cross-platform applications, allowing me to efficiently
-          create solutions for Android, web, and Windows platforms. In 2024, I expanded my technical skills to include
-          web development with Next.js and React, enabling me to deliver comprehensive solutions across multiple
-          platforms.
-        </p>
-        <p className="pinocchio-text">
-          I've focused on freelance projects to enhance my skills and build a diverse portfolio before transitioning to
-          industry roles. This approach has allowed me to develop practical expertise across various technologies and
-          business domains, preparing me for real-world challenges. I'm now looking forward to applying my comprehensive
-          skill set in an industry position where I can contribute to larger-scale projects and continue growing as a
-          developer.
+          I am a cross-platform developer specializing in building AI-powered applications for web and mobile. My portfolio includes solutions for healthcare, education, government, food tech, accessibility, and legal tech. I leverage technologies like Flutter, Next.js, and advanced APIs (Gemini AI, Spoonacular, MediaPipe) to create modern, user-focused products. My work is driven by a passion for integrating artificial intelligence and automation to solve real-world problems and deliver seamless user experiences across platforms.
         </p>
       </div>
 
@@ -142,14 +126,13 @@ export function AboutSection() {
       <div>
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Core Competencies</h3>
         <div className="flex flex-wrap gap-2">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm"
-            >
-              {skill}
-            </span>
-          ))}
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">AI-Powered App Development (Gemini AI, Spoonacular, MediaPipe)</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Cross-Platform Development (Flutter, Next.js)</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">API Integration & Automation</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Modern UI/UX Design</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">End-to-End Solution Delivery (Frontend & Backend)</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Real-Time Data & Analytics</span>
+          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Accessibility & User Empowerment</span>
         </div>
       </div>
 
@@ -189,11 +172,7 @@ export function AboutSection() {
       <div>
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Career Objectives</h3>
         <p className="pinocchio-text">
-          I am actively seeking opportunities to transition from freelance work to an industry position where I can
-          apply my technical skills in a collaborative team environment. My goal is to contribute to innovative projects
-          while continuing to expand my expertise in both mobile and web development. I'm particularly interested in
-          roles that allow me to leverage my experience with Flutter for Android/web/Windows applications and Next.js to
-          create impactful solutions.
+          I am seeking opportunities to further innovate in the field of AI-powered, cross-platform application development. My goal is to continue building impactful solutions that leverage the latest in artificial intelligence and modern frameworks, contributing to projects that make a real difference in users' lives.
         </p>
       </div>
     </div>

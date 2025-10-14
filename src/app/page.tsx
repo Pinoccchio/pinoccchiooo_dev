@@ -10,16 +10,26 @@ import { AboutSection } from "@/components/about-section"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ChatBot } from "@/components/chat-bot"
 import { AnimatedProfile } from "@/components/animated-profile"
+import { PortfolioStats } from "@/components/portfolio-stats"
+import { getProjectsByCategory } from "@/data/projects"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
-  const [projectCategory, setProjectCategory] = useState<"web" | "app" | "hybrid">("web")
+  const [projectCategory, setProjectCategory] = useState<"hybrid" | "web" | "mobile" | "ai-ml">("hybrid")
+  const [showAllProjects, setShowAllProjects] = useState(false)
+
+  // Get projects for each category
+  const hybridProjects = getProjectsByCategory("hybrid")
+  const webProjects = getProjectsByCategory("web")
+  const mobileProjects = getProjectsByCategory("mobile")
+  const aiMlProjects = getProjectsByCategory("ai-ml")
 
   // Memoize the category change handler to prevent unnecessary re-renders
   const handleCategoryChange = useCallback(
-    (category: "web" | "app" | "hybrid") => {
+    (category: "hybrid" | "web" | "mobile" | "ai-ml") => {
       if (category !== projectCategory) {
         setProjectCategory(category)
+        setShowAllProjects(false) // Reset show all when changing categories
       }
     },
     [projectCategory],
@@ -124,228 +134,197 @@ export default function Home() {
               {/* Projects Section - Responsive grid */}
               {activeSection === "projects" && (
                 <div className="transition-all duration-300 ease-in-out">
-                  {/* Project Category Selector */}
+                  {/* Portfolio Statistics */}
+                  <PortfolioStats />
+
+                  {/* Project Category Selector - 4 Categories */}
                   <div className="flex justify-center mb-6">
-                    <div className="inline-flex rounded-md shadow-sm" role="group">
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("web")}
-                        className={`px-4 py-2 text-sm font-medium rounded-l-lg transition-colors duration-200 ${
-                          projectCategory === "web"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
-                        }`}
-                      >
-                        Web Projects
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("app")}
-                        className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                          projectCategory === "app"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
-                        }`}
-                      >
-                        App Projects
-                      </button>
+                    <div className="inline-flex flex-wrap justify-center gap-2 sm:gap-0 sm:rounded-md sm:shadow-sm" role="group">
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("hybrid")}
-                        className={`px-4 py-2 text-sm font-medium rounded-r-lg transition-colors duration-200 ${
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium sm:rounded-l-lg rounded-lg sm:rounded-none transition-colors duration-200 ${
                           projectCategory === "hybrid"
                             ? "bg-blue-500 dark:bg-blue-600 text-white"
                             : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
                         }`}
                       >
-                        Web & App
+                        Hybrid Systems
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("web")}
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg sm:rounded-none transition-colors duration-200 ${
+                          projectCategory === "web"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        Web Apps
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("mobile")}
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg sm:rounded-none transition-colors duration-200 ${
+                          projectCategory === "mobile"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        Mobile Apps
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCategoryChange("ai-ml")}
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium sm:rounded-r-lg rounded-lg sm:rounded-none transition-colors duration-200 ${
+                          projectCategory === "ai-ml"
+                            ? "bg-blue-500 dark:bg-blue-600 text-white"
+                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                        }`}
+                      >
+                        AI & ML
                       </button>
                     </div>
                   </div>
 
-                  {/* Web Projects */}
+                  {/* Web Projects - Dynamic Rendering */}
                   {projectCategory === "web" && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="A'ezzy Grammar Correction"
-                          description="An intelligent online bot for grammar correction and text improvement"
-                          icon="📝"
-                          demoLink="https://aezzy-grammar-corrector.vercel.app/"
-                          demoText="Visit Website"
-                          type="web"
-                        />
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                        {webProjects.slice(0, showAllProjects ? webProjects.length : 8).map((project) => (
+                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                            <ProjectCard
+                              title={project.title}
+                              description={project.description}
+                              icon={project.icon}
+                              githubLink={project.githubUrl}
+                              demoLink={project.demoUrl}
+                              videoLink={project.videoUrl}
+                              type={project.category}
+                              techStack={project.techStack}
+                              status={project.status}
+                              date={project.date}
+                              isPrivate={project.isPrivate}
+                              details={project.details}
+                            />
+                          </div>
+                        ))}
                       </div>
-
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="E-Reserve System"
-                          description="Venue reservation platform for the Local Government of Libmanan"
-                          icon="🏢"
-                          demoLink="https://e-reserve-web-based-system-v1.vercel.app/"
-                          demoText="Visit Website"
-                          type="web"
-                        />
-                      </div>
-
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="MHealth Web App"
-                          description="Healthcare management application with patient tracking features"
-                          icon="🏥"
-                          demoLink="https://mhealth-web-app-nine.vercel.app/"
-                          demoText="Visit Website"
-                          type="web"
-                        />
-                      </div>
-
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Procurement Management System"
-                          description="Comprehensive solution for managing procurement processes"
-                          icon="📊"
-                          demoLink="https://www.procurement-ms.com/"
-                          demoText="Visit Website"
-                          type="web"
-                        />
-                      </div>
-                    </div>
+                      {webProjects.length > 8 && (
+                        <div className="flex justify-center mb-6">
+                          <button
+                            onClick={() => setShowAllProjects(!showAllProjects)}
+                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                          >
+                            {showAllProjects ? `Show Less` : `Show All ${webProjects.length} Web Projects`}
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
 
-                  {/* App Projects - Reordered as requested */}
-                  {projectCategory === "app" && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                      {/* Yummify Recipe Finder */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Yummify Recipe Finder"
-                          description="A modern Flutter app that helps users discover and generate personalized recipes using Gemini AI and the Spoonacular API."
-                          icon="🍳"
-                          videoLink="https://drive.google.com/file/d/1SNMK_7fW5-mlBQF8jLWPcTClgxBi2MdK/view?usp=sharing"
-                          videoLinkText="Watch Demo"
-                          type="app"
-                        />
+                  {/* Mobile Projects - Dynamic Rendering */}
+                  {projectCategory === "mobile" && (
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                        {mobileProjects.slice(0, showAllProjects ? mobileProjects.length : 10).map((project) => (
+                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                            <ProjectCard
+                              title={project.title}
+                              description={project.description}
+                              icon={project.icon}
+                              githubLink={project.githubUrl}
+                              demoLink={project.demoUrl}
+                              videoLink={project.videoUrl}
+                              type={project.category}
+                              techStack={project.techStack}
+                              status={project.status}
+                              date={project.date}
+                              isPrivate={project.isPrivate}
+                              details={project.details}
+                            />
+                          </div>
+                        ))}
                       </div>
-
-                      {/* SnakeBuddy */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="SnakeBuddy"
-                          description="An AI-powered mobile tool for identifying snakes from photos using Google's Gemini 1.5 Pro for detailed analysis."
-                          icon="🐍"
-                          videoLink="https://drive.google.com/file/d/1RF9ZJQC7ewUPSobTj41g_OIASBd27lzI/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* Better Bites */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Better Bites"
-                          description="An AI android application designed to help users make informed dietary choices by analyzing food product ingredients."
-                          icon="🍎"
-                          videoLink="https://drive.google.com/file/d/125EuRkh_k2smk1mhN1Or74CMc875aTwR/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 1. Scan My Soil */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Scan My Soil"
-                          description="AI-powered application using Gemini for soil analysis, providing agricultural recommendations and insights based on soil composition"
-                          icon="🌱"
-                          videoLink="https://drive.google.com/file/d/1k9x9oGSP-PO0DNTonA7s-wmJOaeAhdu9/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 2. EnviroSpeak */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="EnviroSpeak"
-                          description="AI-powered application using Gemini that processes voice input to describe surroundings, eliminating the need for typing with voice-to-text and text-to-voice capabilities"
-                          icon="🌍"
-                          videoLink="https://drive.google.com/file/d/1k-uS8cehsSWc2Gq22VUX_2AcUE-QxsmT/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 3. TalkToHand */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="TalkToHand"
-                          description="Machine learning application powered by MediaPipe that translates sign language gestures into readable text, bridging communication gaps for the hearing impaired"
-                          icon="👋"
-                          videoLink="https://drive.google.com/file/d/1jvLiSPp5QttF01L2UbvV-qE1o254Jc9n/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 4. Econaga */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Econaga"
-                          description="Waste management application allowing users to submit garbage collection or burial requests with location tracking, enabling drivers to efficiently collect and transport waste"
-                          icon="♻️"
-                          videoLink="https://drive.google.com/file/d/1jvdjkWWiDaeVf8jWFT36e7i2ZfIUfS2C/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* QR Code Based Attendance System */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="QR Code Based Attendance System"
-                          description="Android application for tracking attendance using QR code scanning"
-                          icon="📱"
-                          videoLink="https://drive.google.com/file/d/1aPWLWykOcmT3baCXQsODnHdzD9BBmy8D/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 5. SienaTalk */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="SienaTalk V1"
-                          description="Platform for students to book counselor appointments, exchange messages, send voice recordings, with comprehensive admin oversight of student-counselor interactions"
-                          icon="💬"
-                          videoLink="https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                      {/* 6. Eatease */}
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="Eatease"
-                          description="Streamlined food delivery application with a simplified interface, allowing users to browse restaurants and order meals"
-                          icon="🍔"
-                          videoLink="https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing"
-                          type="app"
-                        />
-                      </div>
-
-                    </div>
+                      {mobileProjects.length > 10 && (
+                        <div className="flex justify-center mb-6">
+                          <button
+                            onClick={() => setShowAllProjects(!showAllProjects)}
+                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                          >
+                            {showAllProjects ? `Show Less` : `Show All ${mobileProjects.length} Mobile Apps`}
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
 
-                  {/* Hybrid Projects */}
+                  {/* Hybrid Projects - 4 Major Systems */}
                   {projectCategory === "hybrid" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                      <div className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
-                        <ProjectCard
-                          title="LawBot"
-                          description="An AI legal assistant platform. The Android app features AI chat, legal resources, chat history, notifications, and user profiles, while the web admin panel includes a dashboard, analytics, user management, case reviews, and support."
-                          icon="⚖️"
-                          videoLink="https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing"
-                          videoLinkText="Watch App Demo"
-                          demoLink="https://drive.google.com/file/d/1Qy48z_Ve36DWUHewRYai2nDU8IiCrrr0/view?usp=sharing"
-                          demoText="Watch Web Demo"
-                          type="hybrid"
-                        />
-                      </div>
+                      {hybridProjects.map((project) => (
+                        <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                          <ProjectCard
+                            title={project.title}
+                            description={project.description}
+                            icon={project.icon}
+                            githubLink={project.githubUrl}
+                            demoLink={project.demoUrl}
+                            videoLink={project.videoUrl}
+                            webGithubLink={project.webGithubUrl}
+                            mobileGithubLink={project.mobileGithubUrl}
+                            webDemoLink={project.webDemoUrl}
+                            mobileDemoLink={project.mobileDemoUrl}
+                            webVideoLink={project.webVideoUrl}
+                            mobileVideoLink={project.mobileVideoUrl}
+                            type={project.category}
+                            techStack={project.techStack}
+                            status={project.status}
+                            date={project.date}
+                            isPrivate={project.isPrivate}
+                            details={project.details}
+                          />
+                        </div>
+                      ))}
                     </div>
                   )}
+
+                  {/* AI & ML Projects */}
+                  {projectCategory === "ai-ml" && (
+                    <>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                        {aiMlProjects.slice(0, showAllProjects ? aiMlProjects.length : 8).map((project) => (
+                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                            <ProjectCard
+                              title={project.title}
+                              description={project.description}
+                              icon={project.icon}
+                              githubLink={project.githubUrl}
+                              demoLink={project.demoUrl}
+                              videoLink={project.videoUrl}
+                              type={project.category}
+                              techStack={project.techStack}
+                              status={project.status}
+                              date={project.date}
+                              isPrivate={project.isPrivate}
+                              details={project.details}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      {aiMlProjects.length > 8 && (
+                        <div className="flex justify-center mb-6">
+                          <button
+                            onClick={() => setShowAllProjects(!showAllProjects)}
+                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                          >
+                            {showAllProjects ? `Show Less` : `Show All ${aiMlProjects.length} AI & ML Projects`}
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+
                 </div>
               )}
 

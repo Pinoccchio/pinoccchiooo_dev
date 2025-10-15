@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Github, Mail, Facebook, Instagram, Youtube, MapPin } from "lucide-react"
 import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
@@ -11,12 +12,34 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { ChatBot } from "@/components/chat-bot"
 import { AnimatedProfile } from "@/components/animated-profile"
 import { PortfolioStats } from "@/components/portfolio-stats"
+import { AdminLoginDialog } from "@/components/admin-login-dialog"
 import { getProjectsByCategory } from "@/data/projects"
+import { getCurrentAdmin } from "@/app/actions/admin-auth-actions"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
   const [projectCategory, setProjectCategory] = useState<"hybrid" | "web" | "mobile" | "ai-ml">("hybrid")
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [showAdminLogin, setShowAdminLogin] = useState(false)
+  const [clickCount, setClickCount] = useState(0)
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const router = useRouter()
+
+  // Check if user is already authenticated and redirect to admin
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const admin = await getCurrentAdmin()
+        if (admin) {
+          router.push("/admin")
+        }
+      } catch (error) {
+        // User not authenticated, stay on landing page
+        console.log("Not authenticated")
+      }
+    }
+    checkAuth()
+  }, [router])
 
   // Get projects for each category
   const hybridProjects = getProjectsByCategory("hybrid")
@@ -35,6 +58,29 @@ export default function Home() {
     [projectCategory],
   )
 
+  // Secret admin access trigger - 7 rapid clicks on avatar
+  const handleAvatarClick = () => {
+    const newCount = clickCount + 1
+    setClickCount(newCount)
+
+    // Clear existing timer
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current)
+    }
+
+    // If 7 clicks reached, show admin login
+    if (newCount >= 7) {
+      setShowAdminLogin(true)
+      setClickCount(0)
+      return
+    }
+
+    // Reset count after 2 seconds of inactivity
+    clickTimerRef.current = setTimeout(() => {
+      setClickCount(0)
+    }, 2000)
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
@@ -42,12 +88,18 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
           {/* Avatar and Profile Section - Full width on mobile, sidebar on desktop */}
           <div className="w-full lg:w-80 xl:w-96 flex flex-col items-center">
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64">
+            <div
+              className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 cursor-pointer transition-transform hover:scale-105 active:scale-95"
+              onClick={handleAvatarClick}
+              title="Click me multiple times..."
+            >
               <div className="absolute inset-0 flex items-center justify-center">
                 <AnimatedProfile />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 avatar-border rounded-full"></div>
+                <div className={`w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 avatar-border rounded-full ${
+                  clickCount > 0 && clickCount < 7 ? "animate-pulse" : ""
+                }`}></div>
               </div>
             </div>
 
@@ -347,6 +399,7 @@ export default function Home() {
         </div>
       </div>
       <ChatBot />
+      <AdminLoginDialog isOpen={showAdminLogin} onClose={() => setShowAdminLogin(false)} />
     </div>
   )
 }

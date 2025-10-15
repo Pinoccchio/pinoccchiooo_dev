@@ -102,3 +102,69 @@ body {
 .pointer-events-none {
   pointer-events: none;
 }
+
+/* Admin Section Pinocchio Theme */
+.admin-gradient-bg {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+}
+
+.admin-card-hover {
+  transition: all 0.3s ease;
+}
+
+.admin-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+}
+
+/* shadcn component customizations for Pinocchio theme */
+.admin-primary-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  transition: all 0.3s ease;
+}
+
+.admin-primary-button:hover {
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Table row hover effect */
+.admin-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.admin-table-row:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Sidebar animation */
+.admin-sidebar {
+  transition: width 0.3s ease;
+}
+
+/* Upload area drag active state */
+.upload-drag-active {
+  border-color: var(--pinocchio-accent);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Admin badge styles */
+.admin-badge-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.admin-badge-green {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.admin-badge-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+}
+
+.admin-badge-orange {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: white;
+}

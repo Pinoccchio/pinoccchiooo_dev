@@ -1,9 +1,53 @@
 "use server"
 
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import { createServerClient } from "@/lib/supabase/server"
 
-export async function chatWithPinocchio(messages: { role: string; content: string }[]) {
+export async function chatWithPinocchio(
+  messages: { role: string; content: string }[],
+  sessionId: string,
+  visitorInfo?: { ip?: string; userAgent?: string }
+) {
   try {
+    const supabase = await createServerClient()
+
+    // Ensure chat session exists in database
+    const { data: existingSession } = await supabase
+      .from("chat_sessions")
+      .select("id")
+      .eq("session_id", sessionId)
+      .single()
+
+    let dbSessionId: string
+
+    if (!existingSession) {
+      // Create new session
+      const { data: newSession, error: sessionError } = await supabase
+        .from("chat_sessions")
+        .insert({
+          session_id: sessionId,
+          visitor_ip: visitorInfo?.ip,
+          user_agent: visitorInfo?.userAgent,
+        })
+        .select("id")
+        .single()
+
+      if (sessionError || !newSession) {
+        console.error("Failed to create chat session:", sessionError)
+        throw new Error("Failed to create session")
+      }
+
+      dbSessionId = newSession.id
+    } else {
+      dbSessionId = existingSession.id
+
+      // Update last activity
+      await supabase
+        .from("chat_sessions")
+        .update({ last_activity: new Date().toISOString() })
+        .eq("id", dbSessionId)
+    }
+
     // Initialize the Google Generative AI with your API key
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "")
 
@@ -21,11 +65,11 @@ CRITICAL INSTRUCTIONS:
 - When someone asks about "hybrid" or "both web and app" projects, mention all 4 major hybrid systems
 
 PORTFOLIO STATISTICS (2025):
-- **Total Projects:** 40+ comprehensive projects
+- **Total Projects:** 31 selected projects (from 66 total repositories)
 - **Development Period:** 2023-2025 (active continuous development)
-- **Primary Technologies:** Flutter (20+ projects), Next.js (12+ projects)
-- **Backend Expertise:** Supabase (15+ projects), Firebase (10+ projects)
-- **AI Integration:** 10+ projects with Gemini AI, OpenAI, MediaPipe
+- **Primary Technologies:** Flutter (24+ projects), Next.js 15 (12+ projects)
+- **Backend Expertise:** Supabase (18 projects), Firebase (12 projects)
+- **AI Integration:** 7 projects with Gemini AI, OpenAI, MediaPipe
 - **Major Hybrid Systems:** 4 coordinated web + mobile platforms
 
 🌟 **4 MAJOR HYBRID SYSTEMS (WEB + MOBILE):**
@@ -59,7 +103,7 @@ PORTFOLIO STATISTICS (2025):
    - **Alternative:** React/Vite version (LawBotAIWeb) with comprehensive UI
    - **Tech:** Next.js 15, Flutter 3.0+, Supabase, Firebase, Gemini 2.0 Flash with caching (20-40x performance)
 
-📱 **KEY MOBILE APPS (20+ total):**
+📱 **KEY MOBILE APPS (14 total):**
 
 **AI-Powered Apps:**
 - **Yummify Recipe Finder** - Gemini AI + Spoonacular API for personalized recipes
@@ -89,7 +133,7 @@ PORTFOLIO STATISTICS (2025):
 - **E-Hotel** - Hotel booking with BLoC architecture
 - **Eatease** - Food delivery with simplified interface
 
-🌐 **KEY WEB PROJECTS (12+ total):**
+🌐 **KEY WEB PROJECTS (11 total - 4 hybrid + 7 standalone):**
 
 **Recent Major Projects:**
 - **InCloud Web** - Inventory management admin dashboard for J.A's Food Trading
@@ -133,13 +177,13 @@ TECHNICAL EXPERTISE:
 - **Specialized:** Google Maps, Leaflet, Three.js, PDF generation, QR codes, OCR, BLE, SMS (Twilio), Email (Nodemailer, Resend)
 
 PROFESSIONAL EXPERIENCE:
-- **Full-Stack Developer (Freelance, 2022-Present)**: 40+ comprehensive projects across e-commerce, education, government, healthcare, legal tech, and more
-- **AI Integration Specialist**: 10+ AI-powered applications with Gemini, OpenAI, MediaPipe
+- **Full-Stack Developer (Freelance, 2022-Present)**: 31 selected projects from 66 total repositories across e-commerce, education, government, healthcare, legal tech, and more
+- **AI Integration Specialist**: 7 AI-powered applications with Gemini, OpenAI, MediaPipe
 - **Hybrid System Architect**: 4 major coordinated web + mobile platforms with real-time synchronization
-- **Cross-Platform Expert**: Flutter for iOS, Android, Web, Windows, Linux, macOS (20+ mobile apps)
+- **Cross-Platform Expert**: Flutter for iOS, Android, Web, Windows, Linux, macOS (24+ mobile apps)
 
 CONTACT RESPONSES:
-- Work opportunities: "I'm definitely interested! I've built 40+ projects including 4 major hybrid systems (InCloud, LearnSmart, RRIBN, LawBot). Best way to reach me is Facebook Messenger at https://www.facebook.com/phoebe.finley.96 (most active there) or email janmikoguevarra@gmail.com. I typically respond within 24 hours."
+- Work opportunities: "I'm definitely interested! I've built 31 selected projects from 66 total repositories, including 4 major hybrid systems (InCloud, LearnSmart, RRIBN, LawBot). Best way to reach me is Facebook Messenger at https://www.facebook.com/phoebe.finley.96 (most active there) or email janmikoguevarra@gmail.com. I typically respond within 24 hours."
 - Technical questions: "Great question! I specialize in Flutter, Next.js, and AI integration with real-world experience in e-commerce, government systems, and education. Message me on Facebook at https://www.facebook.com/phoebe.finley.96 (where I'm most active) for detailed technical discussions."
 - Pricing: "My pricing depends on project scope and complexity. With experience building everything from simple apps to complex hybrid systems with AI integration, I can provide accurate estimates. Email me at janmikoguevarra@gmail.com or Facebook message at https://www.facebook.com/phoebe.finley.96 (most active there) for a personalized quote."
 
@@ -184,6 +228,27 @@ Remember: Always provide comprehensive, helpful answers with specific project ex
     const result = await chat.sendMessage(latestMessage.content)
     const response = await result.response
     const text = response.text()
+
+    // Save user message and assistant response to database
+    try {
+      const messagesToSave = [
+        {
+          session_id: dbSessionId,
+          role: "user",
+          content: latestMessage.content,
+        },
+        {
+          session_id: dbSessionId,
+          role: "assistant",
+          content: text,
+        },
+      ]
+
+      await supabase.from("chat_messages").insert(messagesToSave)
+    } catch (dbError) {
+      console.error("Failed to save messages to database:", dbError)
+      // Don't throw error, just log it and continue
+    }
 
     return text
   } catch (error) {

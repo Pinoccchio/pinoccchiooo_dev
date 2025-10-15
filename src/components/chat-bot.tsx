@@ -24,6 +24,10 @@ export function ChatBot() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [sessionId] = useState(() => {
+    // Generate unique session ID on component mount
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+  })
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
@@ -66,8 +70,10 @@ export function ChatBot() {
       // Format all messages for the AI
       const chatHistory = [...messages, userMessage]
 
-      // Get AI response
-      const response = await chatWithPinocchio(chatHistory)
+      // Get AI response with session tracking
+      const response = await chatWithPinocchio(chatHistory, sessionId, {
+        userAgent: navigator.userAgent,
+      })
 
       // Add AI response
       setMessages((prev) => [...prev, { role: "assistant", content: response }])

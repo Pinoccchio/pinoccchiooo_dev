@@ -22,6 +22,12 @@ export type ChatSession = {
   id: string
   session_id: string
   visitor_ip: string | null
+  visitor_country: string | null
+  visitor_country_code: string | null
+  visitor_city: string | null
+  visitor_region: string | null
+  visitor_latitude: number | null
+  visitor_longitude: number | null
   user_agent: string | null
   started_at: string
   last_activity: string
@@ -62,6 +68,12 @@ export async function getAllChatSessions(limit = 50, offset = 0) {
         id,
         session_id,
         visitor_ip,
+        visitor_country,
+        visitor_country_code,
+        visitor_city,
+        visitor_region,
+        visitor_latitude,
+        visitor_longitude,
         user_agent,
         started_at,
         last_activity,
@@ -81,6 +93,12 @@ export async function getAllChatSessions(limit = 50, offset = 0) {
       id: session.id,
       session_id: session.session_id,
       visitor_ip: session.visitor_ip,
+      visitor_country: session.visitor_country,
+      visitor_country_code: session.visitor_country_code,
+      visitor_city: session.visitor_city,
+      visitor_region: session.visitor_region,
+      visitor_latitude: session.visitor_latitude,
+      visitor_longitude: session.visitor_longitude,
       user_agent: session.user_agent,
       started_at: session.started_at,
       last_activity: session.last_activity,
@@ -303,6 +321,12 @@ export async function searchSessions(query: string) {
         id,
         session_id,
         visitor_ip,
+        visitor_country,
+        visitor_country_code,
+        visitor_city,
+        visitor_region,
+        visitor_latitude,
+        visitor_longitude,
         user_agent,
         started_at,
         last_activity,
@@ -322,6 +346,12 @@ export async function searchSessions(query: string) {
       id: session.id,
       session_id: session.session_id,
       visitor_ip: session.visitor_ip,
+      visitor_country: session.visitor_country,
+      visitor_country_code: session.visitor_country_code,
+      visitor_city: session.visitor_city,
+      visitor_region: session.visitor_region,
+      visitor_latitude: session.visitor_latitude,
+      visitor_longitude: session.visitor_longitude,
       user_agent: session.user_agent,
       started_at: session.started_at,
       last_activity: session.last_activity,

@@ -1,13 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { User, Copy, Check, Loader2, Download, MessageCircle } from "lucide-react"
+import { User, Copy, Check, Loader2, Download, MessageCircle, MapPin, ExternalLink } from "lucide-react"
 import { getSessionMessages, type ChatMessage } from "@/app/actions/admin-data-actions"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { formatLocation, getCountryFlagEmoji, getGoogleMapsUrl } from "@/lib/geolocation"
 
 type SessionDetailModalProps = {
   open: boolean
@@ -151,8 +152,55 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
                     </div>
                   )}
                 </div>
+
+                {/* Location Information */}
+                {(session.visitor_city || session.visitor_country) && (
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <MapPin size={16} className="text-blue-500" />
+                          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Location</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {session.visitor_country_code && (
+                            <span className="text-xl">{getCountryFlagEmoji(session.visitor_country_code)}</span>
+                          )}
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">
+                            {formatLocation({
+                              country: session.visitor_country,
+                              city: session.visitor_city,
+                              region: session.visitor_region,
+                              latitude: session.visitor_latitude,
+                              longitude: session.visitor_longitude,
+                              countryCode: session.visitor_country_code,
+                              timezone: null,
+                            })}
+                          </p>
+                        </div>
+                        {session.visitor_region && session.visitor_region !== session.visitor_city && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-7">
+                            {session.visitor_region}
+                          </p>
+                        )}
+                      </div>
+                      {session.visitor_latitude && session.visitor_longitude && (
+                        <a
+                          href={getGoogleMapsUrl(session.visitor_latitude, session.visitor_longitude) || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-md transition-colors"
+                        >
+                          View Map
+                          <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {session.user_agent && (
-                  <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">User Agent</p>
                     <p className="text-sm font-medium text-gray-900 dark:text-white break-all leading-relaxed">
                       {session.user_agent}

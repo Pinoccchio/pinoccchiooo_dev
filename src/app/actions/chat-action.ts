@@ -2,13 +2,32 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { createServerClient } from "@/lib/supabase/server"
+import { getGeolocationFromIP } from "@/lib/geolocation"
+
+/**
+ * Server-side logging utility for terminal output
+ */
+function log(functionName: string, level: "INFO" | "WARN" | "ERROR" | "SUCCESS", message: string, data?: any) {
+  const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19)
+  const prefix = `[${timestamp}] [${functionName}] [${level}]`
+
+  if (data) {
+    console.log(`${prefix} ${message}`, data)
+  } else {
+    console.log(`${prefix} ${message}`)
+  }
+}
 
 export async function chatWithPinocchio(
   messages: { role: string; content: string }[],
   sessionId: string,
   visitorInfo?: { ip?: string; userAgent?: string }
 ) {
+  const functionName = "chatWithPinocchio"
+
   try {
+    log(functionName, "INFO", `Processing chat for session: ${sessionId}`)
+
     const supabase = await createServerClient()
 
     // Ensure chat session exists in database
@@ -21,25 +40,43 @@ export async function chatWithPinocchio(
     let dbSessionId: string
 
     if (!existingSession) {
-      // Create new session
+      // Get geolocation data from IP
+      log(functionName, "INFO", "New session - fetching geolocation data", { ip: visitorInfo?.ip })
+      const locationData = await getGeolocationFromIP(visitorInfo?.ip || null)
+
+      log(functionName, "INFO", "Geolocation result", {
+        country: locationData.country,
+        city: locationData.city,
+        ip: visitorInfo?.ip || "not provided"
+      })
+
+      // Create new session with IP and geolocation data
       const { data: newSession, error: sessionError } = await supabase
         .from("chat_sessions")
         .insert({
           session_id: sessionId,
           visitor_ip: visitorInfo?.ip,
           user_agent: visitorInfo?.userAgent,
+          visitor_country: locationData.country,
+          visitor_country_code: locationData.countryCode,
+          visitor_city: locationData.city,
+          visitor_region: locationData.region,
+          visitor_latitude: locationData.latitude,
+          visitor_longitude: locationData.longitude,
         })
         .select("id")
         .single()
 
       if (sessionError || !newSession) {
-        console.error("Failed to create chat session:", sessionError)
+        log(functionName, "ERROR", "Failed to create chat session", sessionError)
         throw new Error("Failed to create session")
       }
 
+      log(functionName, "SUCCESS", `Created session with ID: ${newSession.id}`)
       dbSessionId = newSession.id
     } else {
       dbSessionId = existingSession.id
+      log(functionName, "INFO", `Using existing session ID: ${dbSessionId}`)
 
       // Update last activity
       await supabase
@@ -225,9 +262,11 @@ Remember: Always provide comprehensive, helpful answers with specific project ex
     })
 
     // Send the latest message
+    log(functionName, "INFO", "Sending message to Gemini AI")
     const result = await chat.sendMessage(latestMessage.content)
     const response = await result.response
     const text = response.text()
+    log(functionName, "SUCCESS", "Received AI response")
 
     // Save user message and assistant response to database
     try {
@@ -244,15 +283,17 @@ Remember: Always provide comprehensive, helpful answers with specific project ex
         },
       ]
 
+      log(functionName, "INFO", "Saving messages to database")
       await supabase.from("chat_messages").insert(messagesToSave)
+      log(functionName, "SUCCESS", "Messages saved successfully")
     } catch (dbError) {
-      console.error("Failed to save messages to database:", dbError)
+      log(functionName, "ERROR", "Failed to save messages to database", dbError)
       // Don't throw error, just log it and continue
     }
 
     return text
   } catch (error) {
-    console.error("Error with AI chat:", error)
+    log(functionName, "ERROR", "Error with AI chat", error)
     return "Sorry, I'm having trouble connecting right now. Please try again later. You can always reach me directly on Facebook at https://www.facebook.com/phoebe.finley.96 where I'm most active!"
   }
 }

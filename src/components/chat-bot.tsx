@@ -24,6 +24,7 @@ export function ChatBot() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [visitorIp, setVisitorIp] = useState<string | null>(null)
   const [sessionId] = useState(() => {
     // Generate unique session ID on component mount
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
@@ -57,6 +58,26 @@ export function ChatBot() {
     }
   }, [input])
 
+  // Fetch visitor IP address on component mount
+  useEffect(() => {
+    const fetchIpAddress = async () => {
+      try {
+        const response = await fetch("/api/get-client-ip")
+        const data = await response.json()
+        if (data.success && data.ip) {
+          setVisitorIp(data.ip)
+          console.log("[ChatBot] Visitor IP fetched:", data.ip)
+        } else {
+          console.log("[ChatBot] No IP address available (localhost/development)")
+        }
+      } catch (error) {
+        console.error("[ChatBot] Failed to fetch IP address:", error)
+      }
+    }
+
+    fetchIpAddress()
+  }, [])
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
 
@@ -70,8 +91,9 @@ export function ChatBot() {
       // Format all messages for the AI
       const chatHistory = [...messages, userMessage]
 
-      // Get AI response with session tracking
+      // Get AI response with session tracking and visitor info
       const response = await chatWithPinocchio(chatHistory, sessionId, {
+        ip: visitorIp,
         userAgent: navigator.userAgent,
       })
 

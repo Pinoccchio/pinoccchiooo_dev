@@ -81,6 +81,15 @@ body {
   border: 1px solid var(--card-border);
   background-color: var(--card-background);
   transition: all 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.project-card p,
+.project-card h3 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .project-card:hover {

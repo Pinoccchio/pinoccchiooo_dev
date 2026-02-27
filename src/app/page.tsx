@@ -244,7 +244,7 @@ export default function Home() {
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                         {webProjects.slice(0, showAllProjects ? webProjects.length : 8).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -258,6 +258,8 @@ export default function Home() {
                               date={project.date}
                               isPrivate={project.isPrivate}
                               details={project.details}
+                              screenshots={project.screenshots}
+                              screenshotCategories={project.screenshotCategories}
                             />
                           </div>
                         ))}
@@ -280,7 +282,7 @@ export default function Home() {
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                         {mobileProjects.slice(0, showAllProjects ? mobileProjects.length : 10).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -294,6 +296,8 @@ export default function Home() {
                               date={project.date}
                               isPrivate={project.isPrivate}
                               details={project.details}
+                              screenshots={project.screenshots}
+                              screenshotCategories={project.screenshotCategories}
                             />
                           </div>
                         ))}
@@ -315,7 +319,7 @@ export default function Home() {
                   {projectCategory === "hybrid" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                       {hybridProjects.map((project) => (
-                        <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                        <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
                           <ProjectCard
                             title={project.title}
                             description={project.description}
@@ -335,6 +339,8 @@ export default function Home() {
                             date={project.date}
                             isPrivate={project.isPrivate}
                             details={project.details}
+                            screenshots={project.screenshots}
+                            screenshotCategories={project.screenshotCategories}
                           />
                         </div>
                       ))}
@@ -346,7 +352,7 @@ export default function Home() {
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                         {aiMlProjects.slice(0, showAllProjects ? aiMlProjects.length : 8).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg overflow-hidden shadow-sm p-4 sm:p-6">
+                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -360,6 +366,8 @@ export default function Home() {
                               date={project.date}
                               isPrivate={project.isPrivate}
                               details={project.details}
+                              screenshots={project.screenshots}
+                              screenshotCategories={project.screenshotCategories}
                             />
                           </div>
                         ))}

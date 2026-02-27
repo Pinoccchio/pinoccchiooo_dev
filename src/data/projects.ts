@@ -2,6 +2,8 @@
 // Comprehensive portfolio including hybrid systems, web apps, mobile apps, AI/ML projects, educational tools, and utilities
 // Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
 
+import { healthcardScreenshots } from "./healthcard-screenshots"
+
 // Screenshot category for organized gallery display
 export interface ScreenshotCategory {
   title: string
@@ -278,7 +280,22 @@ export const projects: Project[] = [
     isPrivate: false
   },
 
-  // ==================== WEB PROJECTS (6) ====================
+  // ==================== WEB PROJECTS (7) ====================
+  {
+    id: "healthcard-go",
+    title: "HealthCardGo",
+    description: "Production-grade Healthcare Appointment Management and Disease Surveillance System for Panabo City Health Office. Features 5-stage appointment workflow, SARIMA time-series forecasting, Leaflet geographic heatmaps, and real-time Supabase subscriptions across 41+ barangays.",
+    icon: "🏥",
+    category: "web",
+    techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "TanStack Query", "Chart.js", "Leaflet", "ARIMA", "Tailwind CSS"],
+    // No githubUrl - private project showcased via screenshots only
+    status: "Active Development",
+    date: "Nov 2025 - Present",
+    isPrivate: true,
+    isFeatured: true,
+    details: "Real client: City Health Office of Panabo City, Davao del Norte | 5-role RBAC | SARIMA forecasting | Real-time notifications",
+    screenshotCategories: healthcardScreenshots
+  },
   {
     id: "e-reserve-v1",
     title: "E-Reserve System v1",

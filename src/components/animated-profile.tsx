@@ -7,11 +7,11 @@ import { motion, AnimatePresence } from "framer-motion"
 export function AnimatedProfile() {
   const [isAvatarShown, setIsAvatarShown] = useState(true)
 
-  // Toggle between images every 5 seconds
+  // Toggle between images every 12 seconds - less distracting
   useEffect(() => {
     const interval = setInterval(() => {
       setIsAvatarShown((prev) => !prev)
-    }, 5000)
+    }, 12000)
 
     return () => clearInterval(interval)
   }, [])

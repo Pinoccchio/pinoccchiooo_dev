@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 import { Github, Mail, Facebook, Instagram, Youtube, MapPin } from "lucide-react"
 import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
@@ -15,6 +16,23 @@ import { PortfolioStats } from "@/components/portfolio-stats"
 import { AdminLoginDialog } from "@/components/admin-login-dialog"
 import { getProjectsByCategory } from "@/data/projects"
 import { getCurrentAdmin } from "@/app/actions/admin-auth-actions"
+
+// Animation variants for stagger reveal
+const stagger = {
+  initial: {},
+  animate: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+  }
+}
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+}
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
@@ -87,8 +105,16 @@ export default function Home() {
         {/* Main content container with improved responsive layout */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
           {/* Avatar and Profile Section - Full width on mobile, sidebar on desktop */}
-          <div className="w-full lg:w-80 xl:w-96 flex flex-col items-center">
-            <div
+          <motion.div
+            className="w-full lg:w-80 xl:w-96 flex flex-col items-center hero-gradient rounded-xl p-4"
+            initial="initial"
+            animate="animate"
+            variants={stagger}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 cursor-pointer transition-transform hover:scale-105 active:scale-95"
               onClick={handleAvatarClick}
               title="Click me multiple times..."
@@ -101,53 +127,80 @@ export default function Home() {
                   clickCount > 0 && clickCount < 7 ? "animate-pulse" : ""
                 }`}></div>
               </div>
-            </div>
+            </motion.div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold mt-4 pinocchio-name text-center">Pinoccchiooo</h1>
-            <div className="flex items-center mt-2 text-blue-500 dark:text-blue-400">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-3xl sm:text-4xl font-bold mt-4 pinocchio-name text-center"
+            >
+              Pinoccchiooo
+            </motion.h1>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex items-center mt-2 text-[var(--accent)]"
+            >
               <MapPin size={18} className="mr-2" />
               <span>Digos City, Philippines</span>
-            </div>
+            </motion.div>
 
-            <p className="mt-4 text-center max-w-md pinocchio-tagline px-4 sm:px-0">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-4 text-center max-w-md pinocchio-tagline px-4 sm:px-0"
+            >
               A <span className="pinocchio-accent hover:underline font-medium">Flutter & Next.js Developer</span>{" "}
               creating applications for Android, web, and Windows with AI integration when needed.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6 mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6 mb-6"
+            >
               <SocialIcon
                 icon={<Mail size={20} />}
                 href="mailto:janmikoguevarra@gmail.com"
-                bgColor="bg-red-500 dark:bg-red-600"
+                bgColor="bg-[var(--accent)]"
               />
               <SocialIcon
                 icon={<Facebook size={20} />}
                 href="https://www.facebook.com/phoebe.finley.96"
-                bgColor="bg-blue-600 dark:bg-blue-700"
+                bgColor="bg-[var(--accent)]"
               />
               <SocialIcon
                 icon={<Github size={20} />}
                 href="https://github.com/Pinoccchio"
-                bgColor="bg-gray-800 dark:bg-gray-700"
+                bgColor="bg-[var(--accent)]"
               />
               <SocialIcon
                 icon={<Instagram size={20} />}
                 href="https://www.instagram.com/jexlevii/"
-                bgColor="bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-600 dark:to-pink-600"
+                bgColor="bg-[var(--accent)]"
               />
               <SocialIcon
                 icon={<Youtube size={20} />}
                 href="https://www.youtube.com/@pinocchio200"
-                bgColor="bg-red-600 dark:bg-red-700"
+                bgColor="bg-[var(--accent)]"
               />
-            </div>
+            </motion.div>
 
             {/* Tech Stack - Responsive layout */}
-            <div className="mt-2 mb-6 w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-2 mb-6 w-full"
+            >
               <h3 className="text-lg font-medium pinocchio-accent mb-4 text-center">Tech stack used:</h3>
               <TechStack />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Main Content - Full width on mobile, flex-1 on desktop */}
           <div className="flex-1 w-full">
@@ -158,20 +211,16 @@ export default function Home() {
                 <nav className="flex gap-2 sm:gap-4 items-center">
                   <button
                     onClick={() => setActiveSection("projects")}
-                    className={`px-4 sm:px-8 py-2 rounded-md font-medium transition-colors nav-button text-sm sm:text-base ${
-                      activeSection === "projects"
-                        ? "bg-blue-500 dark:bg-blue-600 text-white"
-                        : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                    className={`btn nav-button ${
+                      activeSection === "projects" ? "btn-primary" : "btn-secondary"
                     }`}
                   >
                     Projects
                   </button>
                   <button
                     onClick={() => setActiveSection("about")}
-                    className={`px-4 sm:px-8 py-2 rounded-md font-medium transition-colors nav-button text-sm sm:text-base ${
-                      activeSection === "about"
-                        ? "bg-blue-500 dark:bg-blue-600 text-white"
-                        : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                    className={`btn nav-button ${
+                      activeSection === "about" ? "btn-primary" : "btn-secondary"
                     }`}
                   >
                     About
@@ -191,14 +240,14 @@ export default function Home() {
 
                   {/* Project Category Selector - 4 Categories */}
                   <div className="flex justify-center mb-6">
-                    <div className="inline-flex flex-wrap justify-center gap-2 sm:gap-0 sm:rounded-md sm:shadow-sm" role="group">
+                    <div className="inline-flex flex-wrap justify-center gap-2 sm:gap-1 sm:rounded-lg sm:shadow-sm bg-[var(--surface-secondary)] p-1" role="group">
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("hybrid")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium sm:rounded-l-lg rounded-lg sm:rounded-none transition-colors duration-200 ${
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
                           projectCategory === "hybrid"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                            ? "bg-[var(--accent)] text-white"
+                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
                         }`}
                       >
                         Hybrid Systems
@@ -206,10 +255,10 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("web")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg sm:rounded-none transition-colors duration-200 ${
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
                           projectCategory === "web"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                            ? "bg-[var(--accent)] text-white"
+                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
                         }`}
                       >
                         Web Apps
@@ -217,10 +266,10 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("mobile")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg sm:rounded-none transition-colors duration-200 ${
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
                           projectCategory === "mobile"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                            ? "bg-[var(--accent)] text-white"
+                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
                         }`}
                       >
                         Mobile Apps
@@ -228,10 +277,10 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => handleCategoryChange("ai-ml")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium sm:rounded-r-lg rounded-lg sm:rounded-none transition-colors duration-200 ${
+                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
                           projectCategory === "ai-ml"
-                            ? "bg-blue-500 dark:bg-blue-600 text-white"
-                            : "bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-700"
+                            ? "bg-[var(--accent)] text-white"
+                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
                         }`}
                       >
                         AI & ML
@@ -243,8 +292,15 @@ export default function Home() {
                   {projectCategory === "web" && (
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {webProjects.slice(0, showAllProjects ? webProjects.length : 8).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
+                        {webProjects.slice(0, showAllProjects ? webProjects.length : 8).map((project, index) => (
+                          <motion.div
+                            key={project.id}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
+                          >
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -261,14 +317,14 @@ export default function Home() {
                               screenshots={project.screenshots}
                               screenshotCategories={project.screenshotCategories}
                             />
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                       {webProjects.length > 8 && (
                         <div className="flex justify-center mb-6">
                           <button
                             onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                            className="btn btn-primary"
                           >
                             {showAllProjects ? `Show Less` : `Show All ${webProjects.length} Web Projects`}
                           </button>
@@ -281,8 +337,15 @@ export default function Home() {
                   {projectCategory === "mobile" && (
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {mobileProjects.slice(0, showAllProjects ? mobileProjects.length : 10).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
+                        {mobileProjects.slice(0, showAllProjects ? mobileProjects.length : 10).map((project, index) => (
+                          <motion.div
+                            key={project.id}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
+                          >
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -299,14 +362,14 @@ export default function Home() {
                               screenshots={project.screenshots}
                               screenshotCategories={project.screenshotCategories}
                             />
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                       {mobileProjects.length > 10 && (
                         <div className="flex justify-center mb-6">
                           <button
                             onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                            className="btn btn-primary"
                           >
                             {showAllProjects ? `Show Less` : `Show All ${mobileProjects.length} Mobile Apps`}
                           </button>
@@ -318,8 +381,15 @@ export default function Home() {
                   {/* Hybrid Projects - 4 Major Systems */}
                   {projectCategory === "hybrid" && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                      {hybridProjects.map((project) => (
-                        <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
+                      {hybridProjects.map((project, index) => (
+                        <motion.div
+                          key={project.id}
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ duration: 0.5, delay: index * 0.1 }}
+                          className="project-card rounded-lg shadow-sm p-4 sm:p-6"
+                        >
                           <ProjectCard
                             title={project.title}
                             description={project.description}
@@ -342,7 +412,7 @@ export default function Home() {
                             screenshots={project.screenshots}
                             screenshotCategories={project.screenshotCategories}
                           />
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   )}
@@ -351,8 +421,15 @@ export default function Home() {
                   {projectCategory === "ai-ml" && (
                     <>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {aiMlProjects.slice(0, showAllProjects ? aiMlProjects.length : 8).map((project) => (
-                          <div key={project.id} className="project-card rounded-lg shadow-sm p-4 sm:p-6">
+                        {aiMlProjects.slice(0, showAllProjects ? aiMlProjects.length : 8).map((project, index) => (
+                          <motion.div
+                            key={project.id}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
+                          >
                             <ProjectCard
                               title={project.title}
                               description={project.description}
@@ -369,14 +446,14 @@ export default function Home() {
                               screenshots={project.screenshots}
                               screenshotCategories={project.screenshotCategories}
                             />
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                       {aiMlProjects.length > 8 && (
                         <div className="flex justify-center mb-6">
                           <button
                             onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="px-6 py-2 bg-blue-500 dark:bg-blue-600 text-white rounded-md hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors font-medium"
+                            className="btn btn-primary"
                           >
                             {showAllProjects ? `Show Less` : `Show All ${aiMlProjects.length} AI & ML Projects`}
                           </button>

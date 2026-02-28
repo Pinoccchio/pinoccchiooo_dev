@@ -3,8 +3,10 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
 import { X, ChevronLeft, ChevronRight, Images, Grid3X3, List } from "lucide-react"
 import { type ScreenshotCategory } from "@/data/projects"
+import { useTheme } from "@/components/theme-provider"
 
 interface ScreenshotModalProps {
   isOpen: boolean
@@ -23,6 +25,8 @@ export function ScreenshotModal({
   title,
   initialIndex = 0,
 }: ScreenshotModalProps) {
+  const { theme } = useTheme()
+
   // Flatten categories into single array for navigation
   const allScreenshots = screenshotCategories
     ? screenshotCategories.flatMap(cat => cat.screenshots)
@@ -114,17 +118,21 @@ export function ScreenshotModal({
     <div
       className="fixed inset-0 z-[9999] flex flex-col"
       onClick={onClose}
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.95)" }}
+      style={{ backgroundColor: theme === "dark" ? "rgba(0, 0, 0, 0.95)" : "rgba(255, 255, 255, 0.98)" }}
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 bg-black/50 border-b border-gray-800"
+        className={`flex items-center justify-between px-4 py-3 border-b ${
+          theme === "dark" ? "bg-black/50 border-gray-800" : "bg-white/90 border-gray-200"
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center gap-3">
           <Images size={20} className="text-blue-400" />
-          <h3 className="font-semibold text-white text-lg hidden sm:block">{title}</h3>
-          <span className="text-sm text-gray-400 bg-gray-800 px-2.5 py-1 rounded-full">
+          <h3 className={`font-semibold text-lg hidden sm:block ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{title}</h3>
+          <span className={`text-sm px-2.5 py-1 rounded-full ${
+            theme === "dark" ? "text-gray-400 bg-gray-800" : "text-gray-600 bg-gray-100"
+          }`}>
             {currentIndex + 1} / {allScreenshots.length}
           </span>
           {currentCategoryInfo && (
@@ -135,17 +143,21 @@ export function ScreenshotModal({
         </div>
         <div className="flex items-center gap-2">
           {/* View Mode Toggle */}
-          <div className="flex bg-gray-800 rounded-lg p-1">
+          <div className={`flex rounded-lg p-1 ${theme === "dark" ? "bg-gray-800" : "bg-gray-100"}`}>
             <button
               onClick={() => setViewMode("slideshow")}
-              className={`p-1.5 rounded ${viewMode === "slideshow" ? "bg-blue-600 text-white" : "text-gray-400 hover:text-white"}`}
+              className={`p-1.5 rounded ${viewMode === "slideshow"
+                ? "bg-blue-600 text-white"
+                : theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}
               title="Slideshow view"
             >
               <Images size={18} />
             </button>
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded ${viewMode === "grid" ? "bg-blue-600 text-white" : "text-gray-400 hover:text-white"}`}
+              className={`p-1.5 rounded ${viewMode === "grid"
+                ? "bg-blue-600 text-white"
+                : theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}
               title="Grid view"
             >
               <Grid3X3 size={18} />
@@ -153,9 +165,9 @@ export function ScreenshotModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-800 transition-colors"
+            className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "hover:bg-gray-800" : "hover:bg-gray-100"}`}
           >
-            <X size={24} className="text-gray-300 hover:text-white" />
+            <X size={24} className={theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-500 hover:text-gray-900"} />
           </button>
         </div>
       </div>
@@ -167,15 +179,29 @@ export function ScreenshotModal({
           <div className="h-full flex flex-col">
             {/* Main Image */}
             <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
-              <div className="relative w-full h-full max-w-7xl">
-                <Image
-                  src={allScreenshots[currentIndex]}
-                  alt={`${title} screenshot ${currentIndex + 1}`}
-                  fill
-                  className="object-contain"
-                  sizes="100vw"
-                  priority
-                />
+              <div className="relative w-full h-full max-w-7xl" style={{ willChange: "transform" }}>
+                <AnimatePresence initial={false} mode="popLayout">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      opacity: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
+                    }}
+                    className="absolute inset-0"
+                    style={{ willChange: "opacity" }}
+                  >
+                    <Image
+                      src={allScreenshots[currentIndex]}
+                      alt={`${title} screenshot ${currentIndex + 1}`}
+                      fill
+                      className="object-contain"
+                      sizes="100vw"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* Navigation Arrows */}
@@ -183,13 +209,21 @@ export function ScreenshotModal({
                 <>
                   <button
                     onClick={handlePrev}
-                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/60 hover:bg-black/80 text-white transition-all hover:scale-110 border border-gray-700"
+                    className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 rounded-full transition-colors border ${
+                      theme === "dark"
+                        ? "bg-black/60 hover:bg-black/80 text-white border-gray-700"
+                        : "bg-white/80 hover:bg-white text-gray-800 border-gray-300 shadow-lg"
+                    }`}
                   >
                     <ChevronLeft size={24} />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/60 hover:bg-black/80 text-white transition-all hover:scale-110 border border-gray-700"
+                    className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 rounded-full transition-colors border ${
+                      theme === "dark"
+                        ? "bg-black/60 hover:bg-black/80 text-white border-gray-700"
+                        : "bg-white/80 hover:bg-white text-gray-800 border-gray-300 shadow-lg"
+                    }`}
                   >
                     <ChevronRight size={24} />
                   </button>
@@ -199,13 +233,15 @@ export function ScreenshotModal({
 
             {/* Category Info Bar */}
             {currentCategoryInfo && (
-              <div className="px-4 py-2 bg-gray-900/80 border-t border-gray-800">
+              <div className={`px-4 py-2 border-t ${
+                theme === "dark" ? "bg-gray-900/80 border-gray-800" : "bg-gray-50/90 border-gray-200"
+              }`}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-white font-medium">{currentCategoryInfo.category.title}</h4>
-                    <p className="text-gray-400 text-sm">{currentCategoryInfo.category.description}</p>
+                    <h4 className={`font-medium ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{currentCategoryInfo.category.title}</h4>
+                    <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{currentCategoryInfo.category.description}</p>
                   </div>
-                  <span className="text-gray-500 text-sm">
+                  <span className={`text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}>
                     {currentCategoryInfo.indexInCategory + 1} of {currentCategoryInfo.category.screenshots.length} in category
                   </span>
                 </div>
@@ -213,7 +249,9 @@ export function ScreenshotModal({
             )}
 
             {/* Thumbnail Strip */}
-            <div className="bg-black/50 border-t border-gray-800 py-2 px-2 sm:px-4">
+            <div className={`border-t py-2 px-2 sm:px-4 ${
+              theme === "dark" ? "bg-black/50 border-gray-800" : "bg-gray-50/90 border-gray-200"
+            }`}>
               <div
                 ref={thumbnailContainerRef}
                 className="flex gap-1.5 overflow-x-auto pb-1"
@@ -223,17 +261,17 @@ export function ScreenshotModal({
                   <button
                     key={i}
                     onClick={() => setCurrentIndex(i)}
-                    className={`relative flex-shrink-0 rounded overflow-hidden transition-all ${
+                    className={`relative flex-shrink-0 w-16 h-10 rounded overflow-hidden transition-opacity duration-200 ${
                       i === currentIndex
-                        ? "ring-2 ring-blue-500 w-20 h-12"
-                        : "opacity-40 hover:opacity-100 w-16 h-10"
+                        ? "ring-2 ring-blue-500 opacity-100"
+                        : "opacity-40 hover:opacity-80"
                     }`}
                   >
                     <Image src={src} alt={`Thumb ${i + 1}`} fill className="object-cover" sizes="80px" />
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-gray-600 text-center mt-1 hidden sm:block">
+              <p className={`text-xs text-center mt-1 hidden sm:block ${theme === "dark" ? "text-gray-600" : "text-gray-500"}`}>
                 ← → arrow keys to navigate • ESC to close
               </p>
             </div>
@@ -252,11 +290,11 @@ export function ScreenshotModal({
                     <div className="mb-3 flex items-center gap-3">
                       <div className="flex items-center gap-2">
                         <List size={18} className="text-blue-400" />
-                        <h4 className="text-white font-semibold text-lg">{category.title}</h4>
+                        <h4 className={`font-semibold text-lg ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{category.title}</h4>
                       </div>
                       <span className="text-gray-500 text-sm">({category.screenshots.length})</span>
                     </div>
-                    <p className="text-gray-400 text-sm mb-3">{category.description}</p>
+                    <p className={`text-sm mb-3 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{category.description}</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                       {category.screenshots.map((src, imgIndex) => {
                         const globalIndex = screenshotCategories
@@ -269,7 +307,9 @@ export function ScreenshotModal({
                               setCurrentIndex(globalIndex)
                               setViewMode("slideshow")
                             }}
-                            className="relative aspect-video rounded-lg overflow-hidden border border-gray-700 hover:border-blue-500 transition-colors group"
+                            className={`relative aspect-video rounded-lg overflow-hidden border hover:border-blue-500 transition-colors group ${
+                              theme === "dark" ? "border-gray-700" : "border-gray-300"
+                            }`}
                           >
                             <Image
                               src={src}
@@ -301,7 +341,9 @@ export function ScreenshotModal({
                         setCurrentIndex(i)
                         setViewMode("slideshow")
                       }}
-                      className="relative aspect-video rounded-lg overflow-hidden border border-gray-700 hover:border-blue-500 transition-colors group"
+                      className={`relative aspect-video rounded-lg overflow-hidden border hover:border-blue-500 transition-colors group ${
+                        theme === "dark" ? "border-gray-700" : "border-gray-300"
+                      }`}
                     >
                       <Image
                         src={src}

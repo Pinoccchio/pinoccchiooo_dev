@@ -71,12 +71,12 @@ export function TechStack() {
           <motion.div
             key={index}
             className="relative"
-            whileHover={{ y: -5 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            whileHover={{ y: -3 }}
+            transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
           >
             {hoveredTech === tech.name && (
               <motion.div
-                className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap z-10"
+                className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-[var(--surface-tertiary)] text-[var(--text-primary)] border border-[var(--border)] shadow-lg text-xs py-1 px-2 rounded whitespace-nowrap z-10"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}

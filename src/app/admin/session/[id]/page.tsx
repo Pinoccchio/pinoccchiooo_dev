@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAdminPage } from "@/components/admin/admin-page-context"
+import { SessionDetailSkeleton } from "@/components/admin/skeletons"
 
 export default function SessionDetailPage() {
   useAdminPage("Conversation Details")
@@ -84,14 +85,7 @@ export default function SessionDetailPage() {
   }
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-          <p className="text-gray-600 dark:text-gray-400">Loading conversation...</p>
-        </div>
-      </div>
-    )
+    return <SessionDetailSkeleton />
   }
 
   if (!session) {

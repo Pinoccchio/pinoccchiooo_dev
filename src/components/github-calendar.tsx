@@ -35,7 +35,7 @@ export function GitHubCalendar() {
 
   return (
     <div className="overflow-x-auto py-2">
-      <div className="min-w-[750px] lg:min-w-0">
+      <div className="min-w-[320px] sm:min-w-[500px] md:min-w-[700px] lg:min-w-0">
         <CalendarComponent
           username={username}
           colorScheme={theme === "dark" ? "dark" : "light"}

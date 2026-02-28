@@ -97,16 +97,11 @@ export function ProjectCard({
   }
 
   const getStatusColor = (status?: Project["status"]) => {
-    switch (status) {
-      case "Production":
-        return "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-300 dark:border-green-700"
-      case "Active Development":
-        return "bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700"
-      case "Completed":
-        return "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-      default:
-        return "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+    // Production status gets accent treatment, others use neutral
+    if (status === "Production") {
+      return "bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent)]"
     }
+    return "bg-[var(--surface-tertiary)] text-[var(--text-secondary)] border-[var(--border)]"
   }
 
   const openModal = (index: number) => {
@@ -178,7 +173,7 @@ export function ProjectCard({
                 key={i}
                 type="button"
                 onClick={() => openModal(i)}
-                className="relative w-16 h-10 flex-shrink-0 rounded overflow-hidden border border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 transition-colors group"
+                className="relative w-16 h-11 flex-shrink-0 rounded overflow-hidden border border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 transition-colors group"
               >
                 <Image
                   src={src}
@@ -197,7 +192,7 @@ export function ProjectCard({
               <button
                 type="button"
                 onClick={() => openModal(0)}
-                className="h-10 px-2 rounded bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 transition-colors flex items-center gap-1"
+                className="h-11 px-3 rounded bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 transition-colors flex items-center gap-1"
               >
                 <span className="text-xs font-medium text-blue-600 dark:text-blue-400 whitespace-nowrap">
                   +{allScreenshots.length - maxThumbnails}
@@ -217,7 +212,7 @@ export function ProjectCard({
                 href={webGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 Web
@@ -228,7 +223,7 @@ export function ProjectCard({
                 href={mobileGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 Mobile
@@ -239,7 +234,7 @@ export function ProjectCard({
                 href={webDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
               >
                 <ExternalLink size={14} className="mr-1" />
                 Demo
@@ -250,7 +245,7 @@ export function ProjectCard({
                 href={mobileDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
               >
                 <ExternalLink size={14} className="mr-1" />
                 App Demo
@@ -259,7 +254,7 @@ export function ProjectCard({
             {webVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(webVideoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 Web Video
@@ -268,7 +263,7 @@ export function ProjectCard({
             {mobileVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(mobileVideoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 Mobile Video
@@ -282,7 +277,7 @@ export function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 {getGithubButtonLabel()}
@@ -291,7 +286,7 @@ export function ProjectCard({
             {videoLink && (
               <button
                 onClick={() => openVideoInNewTab(videoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 {videoLinkText}
@@ -301,7 +296,7 @@ export function ProjectCard({
             {!githubLink && !videoLink && allScreenshots.length > 0 && (
               <button
                 onClick={() => openModal(0)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Images size={14} className="mr-1" />
                 {categoryCount > 0

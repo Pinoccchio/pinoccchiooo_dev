@@ -1,6 +1,6 @@
 "use client"
 
-import { AlertTriangle } from "lucide-react"
+import { AlertTriangle, Loader2 } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -64,7 +64,12 @@ export function DeleteConfirmDialog({
             disabled={isDeleting}
             className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white dark:bg-red-600 dark:hover:bg-red-700"
           >
-            {isDeleting ? "Deleting..." : "Delete"}
+            {isDeleting ? (
+              <>
+                <Loader2 className="animate-spin mr-2" size={16} />
+                Deleting...
+              </>
+            ) : "Delete"}
           </Button>
         </DialogFooter>
       </DialogContent>

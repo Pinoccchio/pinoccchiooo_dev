@@ -143,16 +143,16 @@ export function AboutSection() {
       <div>
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Core Competencies</h3>
         <div className="flex flex-wrap gap-2">
-          <span className="px-2 sm:px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-xs sm:text-sm font-medium">Hybrid System Architecture (Web + Mobile Coordination)</span>
-          <span className="px-2 sm:px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-xs sm:text-sm">AI Integration (Gemini, OpenAI, MediaPipe)</span>
-          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Full-Stack Development (Flutter, Next.js 15, React 19)</span>
-          <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs sm:text-sm">Backend Architecture (Supabase, Firebase)</span>
-          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Real-Time Data Synchronization</span>
-          <span className="px-2 sm:px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-xs sm:text-sm">Role-Based Access Control (RBAC)</span>
-          <span className="px-2 sm:px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs sm:text-sm">Government-Grade Security</span>
-          <span className="px-2 sm:px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-xs sm:text-sm">TypeScript & Type Safety</span>
-          <span className="px-2 sm:px-3 py-1 bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-200 rounded-full text-xs sm:text-sm">Modern UI/UX Design</span>
-          <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm">Accessibility & User Empowerment</span>
+          <span className="badge">Hybrid System Architecture (Web + Mobile Coordination)</span>
+          <span className="badge">AI Integration (Gemini, OpenAI, MediaPipe)</span>
+          <span className="badge">Full-Stack Development (Flutter, Next.js 15, React 19)</span>
+          <span className="badge">Backend Architecture (Supabase, Firebase)</span>
+          <span className="badge">Real-Time Data Synchronization</span>
+          <span className="badge">Role-Based Access Control (RBAC)</span>
+          <span className="badge">Government-Grade Security</span>
+          <span className="badge">TypeScript & Type Safety</span>
+          <span className="badge">Modern UI/UX Design</span>
+          <span className="badge">Accessibility & User Empowerment</span>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ export function AboutSection() {
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Featured Innovations</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {projectHighlights.map((highlight, index) => (
-            <div key={index} className="border-l-2 border-blue-500 dark:border-blue-700 pl-4">
+            <div key={index} className="border-l-2 border-[var(--accent)] pl-4">
               <h4 className="font-medium pinocchio-primary mb-2">{highlight.category}</h4>
               <ul className="space-y-1">
                 {highlight.projects.map((project, projectIndex) => (
@@ -179,28 +179,28 @@ export function AboutSection() {
       <div>
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Real-World Impact & Achievements</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="border-l-4 border-green-500 dark:border-green-700 pl-4 bg-green-50 dark:bg-green-900/20 p-3 rounded-r">
+          <div className="impact-card">
             <h4 className="font-medium pinocchio-primary mb-1">Production E-commerce System</h4>
             <p className="text-sm pinocchio-text">
               Built InCloud inventory management for J.A's Food Trading, an actual frozen food distributor in Manila with real-time multi-tier pricing and AI analytics
             </p>
           </div>
 
-          <div className="border-l-4 border-blue-500 dark:border-blue-700 pl-4 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-r">
+          <div className="impact-card">
             <h4 className="font-medium pinocchio-primary mb-1">Government Military System</h4>
             <p className="text-sm pinocchio-text">
               Created RRIBN management system for Philippine Army Reserve units with 4-role RBAC, training records, and government-grade security
             </p>
           </div>
 
-          <div className="border-l-4 border-purple-500 dark:border-purple-700 pl-4 bg-purple-50 dark:bg-purple-900/20 p-3 rounded-r">
+          <div className="impact-card">
             <h4 className="font-medium pinocchio-primary mb-1">National Cybercrime Platform</h4>
             <p className="text-sm pinocchio-text">
               Developed LawBot with 67+ crime types for Philippines PNP, featuring AI evidence suggestions and pattern detection with 20-40x performance optimization
             </p>
           </div>
 
-          <div className="border-l-4 border-orange-500 dark:border-orange-700 pl-4 bg-orange-50 dark:bg-orange-900/20 p-3 rounded-r">
+          <div className="impact-card">
             <h4 className="font-medium pinocchio-primary mb-1">AI Educational Platform</h4>
             <p className="text-sm pinocchio-text">
               Designed LearnSmart with 4 evidence-based study techniques (Active Recall, Pomodoro, Feynman, Retrieval Practice) and comprehensive analytics
@@ -214,7 +214,7 @@ export function AboutSection() {
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Education</h3>
         <div className="space-y-3">
           {education.map((item, index) => (
-            <div key={index} className="border-l-2 border-blue-500 dark:border-blue-700 pl-4">
+            <div key={index} className="border-l-2 border-[var(--accent)] pl-4">
               <h4 className="font-medium pinocchio-primary">{item.degree}</h4>
               <p className="text-sm pinocchio-text">
                 {item.institution}, {item.location}
@@ -230,7 +230,7 @@ export function AboutSection() {
         <h3 className="text-lg font-medium pinocchio-accent mb-3">Professional Experience</h3>
         <div className="space-y-4">
           {experience.map((item, index) => (
-            <div key={index} className="border-l-2 border-blue-500 dark:border-blue-700 pl-4">
+            <div key={index} className="border-l-2 border-[var(--accent)] pl-4">
               <h4 className="font-medium pinocchio-primary">{item.position}</h4>
               <p className="text-sm pinocchio-text">
                 {item.company} • {item.period}

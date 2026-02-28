@@ -41,8 +41,8 @@ function AdminShellContent({ adminEmail, onLogout, children }: AdminShellProps) 
       {/* Main Content Area */}
       <main
         className={cn(
-          "flex-1 p-4 lg:p-8 overflow-y-auto transition-all duration-300 min-h-screen",
-          "pt-20 lg:pt-28", // Top padding: Mobile 80px, Desktop 112px for fixed header
+          "flex-1 p-2 sm:p-4 lg:p-8 overflow-y-auto transition-all duration-300 min-h-screen",
+          "pt-18 lg:pt-24", // Top padding for fixed header (mobile h-16 + 8px, desktop h-18 + 24px)
           isCollapsed ? "lg:ml-20" : "lg:ml-64" // Left margin for sidebar on desktop
         )}
       >

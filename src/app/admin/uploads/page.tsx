@@ -18,6 +18,7 @@ import { UploadDialog } from "@/components/admin/upload-dialog"
 import { DeleteConfirmDialog } from "@/components/admin/delete-confirm-dialog"
 import { ImageLightbox } from "@/components/admin/image-lightbox"
 import { useAdminPage } from "@/components/admin/admin-page-context"
+import { UploadsSkeleton } from "@/components/admin/skeletons"
 import { supabase } from "@/lib/supabase/client"
 
 export default function UploadsPage() {
@@ -216,14 +217,7 @@ export default function UploadsPage() {
   }
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-          <p className="text-gray-600 dark:text-gray-400">Loading uploads...</p>
-        </div>
-      </div>
-    )
+    return <UploadsSkeleton />
   }
 
   return (

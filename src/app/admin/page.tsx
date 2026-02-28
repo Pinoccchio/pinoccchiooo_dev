@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useAdminPage } from "@/components/admin/admin-page-context"
+import { DashboardSkeleton } from "@/components/admin/skeletons"
 import { DeleteConfirmDialog } from "@/components/admin/delete-confirm-dialog"
 import { SessionDetailModal } from "@/components/admin/session-detail-modal"
 
@@ -117,14 +118,7 @@ export default function AdminDashboardPage() {
   }
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-          <p className="text-gray-600 dark:text-gray-400">Loading dashboard...</p>
-        </div>
-      </div>
-    )
+    return <DashboardSkeleton />
   }
 
   return (

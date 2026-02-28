@@ -1,15 +1,30 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Space_Grotesk, Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/react"
 
-const inter = Inter({ subsets: ["latin"] })
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"]
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body"
+})
 
 export const metadata: Metadata = {
   title: "Pinocchio Dev - Portfolio",
   description: "A portfolio website with a Pinocchio theme",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   icons: {
     icon: [
       { url: "/favicon_io/favicon.ico", sizes: "any" },
@@ -38,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${spaceGrotesk.variable} ${inter.variable}`}>
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>

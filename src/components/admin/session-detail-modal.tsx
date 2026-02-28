@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { User, Copy, Check, Loader2, Download, MessageCircle, MapPin, ExternalLink } from "lucide-react"
+import { User, Copy, Check, Download, MessageCircle, MapPin, ExternalLink } from "lucide-react"
+import { ModalMessageSkeleton } from "@/components/admin/skeletons"
 import { getSessionMessages, type ChatMessage } from "@/app/actions/admin-data-actions"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
@@ -92,20 +93,20 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0 gap-0 grid grid-rows-[auto_1fr]">
+      <DialogContent className="w-[95vw] sm:w-[90vw] max-w-7xl h-[85vh] sm:h-[90vh] p-0 gap-0 grid grid-rows-[auto_1fr]">
         {/* Fixed Header */}
-        <div className="border-b px-8 py-6 pr-16">
-          <div className="flex items-start justify-between gap-6">
+        <div className="border-b px-4 sm:px-6 md:px-8 py-4 sm:py-6 pr-12 sm:pr-16">
+          <div className="flex items-start justify-between gap-3 sm:gap-6">
             <div className="flex-1 min-w-0">
-              <DialogTitle className="text-2xl font-bold">Conversation Details</DialogTitle>
-              <DialogDescription className="text-sm mt-1">
+              <DialogTitle className="text-xl sm:text-2xl font-bold">Conversation Details</DialogTitle>
+              <DialogDescription className="text-xs sm:text-sm mt-1 truncate">
                 {session ? `Session ${session.session_id.slice(-12)}` : "Loading..."}
               </DialogDescription>
             </div>
             {session && messages.length > 0 && (
               <Button onClick={exportConversation} variant="outline" size="sm" className="flex-shrink-0">
-                <Download size={16} className="mr-2" />
-                Export
+                <Download size={16} className="mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Export</span>
               </Button>
             )}
           </div>
@@ -114,17 +115,31 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
         {/* Scrollable Body */}
         <div className="overflow-y-auto">
           {loading ? (
-            <div className="flex items-center justify-center h-full py-12">
-              <div className="text-center space-y-4">
-                <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-                <p className="text-gray-600 dark:text-gray-400">Loading conversation...</p>
+            <div className="px-3 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8 space-y-6">
+              {/* Session info skeleton */}
+              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6 animate-pulse">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i}>
+                      <div className="h-3 w-16 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                      <div className="h-5 w-12 bg-gray-200 dark:bg-gray-700 rounded" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Messages skeleton */}
+              <div className="border rounded-lg p-6 space-y-6 bg-white dark:bg-gray-900">
+                <div className="h-6 w-40 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                {[...Array(3)].map((_, i) => (
+                  <ModalMessageSkeleton key={i} />
+                ))}
               </div>
             </div>
           ) : session ? (
-            <div className="px-8 py-8 space-y-8">
+            <div className="px-3 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8 space-y-4 sm:space-y-6 md:space-y-8">
               {/* Session Info Card */}
-              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-8 space-y-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                   <div>
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Messages</p>
                     <Badge variant="secondary" className="font-semibold text-sm px-4 py-1.5">
@@ -210,27 +225,27 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
               </div>
 
               {/* Messages Section */}
-              <div className="border rounded-lg p-8 bg-white dark:bg-gray-900">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-8">
+              <div className="border rounded-lg p-4 sm:p-6 md:p-8 bg-white dark:bg-gray-900">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8">
                   Conversation ({messages.length} messages)
                 </h3>
 
                 {messages.length === 0 ? (
-                  <div className="text-center py-16">
-                    <MessageCircle className="mx-auto text-gray-400 dark:text-gray-600 mb-4" size={56} />
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">No messages in this conversation</p>
+                  <div className="text-center py-8 sm:py-12 md:py-16">
+                    <MessageCircle className="mx-auto text-gray-400 dark:text-gray-600 mb-4" size={48} />
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">No messages in this conversation</p>
                   </div>
                 ) : (
-                  <div className="space-y-10">
+                  <div className="space-y-4 sm:space-y-6 md:space-y-10">
                     {messages.map((message, index) => (
                       <div key={message.id}>
                         <div
-                          className={`flex gap-4 ${
+                          className={`flex gap-2 sm:gap-3 md:gap-4 ${
                             message.role === "user" ? "flex-row-reverse" : "flex-row"
                           }`}
                         >
                           {/* Avatar */}
-                          <Avatar className="w-11 h-11 flex-shrink-0">
+                          <Avatar className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 flex-shrink-0">
                             {message.role === "assistant" ? (
                               <AvatarImage src="/pinocchio-avatar.png" alt="Pinoccchiooo" />
                             ) : (
@@ -247,31 +262,31 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
                             }`}
                           >
                             <div
-                              className={`flex items-center gap-2 mb-2 ${
+                              className={`flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2 flex-wrap ${
                                 message.role === "user" ? "justify-end" : "justify-start"
                               }`}
                             >
-                              <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                              <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
                                 {message.role === "user" ? "Visitor" : "Pinoccchiooo"}
                               </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                              <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
                                 {formatDate(message.created_at)}
                               </p>
                             </div>
 
                             <div
-                              className={`group relative inline-block max-w-[85%] ${
+                              className={`group relative inline-block max-w-[95%] sm:max-w-[90%] md:max-w-[85%] ${
                                 message.role === "user" ? "ml-auto" : "mr-auto"
                               }`}
                             >
                               <div
-                                className={`rounded-2xl px-6 py-5 ${
+                                className={`rounded-xl sm:rounded-2xl px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-5 ${
                                   message.role === "user"
                                     ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
                                     : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                                 }`}
                               >
-                                <p className="text-sm whitespace-pre-wrap break-words leading-relaxed">
+                                <p className="text-xs sm:text-sm whitespace-pre-wrap break-words leading-relaxed">
                                   {message.content}
                                 </p>
                               </div>
@@ -300,7 +315,7 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
                         </div>
 
                         {/* Separator between messages */}
-                        {index < messages.length - 1 && <Separator className="my-8" />}
+                        {index < messages.length - 1 && <Separator className="my-3 sm:my-5 md:my-8" />}
                       </div>
                     ))}
                   </div>

@@ -152,7 +152,7 @@ export function ChatBot() {
             ${
               isMinimized
                 ? "w-[280px] h-14 bottom-4 right-4 md:bottom-6 md:right-6"
-                : "w-[90%] sm:w-[350px] md:w-[400px] h-[500px] max-h-[80vh] bottom-4 right-4 md:bottom-6 md:right-6"
+                : "w-[92%] sm:w-[350px] md:w-[400px] h-[70vh] sm:h-[500px] max-h-[80vh] bottom-4 right-4 md:bottom-6 md:right-6"
             } ${
               theme === "dark" ? "bg-gray-900 border-gray-700 text-white" : "bg-white border-gray-200 text-gray-900"
             } rounded-lg shadow-xl border`}
@@ -178,17 +178,17 @@ export function ChatBot() {
             <div className="flex items-center space-x-1">
               <button
                 onClick={toggleMinimize}
-                className={`p-1 rounded ${theme === "dark" ? "hover:bg-blue-800" : "hover:bg-blue-600"}`}
+                className={`p-2 rounded ${theme === "dark" ? "hover:bg-blue-800" : "hover:bg-blue-600"}`}
                 aria-label={isMinimized ? "Maximize chat" : "Minimize chat"}
               >
-                {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+                {isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
               </button>
               <button
                 onClick={toggleChat}
-                className={`p-1 rounded ${theme === "dark" ? "hover:bg-blue-800" : "hover:bg-blue-600"}`}
+                className={`p-2 rounded ${theme === "dark" ? "hover:bg-blue-800" : "hover:bg-blue-600"}`}
                 aria-label="Close chat"
               >
-                <X size={16} />
+                <X size={18} />
               </button>
             </div>
           </div>

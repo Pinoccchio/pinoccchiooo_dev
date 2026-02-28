@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { User, Copy, Check, Download, MessageCircle, MapPin, ExternalLink } from "lucide-react"
 import { ModalMessageSkeleton } from "@/components/admin/skeletons"
-import { getSessionMessages, type ChatMessage } from "@/app/actions/admin-data-actions"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { getSessionMessages, type ChatMessage, type ChatSession } from "@/app/actions/admin-data-actions"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -18,23 +18,12 @@ type SessionDetailModalProps = {
 }
 
 export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDetailModalProps) {
-  const [session, setSession] = useState<any>(null)
+  const [session, setSession] = useState<ChatSession | null>(null)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [loading, setLoading] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (open && sessionId) {
-      loadSession()
-    } else {
-      // Reset state when modal closes
-      setSession(null)
-      setMessages([])
-      setCopiedId(null)
-    }
-  }, [open, sessionId])
-
-  const loadSession = async () => {
+  const loadSession = useCallback(async () => {
     if (!sessionId) return
 
     setLoading(true)
@@ -48,14 +37,24 @@ export function SessionDetailModal({ open, onOpenChange, sessionId }: SessionDet
         alert("Failed to load session")
         onOpenChange(false)
       }
-    } catch (error) {
-      console.error("Error loading session:", error)
+    } catch {
       alert("Error loading session")
       onOpenChange(false)
     } finally {
       setLoading(false)
     }
-  }
+  }, [sessionId, onOpenChange])
+
+  useEffect(() => {
+    if (open && sessionId) {
+      loadSession()
+    } else {
+      // Reset state when modal closes
+      setSession(null)
+      setMessages([])
+      setCopiedId(null)
+    }
+  }, [open, sessionId, loadSession])
 
   const copyMessage = (messageId: string, content: string) => {
     navigator.clipboard.writeText(content)

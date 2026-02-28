@@ -66,12 +66,9 @@ export function ChatBot() {
         const data = await response.json()
         if (data.success && data.ip) {
           setVisitorIp(data.ip)
-          console.log("[ChatBot] Visitor IP fetched:", data.ip)
-        } else {
-          console.log("[ChatBot] No IP address available (localhost/development)")
         }
-      } catch (error) {
-        console.error("[ChatBot] Failed to fetch IP address:", error)
+      } catch {
+        // Silently fail - IP tracking is optional functionality
       }
     }
 
@@ -93,14 +90,13 @@ export function ChatBot() {
 
       // Get AI response with session tracking and visitor info
       const response = await chatWithPinocchio(chatHistory, sessionId, {
-        ip: visitorIp,
+        ip: visitorIp ?? undefined,
         userAgent: navigator.userAgent,
       })
 
       // Add AI response
       setMessages((prev) => [...prev, { role: "assistant", content: response }])
-    } catch (error) {
-      console.error("Error in chat:", error)
+    } catch {
       setMessages((prev) => [
         ...prev,
         {

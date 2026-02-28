@@ -7,7 +7,7 @@ import { isAuthenticated } from "./admin-auth-actions"
  * Server-side logging utility for terminal output
  * All logs will appear in the terminal where `npm run dev` is running
  */
-function log(functionName: string, level: "INFO" | "WARN" | "ERROR" | "SUCCESS", message: string, data?: any) {
+function log(functionName: string, level: "INFO" | "WARN" | "ERROR" | "SUCCESS", message: string, data?: unknown) {
   const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19)
   const prefix = `[${timestamp}] [${functionName}] [${level}]`
 
@@ -89,7 +89,8 @@ export async function getAllChatSessions(limit = 50, offset = 0) {
     }
 
     // Format the data
-    const formattedSessions: ChatSession[] = sessions.map((session: any) => ({
+    const formattedSessions: ChatSession[] = sessions.map(// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(session: any) => ({
       id: session.id,
       session_id: session.session_id,
       visitor_ip: session.visitor_ip,
@@ -342,7 +343,8 @@ export async function searchSessions(query: string) {
     }
 
     // Format the data
-    const formattedSessions: ChatSession[] = sessions.map((session: any) => ({
+    const formattedSessions: ChatSession[] = sessions.map(// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(session: any) => ({
       id: session.id,
       session_id: session.session_id,
       visitor_ip: session.visitor_ip,

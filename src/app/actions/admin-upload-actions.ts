@@ -1,13 +1,13 @@
 "use server"
 
-import { createServerClient, createAdminClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/server"
 import { isAuthenticated } from "./admin-auth-actions"
 
 /**
  * Server-side logging utility for terminal output
  * All logs will appear in the terminal where `npm run dev` is running
  */
-function log(functionName: string, level: "INFO" | "WARN" | "ERROR" | "SUCCESS", message: string, data?: any) {
+function log(functionName: string, level: "INFO" | "WARN" | "ERROR" | "SUCCESS", message: string, data?: unknown) {
   const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19)
   const prefix = `[${timestamp}] [${functionName}] [${level}]`
 
@@ -217,7 +217,7 @@ export async function updateUpload(
     // Use admin client for UPDATE to properly set service_role context
     const supabase = createAdminClient()
 
-    const updateData: any = {}
+    const updateData: { title?: string; description?: string; is_visible?: boolean } = {}
     if (data.title !== undefined) updateData.title = data.title
     if (data.description !== undefined) updateData.description = data.description
     if (data.is_visible !== undefined) updateData.is_visible = data.is_visible
@@ -467,7 +467,7 @@ export async function uploadFile(formData: FormData) {
 
     // Upload to storage
     log(functionName, "INFO", "Uploading file to Supabase Storage...")
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from("admin-uploads")
       .upload(filePath, file, {
         cacheControl: "3600",

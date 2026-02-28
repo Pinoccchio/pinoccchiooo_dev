@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils"
 
 type AdminHeaderProps = {
   isCollapsed: boolean
-  isMobileOpen: boolean
   onToggleCollapse: () => void
   onToggleMobile: () => void
   pageTitle?: string
@@ -13,7 +12,6 @@ type AdminHeaderProps = {
 
 export function AdminHeader({
   isCollapsed,
-  isMobileOpen,
   onToggleCollapse,
   onToggleMobile,
   pageTitle = "Admin Panel",

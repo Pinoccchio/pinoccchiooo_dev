@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Upload, Eye, EyeOff, Trash2, Edit, Loader2, Plus, Image as ImageIcon, CheckSquare, Square } from "lucide-react"
+import { useEffect, useState, useCallback } from "react"
+import { Upload, Eye, EyeOff, Trash2, Loader2, Plus, Image as ImageIcon, CheckSquare, Square } from "lucide-react"
 import {
   getAllUploads,
   toggleUploadVisibility,
@@ -37,15 +37,29 @@ export default function UploadsPage() {
   const [bulkDeleting, setBulkDeleting] = useState(false)
 
   // Helper function to deduplicate uploads by ID
-  const deduplicateUploads = (uploads: AdminUpload[]): AdminUpload[] => {
+  const deduplicateUploads = useCallback((uploadsToDedup: AdminUpload[]): AdminUpload[] => {
     const seen = new Map<string, AdminUpload>()
-    uploads.forEach((upload) => {
+    uploadsToDedup.forEach((upload) => {
       if (!seen.has(upload.id)) {
         seen.set(upload.id, upload)
       }
     })
     return Array.from(seen.values())
-  }
+  }, [])
+
+  const loadUploads = useCallback(async () => {
+    setLoading(true)
+    try {
+      const result = await getAllUploads()
+      if (result.success && result.data) {
+        setUploads(deduplicateUploads(result.data))
+      }
+    } catch {
+      // Silently fail - user will see empty state
+    } finally {
+      setLoading(false)
+    }
+  }, [deduplicateUploads])
 
   useEffect(() => {
     loadUploads()
@@ -62,12 +76,9 @@ export default function UploadsPage() {
           table: 'admin_uploads'
         },
         (payload) => {
-          console.log('Realtime change detected:', payload)
-
           if (payload.eventType === 'INSERT') {
             // Skip INSERT events - handled by manual refresh after upload
             // This prevents duplication from race conditions
-            console.log('Skipping INSERT event to prevent duplicates')
             return
           } else if (payload.eventType === 'UPDATE') {
             // Update existing upload in the list with deduplication
@@ -89,22 +100,7 @@ export default function UploadsPage() {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [])
-
-  const loadUploads = async () => {
-    setLoading(true)
-    try {
-      const result = await getAllUploads()
-      if (result.success && result.data) {
-        // Apply deduplication when loading data
-        setUploads(deduplicateUploads(result.data))
-      }
-    } catch (error) {
-      console.error("Error loading uploads:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [loadUploads, deduplicateUploads])
 
   const handleToggleVisibility = async (id: string, currentVisibility: boolean) => {
     const result = await toggleUploadVisibility(id, !currentVisibility)

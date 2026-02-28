@@ -1,11 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Clock, User, Copy, Check, Loader2, Download } from "lucide-react"
-import { getSessionMessages, type ChatMessage } from "@/app/actions/admin-data-actions"
-import Image from "next/image"
+import { ArrowLeft, User, Copy, Check, Download } from "lucide-react"
+import { getSessionMessages, type ChatMessage, type ChatSession } from "@/app/actions/admin-data-actions"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -22,16 +21,12 @@ export default function SessionDetailPage() {
   const router = useRouter()
   const sessionId = params.id as string
 
-  const [session, setSession] = useState<any>(null)
+  const [session, setSession] = useState<ChatSession | null>(null)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [loading, setLoading] = useState(true)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
-  useEffect(() => {
-    loadSession()
-  }, [sessionId])
-
-  const loadSession = async () => {
+  const loadSession = useCallback(async () => {
     setLoading(true)
     try {
       const result = await getSessionMessages(sessionId)
@@ -43,14 +38,17 @@ export default function SessionDetailPage() {
         alert("Failed to load session")
         router.push("/admin")
       }
-    } catch (error) {
-      console.error("Error loading session:", error)
+    } catch {
       alert("Error loading session")
       router.push("/admin")
     } finally {
       setLoading(false)
     }
-  }
+  }, [sessionId, router])
+
+  useEffect(() => {
+    loadSession()
+  }, [loadSession])
 
   const copyMessage = (messageId: string, content: string) => {
     navigator.clipboard.writeText(content)
@@ -59,6 +57,8 @@ export default function SessionDetailPage() {
   }
 
   const exportConversation = () => {
+    if (!session) return
+
     const content = messages
       .map((m) => `[${m.role.toUpperCase()}] ${m.content}`)
       .join("\n\n")

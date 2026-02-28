@@ -162,7 +162,7 @@ export default function AdminDashboardPage() {
         <Card className="border-l-4 border-l-purple-500">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <CardDescription>Today's Sessions</CardDescription>
+              <CardDescription>Today&apos;s Sessions</CardDescription>
               <Clock className="text-purple-500" size={20} />
             </div>
           </CardHeader>

@@ -32,7 +32,6 @@ function AdminShellContent({ adminEmail, onLogout, children }: AdminShellProps) 
       {/* Header */}
       <AdminHeader
         isCollapsed={isCollapsed}
-        isMobileOpen={isMobileOpen}
         onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
         onToggleMobile={() => setIsMobileOpen(!isMobileOpen)}
         pageTitle={pageTitle}

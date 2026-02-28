@@ -10,12 +10,18 @@ import { cookies } from "next/headers"
  * NEVER import this in Client Components as it would expose the service role key
  */
 export async function createServerClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!url || !serviceRoleKey) {
+    throw new Error(
+      "Missing Supabase environment variables: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required"
+    )
+  }
+
   const cookieStore = await cookies()
 
-  return createSSRClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
+  return createSSRClient(url, serviceRoleKey, {
       cookies: {
         getAll() {
           return cookieStore.getAll()
@@ -25,7 +31,7 @@ export async function createServerClient() {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options)
             })
-          } catch (error) {
+          } catch {
             // Handle cookies in Server Components (read-only)
           }
         },
@@ -43,16 +49,27 @@ export async function createServerClient() {
  * NEVER import this in Client Components as it would expose the service role key
  */
 export function createAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    }
-  )
+  if (typeof window !== 'undefined') {
+    throw new Error(
+      "createAdminClient must only be used server-side. Do not import this in client components."
+    )
+  }
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!url || !serviceRoleKey) {
+    throw new Error(
+      "Missing Supabase environment variables: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required"
+    )
+  }
+
+  return createClient(url, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  })
 }
 
 /**
@@ -61,12 +78,18 @@ export function createAdminClient() {
  * Use this when you want to enforce RLS and access user sessions on the server side
  */
 export async function createServerAnonClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!url || !anonKey) {
+    throw new Error(
+      "Missing Supabase environment variables: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are required"
+    )
+  }
+
   const cookieStore = await cookies()
 
-  return createSSRClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  return createSSRClient(url, anonKey, {
       cookies: {
         getAll() {
           return cookieStore.getAll()
@@ -76,7 +99,7 @@ export async function createServerAnonClient() {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options)
             })
-          } catch (error) {
+          } catch {
             // Handle cookies in Server Components (read-only)
           }
         },

@@ -276,9 +276,9 @@ export function UploadDialog({ open, onOpenChange, onSuccess }: UploadDialogProp
               prev.map((f) => (f.id === fileWithPreview.id ? { ...f, status: "success" } : f))
             )
             console.log(`✅ [${i + 1}/${files.length}] Success: ${file.name}`)
-          } catch (err: any) {
+          } catch (err) {
             // ERROR
-            const errorMsg = err.message || "Upload failed"
+            const errorMsg = err instanceof Error ? err.message : "Upload failed"
             results.push({ fileName: file.name, success: false, error: errorMsg })
             setFiles((prev) =>
               prev.map((f) => (f.id === fileWithPreview.id ? { ...f, status: "error", error: errorMsg } : f))

@@ -2,23 +2,38 @@
 
 import { createServerAnonClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
+import { z } from "zod"
 
 export type AdminUser = {
   id: string
   email: string
 }
 
+const loginSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+})
+
 /**
  * Login admin user using Supabase Auth
  */
 export async function loginAdmin(formData: FormData) {
   try {
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
+    const rawEmail = formData.get("email")
+    const rawPassword = formData.get("password")
 
-    if (!email || !password) {
-      return { success: false, error: "Email and password are required" }
+    const result = loginSchema.safeParse({
+      email: rawEmail,
+      password: rawPassword,
+    })
+
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors
+      const errorMessage = errors.email?.[0] || errors.password?.[0] || "Invalid input"
+      return { success: false, error: errorMessage }
     }
+
+    const { email, password } = result.data
 
     const supabase = await createServerAnonClient()
 
@@ -50,8 +65,7 @@ export async function loginAdmin(formData: FormData) {
         email: data.user.email || "",
       },
     }
-  } catch (error) {
-    console.error("Login error:", error)
+  } catch {
     return { success: false, error: "An error occurred during login" }
   }
 }
@@ -67,8 +81,7 @@ export async function logoutAdmin() {
     revalidatePath("/", "layout")
 
     return { success: true }
-  } catch (error) {
-    console.error("Logout error:", error)
+  } catch {
     return { success: false, error: "An error occurred during logout" }
   }
 }
@@ -100,8 +113,7 @@ export async function getCurrentAdmin(): Promise<AdminUser | null> {
       id: user.id,
       email: user.email || "",
     }
-  } catch (error) {
-    console.error("Get current admin error:", error)
+  } catch {
     return null
   }
 }

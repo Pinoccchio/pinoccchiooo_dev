@@ -25,15 +25,6 @@ const stagger = {
   }
 }
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
-  }
-}
-
 export default function Home() {
   const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
   const [projectCategory, setProjectCategory] = useState<"hybrid" | "web" | "mobile" | "ai-ml">("hybrid")
@@ -51,9 +42,8 @@ export default function Home() {
         if (admin) {
           router.push("/admin")
         }
-      } catch (error) {
+      } catch {
         // User not authenticated, stay on landing page
-        console.log("Not authenticated")
       }
     }
     checkAuth()

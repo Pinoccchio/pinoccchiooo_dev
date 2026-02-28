@@ -20,49 +20,120 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      // Example table structure - replace with your actual tables
-      // chat_messages: {
-      //   Row: {
-      //     id: string
-      //     user_id: string | null
-      //     message: string
-      //     role: 'user' | 'assistant'
-      //     created_at: string
-      //   }
-      //   Insert: {
-      //     id?: string
-      //     user_id?: string | null
-      //     message: string
-      //     role: 'user' | 'assistant'
-      //     created_at?: string
-      //   }
-      //   Update: {
-      //     id?: string
-      //     user_id?: string | null
-      //     message?: string
-      //     role?: 'user' | 'assistant'
-      //     created_at?: string
-      //   }
-      // }
-      [key: string]: {
-        Row: { [key: string]: any }
-        Insert: { [key: string]: any }
-        Update: { [key: string]: any }
+      chat_sessions: {
+        Row: {
+          id: string
+          session_id: string
+          visitor_ip: string | null
+          visitor_country: string | null
+          visitor_country_code: string | null
+          visitor_city: string | null
+          visitor_region: string | null
+          visitor_latitude: number | null
+          visitor_longitude: number | null
+          user_agent: string | null
+          started_at: string
+          last_activity: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          visitor_ip?: string | null
+          visitor_country?: string | null
+          visitor_country_code?: string | null
+          visitor_city?: string | null
+          visitor_region?: string | null
+          visitor_latitude?: number | null
+          visitor_longitude?: number | null
+          user_agent?: string | null
+          started_at?: string
+          last_activity?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          visitor_ip?: string | null
+          visitor_country?: string | null
+          visitor_country_code?: string | null
+          visitor_city?: string | null
+          visitor_region?: string | null
+          visitor_latitude?: number | null
+          visitor_longitude?: number | null
+          user_agent?: string | null
+          started_at?: string
+          last_activity?: string
+        }
+      }
+      chat_messages: {
+        Row: {
+          id: string
+          session_id: string
+          role: "user" | "assistant"
+          content: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          role: "user" | "assistant"
+          content: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          role?: "user" | "assistant"
+          content?: string
+          created_at?: string
+        }
+      }
+      admin_uploads: {
+        Row: {
+          id: string
+          upload_type: "testimony" | "payment_proof" | "screenshot" | "other"
+          title: string
+          description: string | null
+          file_url: string
+          file_name: string
+          file_size: number | null
+          mime_type: string | null
+          is_visible: boolean
+          display_order: number
+          uploaded_by: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          id?: string
+          upload_type: "testimony" | "payment_proof" | "screenshot" | "other"
+          title: string
+          description?: string | null
+          file_url: string
+          file_name: string
+          file_size?: number | null
+          mime_type?: string | null
+          is_visible?: boolean
+          display_order?: number
+          uploaded_by?: string | null
+          uploaded_at?: string
+        }
+        Update: {
+          id?: string
+          upload_type?: "testimony" | "payment_proof" | "screenshot" | "other"
+          title?: string
+          description?: string | null
+          file_url?: string
+          file_name?: string
+          file_size?: number | null
+          mime_type?: string | null
+          is_visible?: boolean
+          display_order?: number
+          uploaded_by?: string | null
+          uploaded_at?: string
+        }
       }
     }
-    Views: {
-      [key: string]: {
-        Row: { [key: string]: any }
-      }
-    }
-    Functions: {
-      [key: string]: {
-        Args: { [key: string]: any }
-        Returns: any
-      }
-    }
-    Enums: {
-      [key: string]: string
-    }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
   }
 }

@@ -1,6 +1,7 @@
 /**
  * Geolocation utility for IP address lookup
  * Uses ip-api.com (free, 15,000 requests/hour, no API key required)
+ * Includes in-memory caching to reduce API calls and avoid rate limits
  */
 
 export type GeolocationData = {
@@ -13,8 +14,33 @@ export type GeolocationData = {
   timezone: string | null
 }
 
+// Cache configuration
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000 // 24 hours (IP locations rarely change)
+const MAX_CACHE_SIZE = 1000 // Maximum number of cached IPs
+
+type CacheEntry = {
+  data: GeolocationData
+  timestamp: number
+}
+
+// In-memory cache for geolocation data
+const geolocationCache = new Map<string, CacheEntry>()
+
+/**
+ * Clean up expired cache entries
+ */
+function cleanExpiredCache(): void {
+  const now = Date.now()
+  for (const [ip, entry] of geolocationCache.entries()) {
+    if (now - entry.timestamp > CACHE_TTL_MS) {
+      geolocationCache.delete(ip)
+    }
+  }
+}
+
 /**
  * Get geolocation data from IP address
+ * Results are cached for 24 hours to avoid rate limits
  * @param ip - IP address to lookup
  * @returns Geolocation data or null values if failed
  */
@@ -32,26 +58,31 @@ export async function getGeolocationFromIP(ip: string | null): Promise<Geolocati
 
   // Skip if no IP provided or localhost
   if (!ip || ip === "::1" || ip === "127.0.0.1" || ip.includes("localhost")) {
-    console.log("[Geolocation] Skipping geolocation for localhost/development")
     return defaultResponse
   }
 
-  try {
-    console.log(`[Geolocation] Looking up IP: ${ip}`)
+  // Check cache first
+  const cached = geolocationCache.get(ip)
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return cached.data
+  }
 
+  try {
     // Call ip-api.com (free service, no API key needed)
     // Rate limit: 45 requests/minute, 15,000/hour
-    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,lat,lon,timezone`, {
-      method: "GET",
-      headers: {
-        "Accept": "application/json",
-      },
-      // Set a timeout of 5 seconds
-      signal: AbortSignal.timeout(5000),
-    })
+    const response = await fetch(
+      `http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,lat,lon,timezone`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        // Set a timeout of 5 seconds
+        signal: AbortSignal.timeout(5000),
+      }
+    )
 
     if (!response.ok) {
-      console.error(`[Geolocation] API request failed with status: ${response.status}`)
       return defaultResponse
     }
 
@@ -59,7 +90,6 @@ export async function getGeolocationFromIP(ip: string | null): Promise<Geolocati
 
     // Check if request was successful
     if (data.status === "fail") {
-      console.error(`[Geolocation] API returned failure: ${data.message}`)
       return defaultResponse
     }
 
@@ -74,14 +104,19 @@ export async function getGeolocationFromIP(ip: string | null): Promise<Geolocati
       timezone: data.timezone || null,
     }
 
-    console.log(`[Geolocation] Success: ${locationData.city}, ${locationData.country}`)
-    return locationData
-  } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
-      console.error("[Geolocation] Request timeout after 5 seconds")
-    } else {
-      console.error("[Geolocation] Error fetching geolocation:", error)
+    // Cache the result
+    if (geolocationCache.size >= MAX_CACHE_SIZE) {
+      cleanExpiredCache()
+      // If still at max, remove oldest entry
+      if (geolocationCache.size >= MAX_CACHE_SIZE) {
+        const oldestKey = geolocationCache.keys().next().value
+        if (oldestKey) geolocationCache.delete(oldestKey)
+      }
     }
+    geolocationCache.set(ip, { data: locationData, timestamp: Date.now() })
+
+    return locationData
+  } catch {
     return defaultResponse
   }
 }

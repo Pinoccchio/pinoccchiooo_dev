@@ -3,6 +3,7 @@
 // Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
 
 import { healthcardScreenshots } from "./healthcard-screenshots"
+import { incloudScreenshots } from "./incloud-screenshots"
 import { jobsyncScreenshots } from "./jobsync-screenshots"
 
 // Screenshot category for organized gallery display
@@ -47,14 +48,12 @@ export const projects: Project[] = [
     icon: "📦",
     category: "hybrid",
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Riverpod", "Turbopack", "Tailwind CSS"],
-    githubUrl: "https://github.com/Pinoccchio/InCloud_WEB",
-    webGithubUrl: "https://github.com/Pinoccchio/InCloud_WEB",
-    mobileGithubUrl: "https://github.com/Pinoccchio/InCloud_APP",
     status: "Active Development",
     date: "Sep-Oct 2025",
     isPrivate: false,
     isFeatured: true,
-    details: "Web: Next.js admin dashboard | Mobile: Flutter customer app | Real client: J.A's Food Trading"
+    details: "Web: Next.js admin dashboard | Mobile: Flutter customer app | Real client: J.A's Food Trading",
+    screenshotCategories: incloudScreenshots
   },
   {
     id: "learnsmart-platform",

@@ -3,6 +3,7 @@
 // Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
 
 import { healthcardScreenshots } from "./healthcard-screenshots"
+import { jobsyncScreenshots } from "./jobsync-screenshots"
 
 // Screenshot category for organized gallery display
 export interface ScreenshotCategory {
@@ -295,6 +296,21 @@ export const projects: Project[] = [
     isFeatured: true,
     details: "Real client: City Health Office of Panabo City, Davao del Norte | 5-role RBAC | SARIMA forecasting | Real-time notifications",
     screenshotCategories: healthcardScreenshots
+  },
+  {
+    id: "jobsync",
+    title: "JobSync",
+    description: "AI-powered Job Matching and Applicant Ranking System for Municipality of Asuncion. Features intelligent applicant ranking using Gemini 1.5 Pro with 3 ensemble scoring algorithms, multi-role RBAC (Admin/HR/PESO/Applicant), comprehensive PDS management, training program enrollment, and certificate generation.",
+    icon: "💼",
+    category: "web",
+    techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Gemini AI", "Recharts", "PDF Processing", "Tailwind CSS"],
+    // No githubUrl - private project showcased via screenshots only
+    status: "Active Development",
+    date: "Feb 2026 - Present",
+    isPrivate: true,
+    isFeatured: true,
+    details: "Real client: Municipality of Asuncion, Davao del Norte | 4-role RBAC | AI ensemble ranking | PDS wizard | Training certificates",
+    screenshotCategories: jobsyncScreenshots
   },
   {
     id: "e-reserve-v1",

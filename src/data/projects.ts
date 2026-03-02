@@ -2,9 +2,11 @@
 // Comprehensive portfolio including hybrid systems, web apps, mobile apps, AI/ML projects, educational tools, and utilities
 // Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
 
+import { fyllensScreenshots } from "./fyllens-screenshots"
 import { healthcardScreenshots } from "./healthcard-screenshots"
 import { incloudScreenshots } from "./incloud-screenshots"
 import { jobsyncScreenshots } from "./jobsync-screenshots"
+import { uavScreenshots } from "./uav-screenshots"
 
 // Screenshot category for organized gallery display
 export interface ScreenshotCategory {
@@ -265,6 +267,34 @@ export const projects: Project[] = [
         ]
       }
     ]
+  },
+  {
+    id: "uav-flood-assessment",
+    title: "UAV Flood Assessment System",
+    description: "AI-powered road passability classification for Philippine disaster response using EfficientNet-B0 CNN. Achieves 78.4% accuracy on US flood data with ~2-3s processing. Features 3-class classification (Passable, Limited, Impassable), interactive Leaflet maps, vehicle recommendations, and safety-enhanced predictions for NDRRMC/DPWH/LGU-DRRMO command centers.",
+    icon: "🛸",
+    category: "ai-ml",
+    techStack: ["Next.js 15", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "EfficientNet-B0", "ONNX Runtime", "OpenCV", "Leaflet Maps", "Tailwind CSS"],
+    status: "Completed",
+    date: "2025",
+    isPrivate: false,
+    isFeatured: true,
+    details: "PLM BSEcE Capstone 2025 | Trained on RescueNet + FloodNet (4,892 images) | Safety-enhanced predictions",
+    screenshotCategories: uavScreenshots
+  },
+  {
+    id: "fyllens",
+    title: "Fyllens - Plant Health Detection",
+    description: "AI-powered Flutter app for plant nutrient deficiency and disease identification. Uses 4 TensorFlow Lite models for Rice, Corn, Okra, and Cucumber analysis with Google Gemini AI for enhanced diagnosis. Features real-time camera scanning, AI chat assistant, scan history tracking, comprehensive plant library with offline support, and detailed treatment recommendations.",
+    icon: "🌿",
+    category: "ai-ml",
+    techStack: ["Flutter", "Dart", "TensorFlow Lite", "Gemini AI", "Supabase", "Provider", "GoRouter", "Image Processing"],
+    status: "Completed",
+    date: "2025",
+    isPrivate: false,
+    isFeatured: true,
+    details: "APPDEV Final Project | 4 ML models | 6-person team | Jan Miko A. Guevarra - Backend Developer",
+    screenshotCategories: fyllensScreenshots
   },
   {
     id: "aezzy-grammar",

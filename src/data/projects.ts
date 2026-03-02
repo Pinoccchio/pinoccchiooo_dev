@@ -2,6 +2,7 @@
 // Comprehensive portfolio including hybrid systems, web apps, mobile apps, AI/ML projects, educational tools, and utilities
 // Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
 
+import { aezzyScreenshots } from "./aezzy-screenshots"
 import { fyllensScreenshots } from "./fyllens-screenshots"
 import { healthcardScreenshots } from "./healthcard-screenshots"
 import { incloudScreenshots } from "./incloud-screenshots"
@@ -22,12 +23,9 @@ export interface Project {
   icon: string
   category: "hybrid" | "web" | "mobile" | "ai-ml"
   techStack: string[]
-  githubUrl?: string
   demoUrl?: string
   videoUrl?: string
   // Hybrid system-specific links
-  webGithubUrl?: string      // Web repository link
-  mobileGithubUrl?: string   // Mobile repository link
   webDemoUrl?: string        // Web demo link
   mobileDemoUrl?: string     // Mobile demo link
   webVideoUrl?: string       // Web video demo
@@ -64,8 +62,6 @@ export const projects: Project[] = [
     icon: "🎓",
     category: "hybrid",
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Provider", "Chart.js", "PDF Processing"],
-    webGithubUrl: "https://github.com/Pinoccchio/LearnSmartNextJSWeb",
-    mobileGithubUrl: "https://github.com/Pinoccchio/LearnSmart_Application",
     status: "Active Development",
     date: "Aug-Oct 2025",
     isPrivate: true,
@@ -79,9 +75,6 @@ export const projects: Project[] = [
     icon: "🎖️",
     category: "hybrid",
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Firebase FCM", "Provider", "PDF Generation", "QR Codes"],
-    githubUrl: "https://github.com/Pinoccchio/RRIBN_Management_System",
-    webGithubUrl: "https://github.com/Pinoccchio/RRIBN_Management_System",
-    mobileGithubUrl: "https://github.com/Pinoccchio/RRIBN_App",
     status: "Active Development",
     date: "Oct 2025",
     isPrivate: false,
@@ -95,9 +88,6 @@ export const projects: Project[] = [
     icon: "⚖️",
     category: "hybrid",
     techStack: ["Next.js 15", "React 18", "Flutter", "TypeScript", "Supabase", "Firebase", "Gemini 2.0", "Provider", "Vite"],
-    githubUrl: "https://github.com/Pinoccchio/LawBot",
-    webGithubUrl: "https://github.com/Pinoccchio/LawBotAIWeb",
-    mobileGithubUrl: "https://github.com/Pinoccchio/LawBot",
     mobileVideoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
     videoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
     demoUrl: "https://drive.google.com/file/d/1Qy48z_Ve36DWUHewRYai2nDU8IiCrrr0/view?usp=sharing",
@@ -299,15 +289,16 @@ export const projects: Project[] = [
   {
     id: "aezzy-grammar",
     title: "A'ezzy Grammar Correction",
-    description: "AI-powered grammar correction and text improvement tool with PDF processing capabilities.",
+    description: "AI-powered grammar correction and text improvement tool. Uses Gemini 2.5 Flash Lite to detect and fix grammar, spelling, punctuation, and style issues with detailed explanations. Built as a research project for CASAP Grade 11 students.",
     icon: "📝",
     category: "ai-ml",
-    techStack: ["Next.js 14", "TypeScript", "Gemini AI", "Radix UI", "PDF Processing", "Tailwind CSS"],
-    githubUrl: "https://github.com/Pinoccchio/aezzy_grammar_corrector",
+    techStack: ["Next.js 14", "TypeScript", "Gemini AI", "Radix UI", "Tailwind CSS"],
     demoUrl: "https://aezzy-grammar-corrector.vercel.app/",
     status: "Production",
     date: "Mar 2025",
-    isPrivate: false
+    isPrivate: false,
+    details: "Research project | CASAP Grade 11 | Gemini 2.5 Flash Lite | Real-time corrections",
+    screenshotCategories: aezzyScreenshots
   },
 
   // ==================== WEB PROJECTS (7) ====================
@@ -348,7 +339,6 @@ export const projects: Project[] = [
     icon: "🏢",
     category: "web",
     techStack: ["Next.js 15", "React 18", "TypeScript", "Supabase", "Gemini AI", "OpenAI", "Google Maps", "Leaflet", "Three.js"],
-    githubUrl: "https://github.com/Pinoccchio/e-reserve-web-based-system-v1",
     demoUrl: "https://e-reserve-web-based-system-v1.vercel.app/",
     status: "Production",
     date: "Feb-Apr 2025",
@@ -361,7 +351,6 @@ export const projects: Project[] = [
     icon: "🏥",
     category: "web",
     techStack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "Firebase", "Twilio", "Nodemailer", "Recharts"],
-    githubUrl: "https://github.com/Pinoccchio/mhealth-web-app",
     demoUrl: "https://mhealth-web-app-nine.vercel.app/",
     status: "Production",
     date: "Feb 2025",
@@ -374,7 +363,6 @@ export const projects: Project[] = [
     icon: "📊",
     category: "web",
     techStack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "Resend", "Radix UI", "Framer Motion"],
-    githubUrl: "https://github.com/Pinoccchio/procurement-monitoring-sysytem",
     demoUrl: "https://www.procurement-ms.com/",
     status: "Production",
     date: "Jan-Feb 2025",
@@ -387,7 +375,6 @@ export const projects: Project[] = [
     icon: "📇",
     category: "web",
     techStack: ["Next.js 14", "React 18", "TypeScript", "Supabase", "Radix UI", "Tailwind CSS"],
-    githubUrl: "https://github.com/Pinoccchio/nfc-card-website",
     status: "Completed",
     date: "Apr 2025",
     isPrivate: false
@@ -410,13 +397,12 @@ export const projects: Project[] = [
     icon: "🔢",
     category: "web",
     techStack: ["Flutter Web", "Dart", "Provider", "Material Design 3"],
-    githubUrl: "https://github.com/Pinoccchio/Hash-Table-Simulator",
     status: "Completed",
     date: "May 2025",
     isPrivate: false
   },
 
-  // ==================== MOBILE APPLICATIONS (20) ====================
+  // ==================== MOBILE APPLICATIONS ====================
   {
     id: "yummify",
     title: "Yummify Recipe Finder",
@@ -424,7 +410,6 @@ export const projects: Project[] = [
     icon: "🍳",
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Spoonacular API", "Firebase", "Provider"],
-    githubUrl: "https://github.com/Pinoccchio/Yummify-Recipe-Finder",
     videoUrl: "https://drive.google.com/file/d/1SNMK_7fW5-mlBQF8jLWPcTClgxBi2MdK/view?usp=sharing",
     status: "Completed",
     date: "Jun 2025",
@@ -437,7 +422,6 @@ export const projects: Project[] = [
     icon: "🐍",
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Camera", "TensorFlow Lite"],
-    githubUrl: "https://github.com/Pinoccchio/snake_buddy",
     videoUrl: "https://drive.google.com/file/d/1RF9ZJQC7ewUPSobTj41g_OIASBd27lzI/view?usp=sharing",
     status: "Completed",
     date: "Apr-Jun 2025",
@@ -450,7 +434,6 @@ export const projects: Project[] = [
     icon: "🍎",
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "ML Kit OCR", "Riverpod", "SQLite"],
-    githubUrl: "https://github.com/Pinoccchio/BetterBites",
     videoUrl: "https://drive.google.com/file/d/125EuRkh_k2smk1mhN1Or74CMc875aTwR/view?usp=sharing",
     status: "Completed",
     date: "Jun 2025",
@@ -463,22 +446,9 @@ export const projects: Project[] = [
     icon: "🌱",
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Supabase", "Provider", "Image Processing"],
-    githubUrl: "https://github.com/Pinoccchio/scan_my_soil",
     videoUrl: "https://drive.google.com/file/d/1k9x9oGSP-PO0DNTonA7s-wmJOaeAhdu9/view?usp=sharing",
     status: "Completed",
     date: "Mar-Apr 2025",
-    isPrivate: false
-  },
-  {
-    id: "beecon",
-    title: "Beecon",
-    description: "BLE beacon-based indoor positioning system with floor plan visualization for indoor navigation.",
-    icon: "📡",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "BLE", "flutter_blue_plus", "Indoor Navigation"],
-    githubUrl: "https://github.com/Pinoccchio/Beecon",
-    status: "Completed",
-    date: "Jun 2025",
     isPrivate: false
   },
   {
@@ -488,7 +458,6 @@ export const projects: Project[] = [
     icon: "👋",
     category: "ai-ml",
     techStack: ["Android Native", "MediaPipe", "Java", "Kotlin", "ML"],
-    githubUrl: "https://github.com/Pinoccchio/sign_language_mp",
     videoUrl: "https://drive.google.com/file/d/1jvLiSPp5QttF01L2UbvV-qE1o254Jc9n/view?usp=sharing",
     status: "Completed",
     date: "May 2024",
@@ -513,7 +482,6 @@ export const projects: Project[] = [
     icon: "♻️",
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase", "GetX", "Google Maps", "Hive", "Charts"],
-    githubUrl: "https://github.com/Pinoccchio/econaga",
     videoUrl: "https://drive.google.com/file/d/1jvdjkWWiDaeVf8jWFT36e7i2ZfIUfS2C/view?usp=sharing",
     status: "Completed",
     date: "Sep 2024-Mar 2025",
@@ -538,7 +506,6 @@ export const projects: Project[] = [
     icon: "💬",
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase", "Supabase", "Audio Recording", "Provider"],
-    githubUrl: "https://github.com/Pinoccchio/SienaTalkV1",
     videoUrl: "https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing",
     status: "Completed",
     date: "Apr 2025",
@@ -557,72 +524,12 @@ export const projects: Project[] = [
     isPrivate: false
   },
   {
-    id: "agosbuhay",
-    title: "Agosbuhay App",
-    description: "Student productivity and health app with study planner, PDF viewer, heart rate monitor, and text-to-speech.",
-    icon: "📚",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "Firebase", "SQLite", "PDF", "TTS", "Heart Monitor"],
-    githubUrl: "https://github.com/Pinoccchio/agosbuhay-app",
-    status: "Completed",
-    date: "Sep-Nov 2024",
-    isPrivate: false
-  },
-  {
-    id: "eduhelix",
-    title: "EduHelix App",
-    description: "Enhanced student productivity with home widgets, background tasks, Rive animations, and gamification.",
-    icon: "🎯",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "Firebase", "SQLite", "PDF", "TTS", "Rive", "WorkManager"],
-    githubUrl: "https://github.com/Pinoccchio/eduhelix-app",
-    status: "Completed",
-    date: "Sep-Nov 2024",
-    isPrivate: false
-  },
-  {
-    id: "seasafe",
-    title: "SeaSafe",
-    description: "Marine safety and navigation with AI-powered hazard detection and weather analysis using Gemini.",
-    icon: "🌊",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "Supabase", "Gemini AI", "Secure Storage", "Image Processing"],
-    status: "Active Development",
-    date: "Sep-Oct 2025",
-    isPrivate: true
-  },
-  {
-    id: "sign-language-app",
-    title: "Sign Language App",
-    description: "Android camera app for real-time sign language gesture recognition using OpenCV.",
-    icon: "👐",
-    category: "mobile",
-    techStack: ["Android Native", "OpenCV", "Java", "Kotlin", "JNI"],
-    githubUrl: "https://github.com/Pinoccchio/sign_language_app",
-    status: "Completed",
-    date: "Mar 2024",
-    isPrivate: false
-  },
-  {
-    id: "slt",
-    title: "SLT (Sign Language Translator)",
-    description: "Sign language translation using OpenCV for computer vision processing.",
-    icon: "🤟",
-    category: "mobile",
-    techStack: ["Android Native", "OpenCV", "Java", "Kotlin"],
-    githubUrl: "https://github.com/Pinoccchio/slt",
-    status: "Completed",
-    date: "Mar 2024",
-    isPrivate: false
-  },
-  {
     id: "siena-talk-v2",
     title: "SienaTalk",
     description: "Enhanced student counselor communication platform with improved messaging and scheduling features.",
     icon: "💬",
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase", "Supabase"],
-    githubUrl: "https://github.com/Pinoccchio/SienaTalk",
     status: "Completed",
     date: "Dec 2024-Jan 2025",
     isPrivate: false
@@ -634,7 +541,6 @@ export const projects: Project[] = [
     icon: "🏖️",
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase"],
-    githubUrl: "https://github.com/Pinoccchio/hotourist",
     status: "Completed",
     date: "Jan-Mar 2024",
     isPrivate: false
@@ -646,7 +552,6 @@ export const projects: Project[] = [
     icon: "👐",
     category: "mobile",
     techStack: ["Android Native", "OpenCV", "Java"],
-    githubUrl: "https://github.com/Pinoccchio/sign_language_app_v",
     status: "Completed",
     date: "Mar 2024",
     isPrivate: false
@@ -658,7 +563,6 @@ export const projects: Project[] = [
     icon: "🐟",
     category: "mobile",
     techStack: ["Technology TBD", "Environmental Monitoring"],
-    githubUrl: "https://github.com/Pinoccchio/IsdaAquaGenTech",
     status: "Active Development",
     date: "Dec 2024-Apr 2025",
     isPrivate: false

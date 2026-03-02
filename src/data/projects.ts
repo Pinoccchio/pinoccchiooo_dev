@@ -333,42 +333,6 @@ export const projects: Project[] = [
     screenshotCategories: jobsyncScreenshots
   },
   {
-    id: "e-reserve-v1",
-    title: "E-Reserve System v1",
-    description: "Enhanced venue reservation platform with dual maps (Google Maps + Leaflet), calendar, 3D visualization, and PDF reports for Libmanan LGU.",
-    icon: "🏢",
-    category: "web",
-    techStack: ["Next.js 15", "React 18", "TypeScript", "Supabase", "Gemini AI", "OpenAI", "Google Maps", "Leaflet", "Three.js"],
-    demoUrl: "https://e-reserve-web-based-system-v1.vercel.app/",
-    status: "Production",
-    date: "Feb-Apr 2025",
-    isPrivate: false
-  },
-  {
-    id: "mhealth-web",
-    title: "MHealth Web App",
-    description: "Healthcare management with multi-channel notifications (Email + SMS), Excel export, and health analytics.",
-    icon: "🏥",
-    category: "web",
-    techStack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "Firebase", "Twilio", "Nodemailer", "Recharts"],
-    demoUrl: "https://mhealth-web-app-nine.vercel.app/",
-    status: "Production",
-    date: "Feb 2025",
-    isPrivate: false
-  },
-  {
-    id: "procurement-system",
-    title: "Procurement Management System",
-    description: "Business procurement tracking with email notifications, form validation, and monitoring features.",
-    icon: "📊",
-    category: "web",
-    techStack: ["Next.js 15", "React 19", "TypeScript", "Supabase", "Resend", "Radix UI", "Framer Motion"],
-    demoUrl: "https://www.procurement-ms.com/",
-    status: "Production",
-    date: "Jan-Feb 2025",
-    isPrivate: false
-  },
-  {
     id: "nfc-card",
     title: "NFC Card Website",
     description: "NFC card management and digital business card platform with theme support.",
@@ -377,28 +341,6 @@ export const projects: Project[] = [
     techStack: ["Next.js 14", "React 18", "TypeScript", "Supabase", "Radix UI", "Tailwind CSS"],
     status: "Completed",
     date: "Apr 2025",
-    isPrivate: false
-  },
-  {
-    id: "v0-hci",
-    title: "v0 HCI Control Systems",
-    description: "Human-Computer Interaction midterm project for control systems interface design with comprehensive UI components.",
-    icon: "🎛️",
-    category: "web",
-    techStack: ["Next.js 14", "React 18", "TypeScript", "Radix UI", "Recharts", "Tailwind CSS"],
-    status: "Completed",
-    date: "Sep-Oct 2025",
-    isPrivate: true
-  },
-  {
-    id: "hash-table-simulator",
-    title: "Hash Table Simulator",
-    description: "Interactive educational tool for visualizing hash table collision resolution (Linear Probing & Double Hashing).",
-    icon: "🔢",
-    category: "web",
-    techStack: ["Flutter Web", "Dart", "Provider", "Material Design 3"],
-    status: "Completed",
-    date: "May 2025",
     isPrivate: false
   },
 
@@ -521,50 +463,6 @@ export const projects: Project[] = [
     videoUrl: "https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing",
     status: "Completed",
     date: "Nov-Dec 2024",
-    isPrivate: false
-  },
-  {
-    id: "siena-talk-v2",
-    title: "SienaTalk",
-    description: "Enhanced student counselor communication platform with improved messaging and scheduling features.",
-    icon: "💬",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "Firebase", "Supabase"],
-    status: "Completed",
-    date: "Dec 2024-Jan 2025",
-    isPrivate: false
-  },
-  {
-    id: "hotourist",
-    title: "Hotourist",
-    description: "Tourism and hospitality app for exploring destinations and booking accommodations.",
-    icon: "🏖️",
-    category: "mobile",
-    techStack: ["Flutter", "Dart", "Firebase"],
-    status: "Completed",
-    date: "Jan-Mar 2024",
-    isPrivate: false
-  },
-  {
-    id: "sign-language-v2",
-    title: "Sign Language App v2",
-    description: "Enhanced sign language recognition with improved gesture detection accuracy.",
-    icon: "👐",
-    category: "mobile",
-    techStack: ["Android Native", "OpenCV", "Java"],
-    status: "Completed",
-    date: "Mar 2024",
-    isPrivate: false
-  },
-  {
-    id: "isda-aqua-gen-tech",
-    title: "IsdaAquaGenTech",
-    description: "Aquaculture and fisheries management platform for sustainable aquatic farming operations.",
-    icon: "🐟",
-    category: "mobile",
-    techStack: ["Technology TBD", "Environmental Monitoring"],
-    status: "Active Development",
-    date: "Dec 2024-Apr 2025",
     isPrivate: false
   },
 ]

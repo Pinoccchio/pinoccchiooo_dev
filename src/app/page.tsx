@@ -387,8 +387,8 @@ export default function Home() {
                             githubLink={undefined}
                             demoLink={project.demoUrl}
                             videoLink={project.videoUrl}
-                            webGithubLink={project.webGithubUrl}
-                            mobileGithubLink={project.mobileGithubUrl}
+                            webGithubLink={undefined}
+                            mobileGithubLink={undefined}
                             webDemoLink={project.webDemoUrl}
                             mobileDemoLink={project.mobileDemoUrl}
                             webVideoLink={project.webVideoUrl}

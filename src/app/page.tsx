@@ -295,7 +295,7 @@ export default function Home() {
                               title={project.title}
                               description={project.description}
                               icon={project.icon}
-                              githubLink={project.githubUrl}
+                              githubLink={undefined}
                               demoLink={project.demoUrl}
                               videoLink={project.videoUrl}
                               type={project.category}
@@ -340,7 +340,7 @@ export default function Home() {
                               title={project.title}
                               description={project.description}
                               icon={project.icon}
-                              githubLink={project.githubUrl}
+                              githubLink={undefined}
                               demoLink={project.demoUrl}
                               videoLink={project.videoUrl}
                               type={project.category}
@@ -384,7 +384,7 @@ export default function Home() {
                             title={project.title}
                             description={project.description}
                             icon={project.icon}
-                            githubLink={project.githubUrl}
+                            githubLink={undefined}
                             demoLink={project.demoUrl}
                             videoLink={project.videoUrl}
                             webGithubLink={project.webGithubUrl}
@@ -424,7 +424,7 @@ export default function Home() {
                               title={project.title}
                               description={project.description}
                               icon={project.icon}
-                              githubLink={project.githubUrl}
+                              githubLink={undefined}
                               demoLink={project.demoUrl}
                               videoLink={project.videoUrl}
                               type={project.category}

@@ -7,72 +7,55 @@ export function PortfolioStats() {
 
   const statItems = [
     {
-      label: "Total Projects",
+      label: "Projects",
       value: stats.total.toString(),
-      subtext: "Comprehensive portfolio"
-    },
-    {
-      label: "Tech Platforms",
-      value: `${stats.web + stats.mobile}+`,
-      subtext: `${stats.web} web, ${stats.mobile} mobile`
+      subtext: "Shipped and documented",
     },
     {
       label: "Hybrid Systems",
-      value: "4",
-      subtext: "Web + Mobile platforms"
+      value: stats.hybrid.toString(),
+      subtext: "Web and mobile coordination",
     },
     {
-      label: "AI Integration",
+      label: "Production",
+      value: stats.production.toString(),
+      subtext: "Live or deployed work",
+    },
+    {
+      label: "AI-enabled",
       value: stats.aiMl.toString(),
-      subtext: "Gemini, OpenAI, MediaPipe"
+      subtext: "Assistive and analytical flows",
     },
-    {
-      label: "Active Period",
-      value: "2023-2025",
-      subtext: "Continuous development"
-    }
   ]
 
   return (
-    <div className="bg-[var(--surface-secondary)] rounded-lg p-4 sm:p-6 mb-6 border border-[var(--border)]">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl sm:text-2xl font-bold pinocchio-primary">Portfolio Overview</h2>
-        <div className="flex items-center gap-2">
-          <span className="badge badge-accent">
-            {stats.production} Production
-          </span>
-          <span className="badge">
-            {stats.active} Active
-          </span>
-        </div>
+    <div>
+      <div className="mt-4">
+        <h2 className="pinocchio-name text-3xl">A compact view of the work</h2>
+        <p className="mt-3 max-w-2xl text-[var(--text-secondary)] leading-8">
+          The numbers are here to provide context, not to turn the page into a dashboard. They support the story, they
+          do not replace it.
+        </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {statItems.map((item, index) => (
-          <div key={index} className="bg-[var(--surface-primary)] rounded-lg p-3 sm:p-4 border border-[var(--border)] hover:shadow-md transition-shadow">
-            <div className="stat-value text-2xl sm:text-3xl text-[var(--accent)] mb-1">
-              {item.value}
-            </div>
-            <div className="text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        {statItems.map(item => (
+          <div key={item.label} className="rounded-[1.2rem] border border-[var(--border)] bg-[var(--surface-secondary)] p-5">
+            <div className="stat-value text-4xl text-[var(--text-primary)]">{item.value}</div>
+            <div className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">
               {item.label}
             </div>
-            <div className="text-xs text-[var(--text-muted)]">
-              {item.subtext}
-            </div>
+            <div className="mt-2 text-sm text-[var(--text-muted)]">{item.subtext}</div>
           </div>
         ))}
       </div>
 
-      {/* Key Technologies Banner */}
-      <div className="mt-4 pt-4 border-t border-[var(--border)]">
-        <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-          <span className="font-medium text-[var(--text-secondary)]">Primary Tech:</span>
-          <span className="badge">Flutter (24+ projects)</span>
-          <span className="badge">Next.js 15 (12+ projects)</span>
-          <span className="badge">Supabase (18 projects)</span>
-          <span className="badge">Firebase (12 projects)</span>
-          <span className="badge badge-accent">AI Integration (7 projects)</span>
-        </div>
+      <div className="mt-6 flex flex-wrap gap-2">
+        <span className="badge">Government workflows</span>
+        <span className="badge">Healthcare systems</span>
+        <span className="badge">Flutter delivery</span>
+        <span className="badge">Next.js platforms</span>
+        <span className="badge badge-accent">AI-integrated products</span>
       </div>
     </div>
   )

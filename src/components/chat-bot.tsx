@@ -24,11 +24,6 @@ export function ChatBot() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [visitorIp, setVisitorIp] = useState<string | null>(null)
-  const [sessionId] = useState(() => {
-    // Generate unique session ID on component mount
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-  })
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const { theme } = useTheme()
@@ -58,23 +53,6 @@ export function ChatBot() {
     }
   }, [input])
 
-  // Fetch visitor IP address on component mount
-  useEffect(() => {
-    const fetchIpAddress = async () => {
-      try {
-        const response = await fetch("/api/get-client-ip")
-        const data = await response.json()
-        if (data.success && data.ip) {
-          setVisitorIp(data.ip)
-        }
-      } catch {
-        // Silently fail - IP tracking is optional functionality
-      }
-    }
-
-    fetchIpAddress()
-  }, [])
-
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
 
@@ -88,11 +66,8 @@ export function ChatBot() {
       // Format all messages for the AI
       const chatHistory = [...messages, userMessage]
 
-      // Get AI response with session tracking and visitor info
-      const response = await chatWithPinocchio(chatHistory, sessionId, {
-        ip: visitorIp ?? undefined,
-        userAgent: navigator.userAgent,
-      })
+      // Get AI response without visitor tracking or persistence.
+      const response = await chatWithPinocchio(chatHistory)
 
       // Add AI response
       setMessages((prev) => [...prev, { role: "assistant", content: response }])

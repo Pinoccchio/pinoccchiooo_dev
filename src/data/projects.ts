@@ -22,6 +22,10 @@ export interface Project {
   description: string
   icon: string
   category: "hybrid" | "web" | "mobile" | "ai-ml"
+  engagementType?: "Client" | "Freelance" | "Academic" | "Personal"
+  sector?: "Government" | "Healthcare" | "Education" | "Business" | "Agriculture" | "Accessibility" | "Consumer"
+  platformSummary?: string
+  impactTags?: string[]
   techStack: string[]
   demoUrl?: string
   videoUrl?: string
@@ -47,6 +51,10 @@ export const projects: Project[] = [
     description: "Complete cloud-based inventory management system for J.A's Food Trading, a frozen food distributor. Features multi-tier pricing, real-time sync, AI analytics, Excel import/export, QR codes, and alert systems.",
     icon: "📦",
     category: "hybrid",
+    engagementType: "Client",
+    sector: "Business",
+    platformSummary: "Web + Mobile",
+    impactTags: ["Client Work", "Inventory", "AI-enabled"],
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Riverpod", "Turbopack", "Tailwind CSS"],
     status: "Active Development",
     date: "Sep-Oct 2025",
@@ -61,6 +69,10 @@ export const projects: Project[] = [
     description: "Comprehensive AI-powered educational platform implementing 4 evidence-based study techniques: Active Recall (flashcards with SM-2), Pomodoro (focus tracking), Feynman (teach to learn), and Retrieval Practice (adaptive questions).",
     icon: "🎓",
     category: "hybrid",
+    engagementType: "Freelance",
+    sector: "Education",
+    platformSummary: "Web + Mobile",
+    impactTags: ["AI-enabled", "Analytics", "Private"],
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Provider", "Chart.js", "PDF Processing"],
     status: "Active Development",
     date: "Aug-Oct 2025",
@@ -74,6 +86,10 @@ export const projects: Project[] = [
     description: "Army Reserve Reservist Integrated Behavioral Network for Philippine Army Reserve units. Features 4-role RBAC (Super Admin, Admin, Staff, Reservist), company management, training records, PDF reports, and QR identification.",
     icon: "🎖️",
     category: "hybrid",
+    engagementType: "Client",
+    sector: "Government",
+    platformSummary: "Web + Mobile",
+    impactTags: ["Government", "RBAC", "Security-focused"],
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Firebase FCM", "Provider", "PDF Generation", "QR Codes"],
     status: "Active Development",
     date: "Oct 2025",
@@ -87,6 +103,10 @@ export const projects: Project[] = [
     description: "AI-powered cybercrime reporting for Philippines with 67+ crime types across 10 categories. Features AI evidence suggestions, credibility meter, pattern detection, and case management for PNP officers.",
     icon: "⚖️",
     category: "hybrid",
+    engagementType: "Client",
+    sector: "Government",
+    platformSummary: "Web + Mobile",
+    impactTags: ["Government", "AI-enabled", "Production"],
     techStack: ["Next.js 15", "React 18", "Flutter", "TypeScript", "Supabase", "Firebase", "Gemini 2.0", "Provider", "Vite"],
     mobileVideoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
     videoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
@@ -105,6 +125,10 @@ export const projects: Project[] = [
     description: "Full-stack medical AI application for early Alzheimer's detection through hippocampal MRI analysis. Achieves 80.77% accuracy using Gradient Boosting on 26 volumetric features extracted from 1,213 NIfTI brain scans.",
     icon: "🧠",
     category: "ai-ml",
+    engagementType: "Freelance",
+    sector: "Healthcare",
+    platformSummary: "Web + ML Backend",
+    impactTags: ["Healthcare", "Private", "AI-enabled"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "Supabase", "Tailwind CSS", "NIfTI"],
     // No GitHub link - showcased via screenshots only (private freelance project)
     status: "Active Development",
@@ -264,6 +288,10 @@ export const projects: Project[] = [
     description: "AI-powered road passability classification for Philippine disaster response using EfficientNet-B0 CNN. Achieves 78.4% accuracy on US flood data with ~2-3s processing. Features 3-class classification (Passable, Limited, Impassable), interactive Leaflet maps, vehicle recommendations, and safety-enhanced predictions for NDRRMC/DPWH/LGU-DRRMO command centers.",
     icon: "🛸",
     category: "ai-ml",
+    engagementType: "Academic",
+    sector: "Government",
+    platformSummary: "Web + ML",
+    impactTags: ["Disaster Response", "Research", "AI-enabled"],
     techStack: ["Next.js 15", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "EfficientNet-B0", "ONNX Runtime", "OpenCV", "Leaflet Maps", "Tailwind CSS"],
     status: "Completed",
     date: "2025",
@@ -278,6 +306,10 @@ export const projects: Project[] = [
     description: "AI-powered Flutter app for plant nutrient deficiency and disease identification. Uses 4 TensorFlow Lite models for Rice, Corn, Okra, and Cucumber analysis with Google Gemini AI for enhanced diagnosis. Features real-time camera scanning, AI chat assistant, scan history tracking, comprehensive plant library with offline support, and detailed treatment recommendations.",
     icon: "🌿",
     category: "ai-ml",
+    engagementType: "Academic",
+    sector: "Agriculture",
+    platformSummary: "Mobile AI App",
+    impactTags: ["TensorFlow Lite", "Offline-ready", "Team Project"],
     techStack: ["Flutter", "Dart", "TensorFlow Lite", "Gemini AI", "Supabase", "Provider", "GoRouter", "Image Processing"],
     status: "Completed",
     date: "2025",
@@ -292,6 +324,10 @@ export const projects: Project[] = [
     description: "AI-powered grammar correction and text improvement tool. Uses Gemini 2.5 Flash Lite to detect and fix grammar, spelling, punctuation, and style issues with detailed explanations. Built as a research project for CASAP Grade 11 students.",
     icon: "📝",
     category: "ai-ml",
+    engagementType: "Academic",
+    sector: "Education",
+    platformSummary: "Web App",
+    impactTags: ["Production", "AI-enabled", "Student Research"],
     techStack: ["Next.js 14", "TypeScript", "Gemini AI", "Radix UI", "Tailwind CSS"],
     demoUrl: "https://aezzy-grammar-corrector.vercel.app/",
     status: "Production",
@@ -308,6 +344,10 @@ export const projects: Project[] = [
     description: "Production-grade Healthcare Appointment Management and Disease Surveillance System for Panabo City Health Office. Features 5-stage appointment workflow, SARIMA time-series forecasting, Leaflet geographic heatmaps, and real-time Supabase subscriptions across 41+ barangays.",
     icon: "🏥",
     category: "web",
+    engagementType: "Client",
+    sector: "Healthcare",
+    platformSummary: "Web Platform",
+    impactTags: ["Client Work", "Healthcare", "Forecasting"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "TanStack Query", "Chart.js", "Leaflet", "ARIMA", "Tailwind CSS"],
     // No githubUrl - private project showcased via screenshots only
     status: "Active Development",
@@ -323,6 +363,10 @@ export const projects: Project[] = [
     description: "AI-powered Job Matching and Applicant Ranking System for Municipality of Asuncion. Features intelligent applicant ranking using Gemini 1.5 Pro with 3 ensemble scoring algorithms, multi-role RBAC (Admin/HR/PESO/Applicant), comprehensive PDS management, training program enrollment, and certificate generation.",
     icon: "💼",
     category: "web",
+    engagementType: "Client",
+    sector: "Government",
+    platformSummary: "Web Platform",
+    impactTags: ["Client Work", "Government", "AI-enabled"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Gemini AI", "Recharts", "PDF Processing", "Tailwind CSS"],
     // No githubUrl - private project showcased via screenshots only
     status: "Active Development",
@@ -338,6 +382,10 @@ export const projects: Project[] = [
     description: "NFC card management and digital business card platform with theme support.",
     icon: "📇",
     category: "web",
+    engagementType: "Freelance",
+    sector: "Business",
+    platformSummary: "Web App",
+    impactTags: ["Completed", "Identity", "Platform"],
     techStack: ["Next.js 14", "React 18", "TypeScript", "Supabase", "Radix UI", "Tailwind CSS"],
     status: "Completed",
     date: "Apr 2025",
@@ -472,8 +520,55 @@ export const getProjectsByCategory = (category: "hybrid" | "web" | "mobile" | "a
   return projects.filter(p => p.category === category)
 }
 
+export const getCategoryLabel = (category: Project["category"]) => {
+  switch (category) {
+    case "hybrid":
+      return "Hybrid"
+    case "web":
+      return "Web"
+    case "mobile":
+      return "Mobile"
+    case "ai-ml":
+      return "AI"
+  }
+}
+
+const statusPriority: Record<Project["status"], number> = {
+  Production: 0,
+  "Active Development": 1,
+  Completed: 2,
+}
+
+const categoryPriority: Record<Project["category"], number> = {
+  hybrid: 0,
+  web: 1,
+  "ai-ml": 2,
+  mobile: 3,
+}
+
+export const getSortedProjects = () => {
+  return [...projects].sort((a, b) => {
+    const featuredDelta = Number(Boolean(b.isFeatured)) - Number(Boolean(a.isFeatured))
+    if (featuredDelta !== 0) return featuredDelta
+
+    const statusDelta = statusPriority[a.status] - statusPriority[b.status]
+    if (statusDelta !== 0) return statusDelta
+
+    const categoryDelta = categoryPriority[a.category] - categoryPriority[b.category]
+    if (categoryDelta !== 0) return categoryDelta
+
+    return a.title.localeCompare(b.title)
+  })
+}
+
+export const getFilteredProjects = (category: Project["category"] | "all") => {
+  const sortedProjects = getSortedProjects()
+  if (category === "all") return sortedProjects
+  return sortedProjects.filter(project => project.category === category)
+}
+
 export const getFeaturedProjects = () => {
-  return projects.filter(p => p.isFeatured)
+  return getSortedProjects().filter(p => p.isFeatured)
 }
 
 export const getPublicProjects = () => {

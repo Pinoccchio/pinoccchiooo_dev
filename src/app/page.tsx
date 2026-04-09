@@ -1,480 +1,252 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { Github, Mail, Facebook, Instagram, Youtube, MapPin } from "lucide-react"
-import { GitHubCalendar } from "@/components/github-calendar"
-import { ProjectCard } from "@/components/project-card"
-import { SocialIcon } from "@/components/social-icon"
-import { TechStack } from "@/components/tech-stack"
+import { ChevronRight, Facebook, Github, Mail, MapPin } from "lucide-react"
 import { AboutSection } from "@/components/about-section"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { ChatBot } from "@/components/chat-bot"
 import { AnimatedProfile } from "@/components/animated-profile"
-import { PortfolioStats } from "@/components/portfolio-stats"
-import { AdminLoginDialog } from "@/components/admin-login-dialog"
-import { getProjectsByCategory } from "@/data/projects"
-import { getCurrentAdmin } from "@/app/actions/admin-auth-actions"
+import { ChatBot } from "@/components/chat-bot"
+import { GitHubCalendar } from "@/components/github-calendar"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { getFilteredProjects, type Project } from "@/data/projects"
 
-// Animation variants for stagger reveal
-const stagger = {
-  initial: {},
-  animate: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+const projectFilters: Array<{ value: "all" | Project["category"]; label: string }> = [
+  { value: "all", label: "All" },
+  { value: "hybrid", label: "Hybrid" },
+  { value: "web", label: "Web" },
+  { value: "mobile", label: "Mobile" },
+  { value: "ai-ml", label: "AI" },
+]
+
+const techGroups = [
+  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Flutter", "Tailwind CSS"] },
+  { title: "Backend", items: ["Node.js", "Python", "Java", "Firebase", "Supabase", "REST APIs"] },
+  { title: "AI & Tools", items: ["Gemini", "OpenAI", "MediaPipe", "PyTorch", "Jupyter", "GitHub"] },
+]
+
+const experienceItems = [
+  {
+    title: "Full-Stack Developer & Hybrid System Architect",
+    subtitle: "Freelance systems across government, healthcare, education, and business",
+    year: "2022-Present",
+    active: true,
+  },
+  {
+    title: "AI Integration Specialist",
+    subtitle: "Gemini, OpenAI, and MediaPipe across production-style workflows",
+    year: "2024-Present",
+  },
+  {
+    title: "Multi-platform Developer",
+    subtitle: "Flutter delivery across Android, iOS, Web, Windows, Linux, and macOS",
+    year: "2022-2024",
+  },
+  { title: "BS Computer Science", subtitle: "Cor Jesu College", year: "Expected 2026" },
+]
+
+function getProjectMeta(project: Project) {
+  if (project.demoUrl) {
+    try {
+      return new URL(project.demoUrl).hostname.replace(/^www\./, "")
+    } catch {
+      return project.platformSummary || project.category
+    }
   }
+
+  return project.platformSummary || project.sector || project.category
 }
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<"projects" | "about" | null>("projects")
-  const [projectCategory, setProjectCategory] = useState<"hybrid" | "web" | "mobile" | "ai-ml">("hybrid")
-  const [showAllProjects, setShowAllProjects] = useState(false)
-  const [showAdminLogin, setShowAdminLogin] = useState(false)
-  const [clickCount, setClickCount] = useState(0)
-  const clickTimerRef = useRef<NodeJS.Timeout | null>(null)
-  const router = useRouter()
+  const [projectFilter, setProjectFilter] = useState<(typeof projectFilters)[number]["value"]>("all")
 
-  // Check if user is already authenticated and redirect to admin
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const admin = await getCurrentAdmin()
-        if (admin) {
-          router.push("/admin")
-        }
-      } catch {
-        // User not authenticated, stay on landing page
-      }
-    }
-    checkAuth()
-  }, [router])
-
-  // Get projects for each category
-  const hybridProjects = getProjectsByCategory("hybrid")
-  const webProjects = getProjectsByCategory("web")
-  const mobileProjects = getProjectsByCategory("mobile")
-  const aiMlProjects = getProjectsByCategory("ai-ml")
-
-  // Memoize the category change handler to prevent unnecessary re-renders
-  const handleCategoryChange = useCallback(
-    (category: "hybrid" | "web" | "mobile" | "ai-ml") => {
-      if (category !== projectCategory) {
-        setProjectCategory(category)
-        setShowAllProjects(false) // Reset show all when changing categories
-      }
-    },
-    [projectCategory],
-  )
-
-  // Secret admin access trigger - 7 rapid clicks on avatar
-  const handleAvatarClick = () => {
-    const newCount = clickCount + 1
-    setClickCount(newCount)
-
-    // Clear existing timer
-    if (clickTimerRef.current) {
-      clearTimeout(clickTimerRef.current)
-    }
-
-    // If 7 clicks reached, show admin login
-    if (newCount >= 7) {
-      setShowAdminLogin(true)
-      setClickCount(0)
-      return
-    }
-
-    // Reset count after 2 seconds of inactivity
-    clickTimerRef.current = setTimeout(() => {
-      setClickCount(0)
-    }, 2000)
-  }
+  const filteredProjects = getFilteredProjects(projectFilter)
+  const featuredProjects = filteredProjects.slice(0, 4)
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Main content container with improved responsive layout */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
-          {/* Avatar and Profile Section - Full width on mobile, sidebar on desktop */}
-          <motion.div
-            className="w-full lg:w-80 xl:w-96 flex flex-col items-center hero-gradient rounded-xl p-4"
-            initial="initial"
-            animate="animate"
-            variants={stagger}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 cursor-pointer transition-transform hover:scale-105 active:scale-95"
-              onClick={handleAvatarClick}
-              title="Click me multiple times..."
-            >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <AnimatedProfile />
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="flex justify-end mb-3">
+          <ThemeToggle />
+        </div>
+
+        <section className="profile-row">
+          <div className="relative h-[170px] w-[170px] overflow-hidden avatar-border">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <AnimatedProfile />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h1 className="pinocchio-name text-4xl sm:text-[2.9rem] leading-none">Pinoccchiooo</h1>
+              <div className="mt-3 flex items-center gap-2 text-[15px] text-[var(--text-secondary)]">
+                <MapPin size={16} />
+                Digos City, Philippines
               </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className={`w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 avatar-border rounded-full ${
-                  clickCount > 0 && clickCount < 7 ? "animate-pulse" : ""
-                }`}></div>
-              </div>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-3xl sm:text-4xl font-bold mt-4 pinocchio-name text-center"
-            >
-              Pinoccchiooo
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center mt-2 text-[var(--accent)]"
-            >
-              <MapPin size={18} className="mr-2" />
-              <span>Digos City, Philippines</span>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-4 text-center max-w-md pinocchio-tagline px-4 sm:px-0"
-            >
-              A <span className="pinocchio-accent hover:underline font-medium">Flutter & Next.js Developer</span>{" "}
-              creating applications for Android, web, and Windows with AI integration when needed.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6 mb-6"
-            >
-              <SocialIcon
-                icon={<Mail size={20} />}
-                href="mailto:janmikoguevarra@gmail.com"
-                bgColor="bg-[var(--accent)]"
-              />
-              <SocialIcon
-                icon={<Facebook size={20} />}
-                href="https://www.facebook.com/phoebe.finley.96"
-                bgColor="bg-[var(--accent)]"
-              />
-              <SocialIcon
-                icon={<Github size={20} />}
-                href="https://github.com/Pinoccchio"
-                bgColor="bg-[var(--accent)]"
-              />
-              <SocialIcon
-                icon={<Instagram size={20} />}
-                href="https://www.instagram.com/jexlevii/"
-                bgColor="bg-[var(--accent)]"
-              />
-              <SocialIcon
-                icon={<Youtube size={20} />}
-                href="https://www.youtube.com/@pinocchio200"
-                bgColor="bg-[var(--accent)]"
-              />
-            </motion.div>
-
-            {/* Tech Stack - Responsive layout */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="mt-2 mb-6 w-full"
-            >
-              <h3 className="text-lg font-medium pinocchio-accent mb-4 text-center">Tech stack used:</h3>
-              <TechStack />
-            </motion.div>
-          </motion.div>
-
-          {/* Main Content - Full width on mobile, flex-1 on desktop */}
-          <div className="flex-1 w-full">
-            {/* Navigation - Improved responsive layout */}
-            <div className="flex justify-between items-center mb-6 sm:mb-8">
-              <div className="hidden sm:block"></div> {/* Empty div for flex spacing on larger screens */}
-              <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-center sm:justify-end">
-                <nav className="flex gap-2 sm:gap-4 items-center">
-                  <button
-                    onClick={() => setActiveSection("projects")}
-                    className={`btn nav-button ${
-                      activeSection === "projects" ? "btn-primary" : "btn-secondary"
-                    }`}
-                  >
-                    Projects
-                  </button>
-                  <button
-                    onClick={() => setActiveSection("about")}
-                    className={`btn nav-button ${
-                      activeSection === "about" ? "btn-primary" : "btn-secondary"
-                    }`}
-                  >
-                    About
-                  </button>
-                </nav>
-                <ThemeToggle />
+              <div className="mt-3 text-[1.05rem] text-[var(--text-primary)]">
+                AI \ Software Engineer \ Systems Builder
               </div>
             </div>
 
-            {/* Content Sections */}
-            <div className="w-full">
-              {/* Projects Section - Responsive grid */}
-              {activeSection === "projects" && (
-                <div className="transition-all duration-300 ease-in-out">
-                  {/* Portfolio Statistics */}
-                  <PortfolioStats />
+            <div className="flex flex-wrap gap-3">
+              <a href="mailto:janmikoguevarra@gmail.com" className="btn btn-primary">
+                <Mail size={16} />
+                Send Email
+              </a>
+              <a href="https://github.com/Pinoccchio" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                <Github size={16} />
+                View GitHub
+              </a>
+              <a href="https://www.facebook.com/phoebe.finley.96" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                <Facebook size={16} />
+                Facebook
+              </a>
+            </div>
+          </div>
 
-                  {/* Project Category Selector - 4 Categories */}
-                  <div className="flex justify-center mb-6">
-                    <div className="inline-flex flex-wrap justify-center gap-2 sm:gap-1 sm:rounded-lg sm:shadow-sm bg-[var(--surface-secondary)] p-1" role="group">
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("hybrid")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
-                          projectCategory === "hybrid"
-                            ? "bg-[var(--accent)] text-white"
-                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                        }`}
-                      >
-                        Hybrid Systems
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("web")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
-                          projectCategory === "web"
-                            ? "bg-[var(--accent)] text-white"
-                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                        }`}
-                      >
-                        Web Apps
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("mobile")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
-                          projectCategory === "mobile"
-                            ? "bg-[var(--accent)] text-white"
-                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                        }`}
-                      >
-                        Mobile Apps
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCategoryChange("ai-ml")}
-                        className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-md transition-colors duration-200 ${
-                          projectCategory === "ai-ml"
-                            ? "bg-[var(--accent)] text-white"
-                            : "text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                        }`}
-                      >
-                        AI & ML
-                      </button>
-                    </div>
-                  </div>
+          <div className="self-start">
+            <div className="badge badge-accent">Hybrid Systems / AI Workflows</div>
+          </div>
+        </section>
 
-                  {/* Web Projects - Dynamic Rendering */}
-                  {projectCategory === "web" && (
-                    <>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {webProjects.slice(0, showAllProjects ? webProjects.length : 8).map((project, index) => (
-                          <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
-                          >
-                            <ProjectCard
-                              title={project.title}
-                              description={project.description}
-                              icon={project.icon}
-                              githubLink={undefined}
-                              demoLink={project.demoUrl}
-                              videoLink={project.videoUrl}
-                              type={project.category}
-                              techStack={project.techStack}
-                              status={project.status}
-                              date={project.date}
-                              isPrivate={project.isPrivate}
-                              details={project.details}
-                              screenshots={project.screenshots}
-                              screenshotCategories={project.screenshotCategories}
-                            />
-                          </motion.div>
-                        ))}
-                      </div>
-                      {webProjects.length > 8 && (
-                        <div className="flex justify-center mb-6">
-                          <button
-                            onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="btn btn-primary"
-                          >
-                            {showAllProjects ? `Show Less` : `Show All ${webProjects.length} Web Projects`}
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
+        <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_392px]">
+          <div className="space-y-8">
+            <section className="section-card p-5 sm:p-6">
+              <h2 className="section-title">About</h2>
+              <AboutSection />
+            </section>
 
-                  {/* Mobile Projects - Dynamic Rendering */}
-                  {projectCategory === "mobile" && (
-                    <>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {mobileProjects.slice(0, showAllProjects ? mobileProjects.length : 10).map((project, index) => (
-                          <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
-                          >
-                            <ProjectCard
-                              title={project.title}
-                              description={project.description}
-                              icon={project.icon}
-                              githubLink={undefined}
-                              demoLink={project.demoUrl}
-                              videoLink={project.videoUrl}
-                              type={project.category}
-                              techStack={project.techStack}
-                              status={project.status}
-                              date={project.date}
-                              isPrivate={project.isPrivate}
-                              details={project.details}
-                              screenshots={project.screenshots}
-                              screenshotCategories={project.screenshotCategories}
-                            />
-                          </motion.div>
-                        ))}
-                      </div>
-                      {mobileProjects.length > 10 && (
-                        <div className="flex justify-center mb-6">
-                          <button
-                            onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="btn btn-primary"
-                          >
-                            {showAllProjects ? `Show Less` : `Show All ${mobileProjects.length} Mobile Apps`}
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
+            <section className="section-card p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="section-title">Tech Stack</h2>
+                <button className="btn btn-ghost !px-0 !py-0 !border-0">
+                  View All
+                  <ChevronRight size={16} />
+                </button>
+              </div>
 
-                  {/* Hybrid Projects - 4 Major Systems */}
-                  {projectCategory === "hybrid" && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                      {hybridProjects.map((project, index) => (
-                        <motion.div
-                          key={project.id}
-                          initial={{ opacity: 0, y: 30 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, margin: "-50px" }}
-                          transition={{ duration: 0.5, delay: index * 0.1 }}
-                          className="project-card rounded-lg shadow-sm p-4 sm:p-6"
+              <div className="mt-6 space-y-7">
+                {techGroups.map(group => (
+                  <div key={group.title}>
+                    <h3 className="text-[1.1rem] font-semibold text-[var(--text-primary)]">{group.title}</h3>
+                    <div className="mt-3 flex flex-wrap gap-2 pl-3 sm:pl-4 text-[1rem] text-[var(--text-primary)]">
+                      {group.items.map(item => (
+                        <span
+                          key={item}
+                          className="inline-flex items-center border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-1.5 leading-none"
                         >
-                          <ProjectCard
-                            title={project.title}
-                            description={project.description}
-                            icon={project.icon}
-                            githubLink={undefined}
-                            demoLink={project.demoUrl}
-                            videoLink={project.videoUrl}
-                            webGithubLink={undefined}
-                            mobileGithubLink={undefined}
-                            webDemoLink={project.webDemoUrl}
-                            mobileDemoLink={project.mobileDemoUrl}
-                            webVideoLink={project.webVideoUrl}
-                            mobileVideoLink={project.mobileVideoUrl}
-                            type={project.category}
-                            techStack={project.techStack}
-                            status={project.status}
-                            date={project.date}
-                            isPrivate={project.isPrivate}
-                            details={project.details}
-                            screenshots={project.screenshots}
-                            screenshotCategories={project.screenshotCategories}
-                          />
-                        </motion.div>
+                          {item}
+                        </span>
                       ))}
                     </div>
-                  )}
-
-                  {/* AI & ML Projects */}
-                  {projectCategory === "ai-ml" && (
-                    <>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        {aiMlProjects.slice(0, showAllProjects ? aiMlProjects.length : 8).map((project, index) => (
-                          <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className="project-card rounded-lg shadow-sm p-4 sm:p-6"
-                          >
-                            <ProjectCard
-                              title={project.title}
-                              description={project.description}
-                              icon={project.icon}
-                              githubLink={undefined}
-                              demoLink={project.demoUrl}
-                              videoLink={project.videoUrl}
-                              type={project.category}
-                              techStack={project.techStack}
-                              status={project.status}
-                              date={project.date}
-                              isPrivate={project.isPrivate}
-                              details={project.details}
-                              screenshots={project.screenshots}
-                              screenshotCategories={project.screenshotCategories}
-                            />
-                          </motion.div>
-                        ))}
-                      </div>
-                      {aiMlProjects.length > 8 && (
-                        <div className="flex justify-center mb-6">
-                          <button
-                            onClick={() => setShowAllProjects(!showAllProjects)}
-                            className="btn btn-primary"
-                          >
-                            {showAllProjects ? `Show Less` : `Show All ${aiMlProjects.length} AI & ML Projects`}
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                </div>
-              )}
-
-              {/* About Section - Responsive padding */}
-              {activeSection === "about" && (
-                <div className="transition-all duration-300 ease-in-out mb-6 sm:mb-8">
-                  <div className="bg-card-background border border-card-border p-4 sm:p-6 rounded-lg shadow-sm">
-                    <AboutSection />
                   </div>
-                </div>
-              )}
+                ))}
+              </div>
+            </section>
 
-              {/* GitHub Contributions - Always Visible with responsive padding */}
-              <div className="bg-card-background border border-card-border p-4 sm:p-6 rounded-lg shadow-sm mb-6 sm:mb-8">
-                <h2 className="text-xl font-semibold mb-4 pinocchio-accent">My GitHub Contributions</h2>
+            <section className="section-card p-5 sm:p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="section-title">Recent Projects</h2>
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap gap-2">
+                    {projectFilters.map(filter => (
+                      <button
+                        key={filter.value}
+                        type="button"
+                        onClick={() => setProjectFilter(filter.value)}
+                        className={`filter-chip ${projectFilter === filter.value ? "filter-chip-active" : ""}`}
+                      >
+                        {filter.label}
+                      </button>
+                    ))}
+                  </div>
+                  <button className="btn btn-ghost !px-0 !py-0 !border-0 hidden sm:inline-flex">
+                    View All
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {featuredProjects.map((project, index) => (
+                  <motion.a
+                    key={project.id}
+                    href={project.demoUrl || project.videoUrl || "#"}
+                    target={project.demoUrl || project.videoUrl ? "_blank" : undefined}
+                    rel={project.demoUrl || project.videoUrl ? "noopener noreferrer" : undefined}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.28, delay: index * 0.04 }}
+                    className="block border border-[var(--border)] p-4 hover:bg-[var(--surface-secondary)] transition-colors"
+                  >
+                    <div className="text-[1.05rem] font-semibold text-[var(--text-primary)]">{project.title}</div>
+                    <p className="mt-2 text-[0.98rem] leading-7 text-[var(--text-primary)]">{project.description}</p>
+                    <div className="mt-3 inline-block bg-[var(--surface-tertiary)] px-3 py-1 text-sm text-[var(--text-secondary)]">
+                      {getProjectMeta(project)}
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <div className="space-y-8">
+            <section className="section-card p-5 sm:p-6">
+              <div className="aspect-[4/5] bg-gradient-to-br from-[#3b3b3b] to-[#181818] text-white p-6 flex flex-col justify-between">
+                <div>
+                  <div className="text-sm uppercase tracking-[0.2em] text-white/60">Access Card</div>
+                  <div className="mt-6 text-3xl font-bold">PINOCCHIOOO</div>
+                  <div className="mt-2 text-sm text-white/65">Systems Developer</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-xs uppercase tracking-[0.2em] text-white/50">Focus</div>
+                  <div className="text-sm">Government, healthcare, and business platforms</div>
+                </div>
+                <div className="text-xs uppercase tracking-[0.2em] text-white/50">Philippines</div>
+              </div>
+              <div className="mt-4 bg-[var(--accent)] text-white px-4 py-3 text-sm font-semibold">
+                Building plain, useful software with web, mobile, and AI.
+              </div>
+            </section>
+
+            <section className="section-card p-5 sm:p-6">
+              <h2 className="section-title">Experience</h2>
+              <div className="mt-6 experience-list">
+                {experienceItems.map(item => (
+                  <div key={`${item.title}-${item.year}`} className="experience-item">
+                    <div className="experience-marker-wrap">
+                      <div
+                        className={`experience-marker ${
+                          item.active
+                            ? "bg-black border-black dark:bg-white dark:border-white"
+                            : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
+                        }`}
+                      ></div>
+                    </div>
+                    <div className="experience-copy">
+                      <div className="experience-row">
+                        <div className="experience-title">{item.title}</div>
+                        <div className="experience-year-chip">{item.year}</div>
+                      </div>
+                      <div className="experience-subtitle">{item.subtitle}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="section-card p-5 sm:p-6">
+              <h2 className="section-title">GitHub</h2>
+              <div className="mt-4">
                 <GitHubCalendar />
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>
+
       <ChatBot />
-      <AdminLoginDialog isOpen={showAdminLogin} onClose={() => setShowAdminLogin(false)} />
     </div>
   )
 }

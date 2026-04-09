@@ -1,19 +1,14 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Space_Grotesk, Inter } from "next/font/google"
+import { Public_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/react"
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
-})
-
-const inter = Inter({
+const publicSans = Public_Sans({
   subsets: ["latin"],
   variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
 })
 
 export const viewport: Viewport = {
@@ -30,14 +25,14 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://pinoccchiooo.dev"),
   title: {
-    default: "Jan Miko Guevarra | Flutter & Next.js Developer",
+    default: "Jan Miko Guevarra | Multi-Platform Systems Developer",
     template: "%s | Jan Miko Guevarra",
   },
   description:
-    "Portfolio of Jan Miko A. Guevarra (Pinoccchiooo), a full-stack developer specializing in Flutter mobile apps and Next.js web applications. 31+ projects including AI-powered systems, government platforms, and enterprise solutions.",
+    "Portfolio of Jan Miko A. Guevarra (Pinoccchiooo), a full-stack developer building multi-platform systems across web, mobile, and AI-enabled workflows for government, healthcare, education, and business.",
   keywords: [
-    "Flutter developer",
-    "Next.js developer",
+    "systems developer",
+    "multi-platform developer",
     "Full-stack developer",
     "Mobile app developer",
     "Web developer",
@@ -68,23 +63,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://pinoccchiooo.dev",
     siteName: "Jan Miko Guevarra - Portfolio",
-    title: "Jan Miko Guevarra | Flutter & Next.js Developer",
+    title: "Jan Miko Guevarra | Multi-Platform Systems Developer",
     description:
-      "Full-stack developer specializing in Flutter mobile apps and Next.js web applications. 31+ projects including AI-powered systems and enterprise solutions.",
+      "Full-stack developer building multi-platform systems across web, mobile, and AI-enabled workflows.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Jan Miko Guevarra - Flutter & Next.js Developer Portfolio",
+        alt: "Jan Miko Guevarra - Multi-Platform Systems Developer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jan Miko Guevarra | Flutter & Next.js Developer",
+    title: "Jan Miko Guevarra | Multi-Platform Systems Developer",
     description:
-      "Full-stack developer specializing in Flutter mobile apps and Next.js web applications. 31+ projects.",
+      "Full-stack developer building multi-platform systems across web, mobile, and AI-enabled workflows.",
     images: ["/og-image.png"],
     creator: "@pinoccchiooo",
   },
@@ -119,7 +114,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${inter.variable}`}>
+      <body className={`${publicSans.variable}`}>
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>

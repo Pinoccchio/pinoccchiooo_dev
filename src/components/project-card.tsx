@@ -23,6 +23,11 @@ interface ProjectCardProps {
   webVideoLink?: string
   mobileVideoLink?: string
   type?: "hybrid" | "web" | "mobile" | "ai-ml" | "educational" | "tools"
+  categoryLabel?: string
+  platformSummary?: string
+  engagementType?: Project["engagementType"]
+  sector?: Project["sector"]
+  impactTags?: string[]
   techStack?: string[]
   status?: Project["status"]
   date?: string
@@ -45,6 +50,11 @@ export function ProjectCard({
   mobileDemoLink,
   webVideoLink,
   mobileVideoLink,
+  categoryLabel,
+  platformSummary,
+  engagementType,
+  sector,
+  impactTags,
   techStack,
   status,
   date,
@@ -145,6 +155,9 @@ export function ProjectCard({
   const maxThumbnails = 4
   const hasMoreScreenshots = allScreenshots.length > maxThumbnails
   const categoryCount = screenshotCategories?.length || 0
+  const metadataTags = Array.from(
+    new Set([platformSummary, engagementType, sector, categoryLabel, ...(impactTags || [])].filter(Boolean) as string[])
+  )
 
   // Compute video thumbnails once for reuse
   const videoThumbnails = [
@@ -159,11 +172,11 @@ export function ProjectCard({
     <div className="flex flex-col h-full">
       {/* Header Row: Icon + Title/Status */}
       <div className="flex items-start gap-3 mb-3">
-        <div className="text-2xl sm:text-3xl flex-shrink-0">{icon}</div>
+        <div className="text-xl sm:text-2xl flex-shrink-0">{icon}</div>
         <div className="flex-1 min-w-0">
           {/* Title with Private Badge */}
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base sm:text-lg font-semibold pinocchio-primary break-words">{title}</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-[var(--text-primary)] break-words">{title}</h3>
             {isPrivate && (
               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 flex-shrink-0">
                 <Lock size={10} className="mr-1" />
@@ -180,7 +193,7 @@ export function ProjectCard({
               </span>
             )}
             {date && (
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-xs text-[var(--text-muted)]">
                 {date}
               </span>
             )}
@@ -188,12 +201,22 @@ export function ProjectCard({
         </div>
       </div>
 
+      {metadataTags.length > 0 && (
+        <div className="mb-3 flex flex-wrap gap-1.5">
+          {metadataTags.slice(0, 5).map((tag, index) => (
+            <span key={`${tag}-${index}`} className="badge">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
       {/* Description - Full width, no truncation */}
       <p className="pinocchio-text text-sm leading-relaxed mb-2">{description}</p>
 
       {/* Details */}
       {details && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 italic leading-relaxed">
+        <p className="text-xs text-[var(--text-muted)] mb-3 italic leading-relaxed">
           {details}
         </p>
       )}
@@ -214,7 +237,7 @@ export function ProjectCard({
                 key={i}
                 type="button"
                 onClick={() => openModal(i)}
-                className="relative aspect-[4/3] w-full rounded-md overflow-hidden border border-gray-200/50 dark:border-gray-700/50 hover:border-blue-500/70 dark:hover:border-blue-400/70 transition-all duration-300 group bg-gray-100 dark:bg-gray-800 shadow-sm hover:shadow-md"
+                className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--border)] transition-all duration-300 group bg-[var(--surface-secondary)]"
               >
                 <Image
                   src={src}
@@ -225,7 +248,7 @@ export function ProjectCard({
                 />
                 {/* Hover overlay with icon */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                  <div className="w-8 h-8 bg-white/90 flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300">
                     <Images size={14} className="text-gray-900" />
                   </div>
                 </div>
@@ -237,10 +260,10 @@ export function ProjectCard({
             <button
               type="button"
               onClick={() => openModal(0)}
-              className="mt-2 w-full py-2 rounded-md bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2 group"
+              className="mt-2 w-full py-2 border border-[var(--border)] transition-all duration-300 flex items-center justify-center gap-2 group hover:bg-[var(--surface-secondary)]"
             >
-              <Images size={14} className="text-blue-600 dark:text-blue-400" />
-              <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
+              <Images size={14} className="text-[var(--text-secondary)]" />
+              <span className="text-xs font-medium text-[var(--text-secondary)]">
                 View all {allScreenshots.length} screenshots
                 {categoryCount > 0 && ` (${categoryCount} sections)`}
               </span>
@@ -258,7 +281,7 @@ export function ProjectCard({
                 key={i}
                 type="button"
                 onClick={() => openVideoInNewTab(video.url!)}
-                className="relative w-full aspect-video rounded-lg overflow-hidden border border-gray-200/50 dark:border-gray-700/50 hover:border-blue-500/70 dark:hover:border-blue-400/70 transition-all duration-300 group bg-gray-900 shadow-sm hover:shadow-lg hover:shadow-black/20"
+                className="relative w-full aspect-video overflow-hidden border border-[var(--border)] transition-all duration-300 group bg-gray-900"
                 title={`Watch ${video.label} Video`}
               >
                 {/* Thumbnail image - full coverage */}
@@ -277,7 +300,7 @@ export function ProjectCard({
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                 {/* Play button - centered, prominent */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/95 dark:bg-white/90 flex items-center justify-center shadow-xl backdrop-blur-sm transform group-hover:scale-110 transition-all duration-300 group-hover:bg-white">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/95 dark:bg-white/90 flex items-center justify-center backdrop-blur-sm transform group-hover:scale-110 transition-all duration-300 group-hover:bg-white">
                     <Play size={22} className="text-gray-900 ml-1" fill="currentColor" />
                   </div>
                 </div>
@@ -287,7 +310,7 @@ export function ProjectCard({
                     {video.label}
                   </span>
                   {/* Watch indicator on hover */}
-                  <span className="text-[10px] font-medium text-white/90 bg-blue-600/80 backdrop-blur-sm px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+                  <span className="text-[10px] font-medium text-white/90 bg-[var(--accent)]/85 backdrop-blur-sm px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
                     <ExternalLink size={10} />
                     Watch
                   </span>
@@ -307,7 +330,7 @@ export function ProjectCard({
                 href={webGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 Web
@@ -318,7 +341,7 @@ export function ProjectCard({
                 href={mobileGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 Mobile
@@ -329,7 +352,7 @@ export function ProjectCard({
                 href={webDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
               >
                 <ExternalLink size={14} className="mr-1" />
                 Demo
@@ -340,7 +363,7 @@ export function ProjectCard({
                 href={mobileDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
               >
                 <ExternalLink size={14} className="mr-1" />
                 App Demo
@@ -350,7 +373,7 @@ export function ProjectCard({
             {!hasVideoThumbnails && webVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(webVideoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 Web Video
@@ -359,7 +382,7 @@ export function ProjectCard({
             {!hasVideoThumbnails && mobileVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(mobileVideoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 Mobile Video
@@ -373,7 +396,7 @@ export function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
               >
                 <Github size={14} className="mr-1" />
                 {getGithubButtonLabel()}
@@ -383,7 +406,7 @@ export function ProjectCard({
             {!hasVideoThumbnails && videoLink && (
               <button
                 onClick={() => openVideoInNewTab(videoLink)}
-                className="inline-flex items-center text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer py-1.5 px-1"
+                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
               >
                 <Play size={14} className="mr-1" />
                 {videoLinkText}

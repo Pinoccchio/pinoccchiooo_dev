@@ -126,7 +126,7 @@ export default function Home() {
                 {CONTACT.location.city}, {CONTACT.location.country}
               </div>
               <div className="mt-3 text-[1.05rem] text-[var(--text-primary)]">
-                AI \ Software Developer \ Web & App Developer
+                AI & Full-Stack Developer
               </div>
             </div>
 

@@ -63,23 +63,6 @@ export const projects: Project[] = [
     details: "Web: Next.js admin dashboard | Mobile: Flutter customer app | Real client: J.A's Food Trading",
     screenshotCategories: incloudScreenshots
   },
-  {
-    id: "rribn-system",
-    title: "RRIBN Military Management System",
-    description: "Army Reserve Reservist Integrated Behavioral Network for Philippine Army Reserve units. Features 4-role RBAC (Super Admin, Admin, Staff, Reservist), company management, training records, PDF reports, and QR identification.",
-    icon: "🎖️",
-    category: "hybrid",
-    engagementType: "Client",
-    sector: "Government",
-    platformSummary: "Web + Mobile",
-    impactTags: ["Government", "RBAC", "Security-focused"],
-    techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Firebase FCM", "Provider", "PDF Generation", "QR Codes"],
-    status: "Active Development",
-    date: "Oct 2025",
-    isPrivate: false,
-    isFeatured: true,
-    details: "Web: Personnel management | Mobile: Reservist app (private) | Government-grade security"
-  },
   // ==================== AI & ML PROJECTS ====================
   {
     id: "mci-detection-system",

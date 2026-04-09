@@ -60,7 +60,7 @@ export function ProfileCard() {
         <div className="profile-card-header">
           <div className="profile-card-kicker">Software Developer</div>
           <div className="profile-card-name">{CONTACT.name.full}</div>
-          <div className="profile-card-role">AI / Software Developer / Web & App Developer</div>
+          <div className="profile-card-role">AI & Full-Stack Developer</div>
         </div>
 
         <div className="profile-card-grid">

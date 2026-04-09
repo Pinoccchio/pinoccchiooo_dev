@@ -2,20 +2,20 @@ export function AboutSection() {
   return (
     <div className="mt-6 space-y-7 text-[1.02rem] leading-9 text-[var(--text-primary)]">
       <p>
-        I&apos;m a full-stack software engineer specializing in building practical systems across web, mobile, and
-        applied AI. Most of my work involves real operational software for government, healthcare, education, and
-        business use cases.
+        I&apos;m Jan Miko A. Guevarra, a software developer who builds practical web, mobile, and AI-supported
+        applications. My work is focused on software that is usable, reliable, and built around real workflows.
       </p>
 
       <p>
-        I focus on products that help teams work better: software with clearer workflows, better role handling, strong
-        synchronization, and interfaces that stay understandable even when the system itself is complex.
+        Most of my experience comes from client projects across government, healthcare, education, and business. These
+        projects usually involve multi-role processes, real-time data, structured operations, and interfaces that need
+        to stay clear and easy to use.
       </p>
 
       <p>
-        Lately, I&apos;ve been going deeper into artificial intelligence, not as a novelty layer, but as a useful part
-        of modern applications. My work now includes AI-assisted ranking, evidence support, medical and research tools,
-        and workflow automation built around real user needs.
+        My main strengths are full-stack web development, cross-platform app development, and applying AI where it has
+        a clear purpose. I focus on building software that helps clients manage work better, reduce manual effort, and
+        make day-to-day operations more efficient.
       </p>
     </div>
   )

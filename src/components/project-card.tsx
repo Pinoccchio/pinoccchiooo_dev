@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Github, ExternalLink, Play, Lock, Images } from "lucide-react"
+import { Github, ExternalLink, Play } from "lucide-react"
 import { TechBadgeList } from "./tech-badge"
 import { ScreenshotModal } from "./screenshot-modal"
 import { type Project, type ScreenshotCategory } from "@/data/projects"
@@ -10,7 +10,6 @@ import { type Project, type ScreenshotCategory } from "@/data/projects"
 interface ProjectCardProps {
   title: string
   description: string
-  icon: string
   githubLink?: string
   demoLink?: string
   demoText?: string
@@ -29,9 +28,6 @@ interface ProjectCardProps {
   sector?: Project["sector"]
   impactTags?: string[]
   techStack?: string[]
-  status?: Project["status"]
-  date?: string
-  isPrivate?: boolean
   details?: string
   screenshots?: string[]
   screenshotCategories?: ScreenshotCategory[]
@@ -40,8 +36,8 @@ interface ProjectCardProps {
 export function ProjectCard({
   title,
   description,
-  icon,
   githubLink,
+  demoLink,
   videoLink,
   videoLinkText = "Watch Demo",
   webGithubLink,
@@ -56,9 +52,6 @@ export function ProjectCard({
   sector,
   impactTags,
   techStack,
-  status,
-  date,
-  isPrivate,
   details,
   screenshots,
   screenshotCategories,
@@ -90,38 +83,6 @@ export function ProjectCard({
     return url
   }
 
-  const getVideoThumbnail = (url: string): string | null => {
-    if (!url) return null
-
-    // Handle Google Drive URLs
-    if (url.includes("drive.google.com")) {
-      let fileId = ""
-      if (url.includes("/file/d/")) {
-        fileId = url.split("/file/d/")[1].split("/")[0]
-      } else if (url.includes("open?id=")) {
-        fileId = url.split("open?id=")[1].split("&")[0]
-      }
-      if (fileId) {
-        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
-      }
-    }
-
-    // Handle YouTube URLs
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      let videoId = ""
-      if (url.includes("watch?v=")) {
-        videoId = url.split("watch?v=")[1].split("&")[0]
-      } else if (url.includes("youtu.be/")) {
-        videoId = url.split("youtu.be/")[1].split("?")[0]
-      }
-      if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
-      }
-    }
-
-    return null
-  }
-
   const openVideoInNewTab = (url: string) => {
     const formattedUrl = formatGoogleDriveLink(url)
     window.open(formattedUrl, "_blank", "noopener,noreferrer")
@@ -138,14 +99,6 @@ export function ProjectCard({
     }
   }
 
-  const getStatusColor = (status?: Project["status"]) => {
-    // Production status gets accent treatment, others use neutral
-    if (status === "Production") {
-      return "bg-[var(--accent-muted)] text-[var(--accent)] border-[var(--accent)]"
-    }
-    return "bg-[var(--surface-tertiary)] text-[var(--text-secondary)] border-[var(--border)]"
-  }
-
   const openModal = (index: number) => {
     setModalInitialIndex(index)
     setIsModalOpen(true)
@@ -158,52 +111,29 @@ export function ProjectCard({
   const metadataTags = Array.from(
     new Set([platformSummary, engagementType, sector, categoryLabel, ...(impactTags || [])].filter(Boolean) as string[])
   )
-
-  // Compute video thumbnails once for reuse
-  const videoThumbnails = [
-    { url: videoLink, thumbnail: getVideoThumbnail(videoLink || ""), label: "Demo", type: "video" as const },
-    { url: webVideoLink, thumbnail: getVideoThumbnail(webVideoLink || ""), label: "Web", type: "webVideo" as const },
-    { url: mobileVideoLink, thumbnail: getVideoThumbnail(mobileVideoLink || ""), label: "Mobile", type: "mobileVideo" as const },
-  ].filter(v => v.url && v.thumbnail)
-
-  const hasVideoThumbnails = videoThumbnails.length > 0
+  const mediaLinks = [
+    { label: "Demo Video", url: videoLink },
+    { label: "Web Video", url: webVideoLink },
+    { label: "Mobile Video", url: mobileVideoLink },
+  ].filter(item => item.url)
+  const actionClassName =
+    "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)]"
 
   return (
     <div className="flex flex-col h-full">
       {/* Header Row: Icon + Title/Status */}
       <div className="flex items-start gap-3 mb-3">
-        <div className="text-xl sm:text-2xl flex-shrink-0">{icon}</div>
         <div className="flex-1 min-w-0">
-          {/* Title with Private Badge */}
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base sm:text-lg font-semibold text-[var(--text-primary)] break-words">{title}</h3>
-            {isPrivate && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-700 flex-shrink-0">
-                <Lock size={10} className="mr-1" />
-                Private
-              </span>
-            )}
+            <h3 className="text-[1.1rem] sm:text-[1.2rem] font-semibold text-[var(--text-primary)] leading-8 break-words">{title}</h3>
           </div>
 
-          {/* Status and Date */}
-          <div className="flex items-center gap-2 flex-wrap mt-1">
-            {status && (
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${getStatusColor(status)}`}>
-                {status}
-              </span>
-            )}
-            {date && (
-              <span className="text-xs text-[var(--text-muted)]">
-                {date}
-              </span>
-            )}
-          </div>
         </div>
       </div>
 
       {metadataTags.length > 0 && (
-        <div className="mb-3 flex flex-wrap gap-1.5">
-          {metadataTags.slice(0, 5).map((tag, index) => (
+        <div className="mb-4 flex flex-wrap gap-1.5">
+          {metadataTags.slice(0, 4).map((tag, index) => (
             <span key={`${tag}-${index}`} className="badge">
               {tag}
             </span>
@@ -212,109 +142,83 @@ export function ProjectCard({
       )}
 
       {/* Description - Full width, no truncation */}
-      <p className="pinocchio-text text-sm leading-relaxed mb-2">{description}</p>
+      <p className="pinocchio-text text-[0.96rem] leading-8 mb-2">{description}</p>
 
       {/* Details */}
       {details && (
-        <p className="text-xs text-[var(--text-muted)] mb-3 italic leading-relaxed">
+        <p className="text-xs text-[var(--text-muted)] mb-4 italic leading-6">
           {details}
         </p>
       )}
 
       {/* Tech Stack Badges */}
       {techStack && techStack.length > 0 && (
-        <div className="mb-3">
+        <div className="mb-4">
           <TechBadgeList technologies={techStack} maxDisplay={6} />
         </div>
       )}
 
-      {/* Screenshots Gallery - Full Width Grid Style */}
+      {/* Media Preview */}
       {allScreenshots.length > 0 && (
-        <div className="mb-3">
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+          <div className="mb-2 flex items-center justify-between gap-3">
+            <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+              Screenshots
+            </div>
+            <button
+              type="button"
+              onClick={() => openModal(0)}
+              className="text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            >
+              View gallery
+            </button>
+          </div>
           <div className="grid grid-cols-4 gap-1.5">
             {allScreenshots.slice(0, maxThumbnails).map((src, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => openModal(i)}
-                className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--border)] transition-all duration-300 group bg-[var(--surface-secondary)]"
+                className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--border)] transition-colors duration-200 group bg-[var(--surface-primary)]"
               >
                 <Image
                   src={src}
                   alt={`${title} screenshot ${i + 1}`}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-opacity duration-200 group-hover:opacity-90"
                   sizes="(max-width: 640px) 25vw, 120px"
                 />
-                {/* Hover overlay with icon */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-white/90 flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                    <Images size={14} className="text-gray-900" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center bg-black/10">
+                  <div className="border border-white/80 bg-white/90 px-2 py-1 text-[11px] font-medium text-gray-900">
+                    Open
                   </div>
                 </div>
               </button>
             ))}
           </div>
-          {/* View More Row - Full width button below grid */}
           {hasMoreScreenshots && (
-            <button
-              type="button"
-              onClick={() => openModal(0)}
-              className="mt-2 w-full py-2 border border-[var(--border)] transition-all duration-300 flex items-center justify-center gap-2 group hover:bg-[var(--surface-secondary)]"
-            >
-              <Images size={14} className="text-[var(--text-secondary)]" />
-              <span className="text-xs font-medium text-[var(--text-secondary)]">
-                View all {allScreenshots.length} screenshots
-                {categoryCount > 0 && ` (${categoryCount} sections)`}
-              </span>
-            </button>
+            <div className="mt-2 text-xs text-[var(--text-muted)]">
+              {allScreenshots.length} screenshots{categoryCount > 0 && ` across ${categoryCount} sections`}
+            </div>
           )}
         </div>
       )}
 
-      {/* Video Preview Thumbnails - Full Width Cinematic Style */}
-      {hasVideoThumbnails && (
-        <div className="mb-3">
-          <div className={`grid gap-2 ${videoThumbnails.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            {videoThumbnails.map((video, i) => (
+      {mediaLinks.length > 0 && (
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+            Video Walkthroughs
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {mediaLinks.map(link => (
               <button
-                key={i}
+                key={link.label}
                 type="button"
-                onClick={() => openVideoInNewTab(video.url!)}
-                className="relative w-full aspect-video overflow-hidden border border-[var(--border)] transition-all duration-300 group bg-gray-900"
-                title={`Watch ${video.label} Video`}
+                onClick={() => openVideoInNewTab(link.url!)}
+                className={actionClassName}
               >
-                {/* Thumbnail image - full coverage */}
-                <Image
-                  src={video.thumbnail!}
-                  alt={`${title} ${video.label} video`}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  unoptimized
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
-                {/* Gradient overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
-                {/* Play button - centered, prominent */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-white/95 dark:bg-white/90 flex items-center justify-center backdrop-blur-sm transform group-hover:scale-110 transition-all duration-300 group-hover:bg-white">
-                    <Play size={22} className="text-gray-900 ml-1" fill="currentColor" />
-                  </div>
-                </div>
-                {/* Label badge - bottom left with glass effect */}
-                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-white bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md shadow-sm">
-                    {video.label}
-                  </span>
-                  {/* Watch indicator on hover */}
-                  <span className="text-[10px] font-medium text-white/90 bg-[var(--accent)]/85 backdrop-blur-sm px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
-                    <ExternalLink size={10} />
-                    Watch
-                  </span>
-                </div>
+                <Play size={14} />
+                {link.label}
               </button>
             ))}
           </div>
@@ -322,7 +226,7 @@ export function ProjectCard({
       )}
 
       {/* Links - Push to bottom */}
-      <div className="flex gap-2 flex-wrap mt-auto pt-2">
+      <div className="flex gap-2 flex-wrap mt-auto pt-3">
         {(webGithubLink || mobileGithubLink) ? (
           <>
             {webGithubLink && (
@@ -330,7 +234,7 @@ export function ProjectCard({
                 href={webGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
+                className={actionClassName}
               >
                 <Github size={14} className="mr-1" />
                 Web
@@ -341,7 +245,7 @@ export function ProjectCard({
                 href={mobileGithubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
+                className={actionClassName}
               >
                 <Github size={14} className="mr-1" />
                 Mobile
@@ -352,10 +256,10 @@ export function ProjectCard({
                 href={webDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
+                className={actionClassName}
               >
                 <ExternalLink size={14} className="mr-1" />
-                Demo
+                Web Demo
               </a>
             )}
             {mobileDemoLink && (
@@ -363,26 +267,25 @@ export function ProjectCard({
                 href={mobileDemoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
+                className={actionClassName}
               >
                 <ExternalLink size={14} className="mr-1" />
-                App Demo
+                Mobile Demo
               </a>
             )}
-            {/* Only show video links if no video thumbnails are displayed */}
-            {!hasVideoThumbnails && webVideoLink && (
+            {!mediaLinks.length && webVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(webVideoLink)}
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
+                className={actionClassName}
               >
                 <Play size={14} className="mr-1" />
                 Web Video
               </button>
             )}
-            {!hasVideoThumbnails && mobileVideoLink && (
+            {!mediaLinks.length && mobileVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(mobileVideoLink)}
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
+                className={actionClassName}
               >
                 <Play size={14} className="mr-1" />
                 Mobile Video
@@ -396,17 +299,27 @@ export function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline py-1.5 px-1"
+                className={actionClassName}
               >
                 <Github size={14} className="mr-1" />
                 {getGithubButtonLabel()}
               </a>
             )}
-            {/* Only show video link if no video thumbnail is displayed */}
-            {!hasVideoThumbnails && videoLink && (
+            {demoLink && (
+              <a
+                href={demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={actionClassName}
+              >
+                <ExternalLink size={14} className="mr-1" />
+                Demo
+              </a>
+            )}
+            {!mediaLinks.length && videoLink && (
               <button
                 onClick={() => openVideoInNewTab(videoLink)}
-                className="inline-flex items-center text-xs text-[var(--accent)] hover:underline cursor-pointer py-1.5 px-1"
+                className={actionClassName}
               >
                 <Play size={14} className="mr-1" />
                 {videoLinkText}

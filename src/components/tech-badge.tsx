@@ -14,7 +14,7 @@ export function TechBadge({ tech, className }: TechBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border transition-colors",
+        "inline-flex items-center px-2.5 py-1 text-[11px] font-medium border transition-colors",
         getTechColor(),
         className
       )}

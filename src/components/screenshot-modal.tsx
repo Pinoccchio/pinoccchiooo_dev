@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ChevronLeft, ChevronRight, Images, Grid3X3, List } from "lucide-react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { type ScreenshotCategory } from "@/data/projects"
 import { useTheme } from "@/components/theme-provider"
 
@@ -26,338 +26,246 @@ export function ScreenshotModal({
   initialIndex = 0,
 }: ScreenshotModalProps) {
   const { theme } = useTheme()
-
-  // Flatten categories into single array for navigation
   const allScreenshots = screenshotCategories
-    ? screenshotCategories.flatMap(cat => cat.screenshots)
+    ? screenshotCategories.flatMap(category => category.screenshots)
     : screenshots || []
 
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const [mounted, setMounted] = useState(false)
-  const [viewMode, setViewMode] = useState<"slideshow" | "grid">("slideshow")
+  const [viewMode, setViewMode] = useState<"single" | "grid">("single")
   const thumbnailContainerRef = useRef<HTMLDivElement>(null)
-  const gridContainerRef = useRef<HTMLDivElement>(null)
 
-  // Get current category info
   const getCurrentCategory = () => {
     if (!screenshotCategories) return null
-    let count = 0
-    for (const cat of screenshotCategories) {
-      if (currentIndex < count + cat.screenshots.length) {
+
+    let offset = 0
+    for (const category of screenshotCategories) {
+      if (currentIndex < offset + category.screenshots.length) {
         return {
-          category: cat,
-          indexInCategory: currentIndex - count,
-          categoryIndex: screenshotCategories.indexOf(cat)
+          title: category.title,
+          description: category.description,
+          indexInCategory: currentIndex - offset,
+          total: category.screenshots.length,
         }
       }
-      count += cat.screenshots.length
+      offset += category.screenshots.length
     }
+
     return null
   }
 
-  const currentCategoryInfo = getCurrentCategory()
+  const currentCategory = getCurrentCategory()
 
-  // Reset index when modal opens
   useEffect(() => {
     if (isOpen) {
       setCurrentIndex(initialIndex)
-      setViewMode("slideshow")
+      setViewMode("single")
     }
-  }, [isOpen, initialIndex])
+  }, [initialIndex, isOpen])
 
-  // Mount check for portal
   useEffect(() => {
     setMounted(true)
     return () => setMounted(false)
   }, [])
 
-  // Scroll thumbnail into view
   useEffect(() => {
-    if (thumbnailContainerRef.current && isOpen && viewMode === "slideshow") {
-      const container = thumbnailContainerRef.current
-      const thumbnail = container.children[currentIndex] as HTMLElement
-      if (thumbnail) {
-        thumbnail.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
-      }
-    }
-  }, [currentIndex, isOpen, viewMode])
-
-  // Keyboard navigation
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return
-    if (e.key === "Escape") onClose()
-    else if (e.key === "ArrowLeft") setCurrentIndex(prev => (prev === 0 ? allScreenshots.length - 1 : prev - 1))
-    else if (e.key === "ArrowRight") setCurrentIndex(prev => (prev === allScreenshots.length - 1 ? 0 : prev + 1))
-  }, [isOpen, onClose, allScreenshots.length])
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!thumbnailContainerRef.current || !isOpen) return
+
+    const thumbnail = thumbnailContainerRef.current.children[currentIndex] as HTMLElement | undefined
+    thumbnail?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
+  }, [currentIndex, isOpen])
+
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (!isOpen) return
+
+    if (event.key === "Escape") onClose()
+    if (event.key === "ArrowLeft") {
+      setCurrentIndex(prev => (prev === 0 ? allScreenshots.length - 1 : prev - 1))
+    }
+    if (event.key === "ArrowRight") {
+      setCurrentIndex(prev => (prev === allScreenshots.length - 1 ? 0 : prev + 1))
+    }
+  }, [allScreenshots.length, isOpen, onClose])
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [handleKeyDown])
 
-  // Prevent body scroll
-  useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden"
-    else document.body.style.overflow = ""
-    return () => { document.body.style.overflow = "" }
-  }, [isOpen])
-
   if (!isOpen || !mounted || allScreenshots.length === 0) return null
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const panelClassName = theme === "dark"
+    ? "bg-[var(--surface-primary)] border-[var(--border)]"
+    : "bg-white border-[var(--border)]"
+
+  const subTextClassName = theme === "dark" ? "text-[var(--text-secondary)]" : "text-[var(--text-secondary)]"
+
+  const handlePrev = (event: React.MouseEvent) => {
+    event.stopPropagation()
     setCurrentIndex(prev => (prev === 0 ? allScreenshots.length - 1 : prev - 1))
   }
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const handleNext = (event: React.MouseEvent) => {
+    event.stopPropagation()
     setCurrentIndex(prev => (prev === allScreenshots.length - 1 ? 0 : prev + 1))
   }
 
   const modalContent = (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col"
+      className="fixed inset-0 z-[9999] bg-[rgba(247,247,245,0.96)] dark:bg-[rgba(15,17,21,0.96)] p-3 sm:p-6"
       onClick={onClose}
-      style={{ backgroundColor: theme === "dark" ? "rgba(0, 0, 0, 0.95)" : "rgba(255, 255, 255, 0.98)" }}
     >
-      {/* Header */}
       <div
-        className={`flex items-center justify-between px-4 py-3 border-b ${
-          theme === "dark" ? "bg-black/50 border-gray-800" : "bg-white/90 border-gray-200"
-        }`}
-        onClick={e => e.stopPropagation()}
+        className={`mx-auto flex h-full max-w-[1500px] flex-col border ${panelClassName}`}
+        onClick={event => event.stopPropagation()}
       >
-        <div className="flex items-center gap-3">
-          <Images size={20} className="text-blue-400" />
-          <h3 className={`font-semibold text-lg hidden sm:block ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{title}</h3>
-          <span className={`text-sm px-2.5 py-1 rounded-full ${
-            theme === "dark" ? "text-gray-400 bg-gray-800" : "text-gray-600 bg-gray-100"
-          }`}>
-            {currentIndex + 1} / {allScreenshots.length}
-          </span>
-          {currentCategoryInfo && (
-            <span className="text-sm text-blue-400 hidden sm:inline">
-              {currentCategoryInfo.category.title}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {/* View Mode Toggle */}
-          <div className={`flex rounded-lg p-1 ${theme === "dark" ? "bg-gray-800" : "bg-gray-100"}`}>
+        <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-4 py-4 sm:px-6">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-3">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] sm:text-xl">{title}</h3>
+              <span className="border border-[var(--border)] bg-[var(--surface-secondary)] px-2 py-0.5 text-xs font-medium text-[var(--text-secondary)]">
+                {currentIndex + 1} / {allScreenshots.length}
+              </span>
+              {currentCategory && (
+                <span className="text-sm font-medium text-[var(--text-secondary)]">
+                  {currentCategory.title}
+                </span>
+              )}
+            </div>
+            {currentCategory && (
+              <p className={`mt-2 text-sm ${subTextClassName}`}>
+                {currentCategory.description}
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
             <button
-              onClick={() => setViewMode("slideshow")}
-              className={`p-1.5 rounded ${viewMode === "slideshow"
-                ? "bg-blue-600 text-white"
-                : theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}
-              title="Slideshow view"
+              type="button"
+              onClick={() => setViewMode(current => current === "single" ? "grid" : "single")}
+              className="border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-2 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)]"
             >
-              <Images size={18} />
+              {viewMode === "single" ? "All Screens" : "Single View"}
             </button>
             <button
-              onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded ${viewMode === "grid"
-                ? "bg-blue-600 text-white"
-                : theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}
-              title="Grid view"
+              type="button"
+              onClick={onClose}
+              className="border border-[var(--border)] bg-[var(--surface-secondary)] p-2 text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)]"
             >
-              <Grid3X3 size={18} />
+              <X size={18} />
             </button>
           </div>
-          <button
-            onClick={onClose}
-            className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "hover:bg-gray-800" : "hover:bg-gray-100"}`}
-          >
-            <X size={24} className={theme === "dark" ? "text-gray-300 hover:text-white" : "text-gray-500 hover:text-gray-900"} />
-          </button>
         </div>
-      </div>
 
-      {/* Content Area */}
-      <div className="flex-1 overflow-hidden" onClick={e => e.stopPropagation()}>
-        {viewMode === "slideshow" ? (
-          /* Slideshow View */
-          <div className="h-full flex flex-col">
-            {/* Main Image */}
-            <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
-              <div className="relative w-full h-full max-w-7xl" style={{ willChange: "transform" }}>
-                <AnimatePresence initial={false} mode="popLayout">
-                  <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      opacity: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
-                    }}
-                    className="absolute inset-0"
-                    style={{ willChange: "opacity" }}
-                  >
-                    <Image
-                      src={allScreenshots[currentIndex]}
-                      alt={`${title} screenshot ${currentIndex + 1}`}
-                      fill
-                      className="object-contain"
-                      sizes="100vw"
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
+        {viewMode === "single" ? (
+          <>
+            <div className="relative flex-1 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center px-3 py-4 sm:px-6 sm:py-6">
+                <div className="relative h-full w-full">
+                  <AnimatePresence initial={false} mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={allScreenshots[currentIndex]}
+                        alt={`${title} screenshot ${currentIndex + 1}`}
+                        fill
+                        className="object-contain"
+                        sizes="100vw"
+                        priority
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
 
-              {/* Navigation Arrows */}
               {allScreenshots.length > 1 && (
                 <>
                   <button
+                    type="button"
                     onClick={handlePrev}
-                    className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 rounded-full transition-colors border ${
-                      theme === "dark"
-                        ? "bg-black/60 hover:bg-black/80 text-white border-gray-700"
-                        : "bg-white/80 hover:bg-white text-gray-800 border-gray-300 shadow-lg"
-                    }`}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 border border-[var(--border)] bg-[var(--surface-primary)] p-2.5 text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-secondary)] hover:text-[var(--text-primary)]"
                   >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={18} />
                   </button>
                   <button
+                    type="button"
                     onClick={handleNext}
-                    className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-3 sm:p-3 rounded-full transition-colors border ${
-                      theme === "dark"
-                        ? "bg-black/60 hover:bg-black/80 text-white border-gray-700"
-                        : "bg-white/80 hover:bg-white text-gray-800 border-gray-300 shadow-lg"
-                    }`}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 border border-[var(--border)] bg-[var(--surface-primary)] p-2.5 text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-secondary)] hover:text-[var(--text-primary)]"
                   >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={18} />
                   </button>
                 </>
               )}
             </div>
-
-            {/* Category Info Bar */}
-            {currentCategoryInfo && (
-              <div className={`px-4 py-2 border-t ${
-                theme === "dark" ? "bg-gray-900/80 border-gray-800" : "bg-gray-50/90 border-gray-200"
-              }`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className={`font-medium ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{currentCategoryInfo.category.title}</h4>
-                    <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{currentCategoryInfo.category.description}</p>
-                  </div>
-                  <span className={`text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}>
-                    {currentCategoryInfo.indexInCategory + 1} of {currentCategoryInfo.category.screenshots.length} in category
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Thumbnail Strip */}
-            <div className={`border-t py-2 px-2 sm:px-4 ${
-              theme === "dark" ? "bg-black/50 border-gray-800" : "bg-gray-50/90 border-gray-200"
-            }`}>
+            <div className="border-t border-[var(--border)] px-3 py-3 sm:px-6">
               <div
                 ref={thumbnailContainerRef}
-                className="flex gap-1.5 overflow-x-auto pb-1"
+                className="flex gap-2 overflow-x-auto pb-1"
                 style={{ scrollbarWidth: "thin" }}
               >
-                {allScreenshots.map((src, i) => (
+                {allScreenshots.map((src, index) => (
                   <button
-                    key={i}
-                    onClick={() => setCurrentIndex(i)}
-                    className={`relative flex-shrink-0 w-16 h-10 rounded overflow-hidden transition-opacity duration-200 ${
-                      i === currentIndex
-                        ? "ring-2 ring-blue-500 opacity-100"
-                        : "opacity-40 hover:opacity-80"
+                    key={index}
+                    type="button"
+                    onClick={() => setCurrentIndex(index)}
+                    className={`relative h-14 w-24 flex-shrink-0 overflow-hidden border transition-opacity ${
+                      index === currentIndex
+                        ? "border-[var(--text-primary)] opacity-100"
+                        : "border-[var(--border)] opacity-55 hover:opacity-90"
                     }`}
                   >
-                    <Image src={src} alt={`Thumb ${i + 1}`} fill className="object-cover" sizes="80px" />
+                    <Image src={src} alt={`Thumbnail ${index + 1}`} fill className="object-cover" sizes="96px" />
                   </button>
                 ))}
               </div>
-              <p className={`text-xs text-center mt-1 hidden sm:block ${theme === "dark" ? "text-gray-600" : "text-gray-500"}`}>
-                ← → arrow keys to navigate • ESC to close
-              </p>
+
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--text-muted)]">
+                <span>Use left and right arrow keys to navigate.</span>
+                {currentCategory && (
+                  <span>
+                    {currentCategory.indexInCategory + 1} of {currentCategory.total} in {currentCategory.title}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
+          </>
         ) : (
-          /* Grid View with Categories */
-          <div
-            ref={gridContainerRef}
-            className="h-full overflow-y-auto p-4"
-          >
-            {screenshotCategories ? (
-              /* Categorized Grid */
-              <div className="max-w-7xl mx-auto space-y-8">
-                {screenshotCategories.map((category, catIndex) => (
-                  <div key={catIndex}>
-                    <div className="mb-3 flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <List size={18} className="text-blue-400" />
-                        <h4 className={`font-semibold text-lg ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{category.title}</h4>
-                      </div>
-                      <span className="text-gray-500 text-sm">({category.screenshots.length})</span>
-                    </div>
-                    <p className={`text-sm mb-3 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{category.description}</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                      {category.screenshots.map((src, imgIndex) => {
-                        const globalIndex = screenshotCategories
-                          .slice(0, catIndex)
-                          .reduce((sum, c) => sum + c.screenshots.length, 0) + imgIndex
-                        return (
-                          <button
-                            key={imgIndex}
-                            onClick={() => {
-                              setCurrentIndex(globalIndex)
-                              setViewMode("slideshow")
-                            }}
-                            className={`relative aspect-video rounded-lg overflow-hidden border hover:border-blue-500 transition-colors group ${
-                              theme === "dark" ? "border-gray-700" : "border-gray-300"
-                            }`}
-                          >
-                            <Image
-                              src={src}
-                              alt={`${category.title} ${imgIndex + 1}`}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                              <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                                View
-                              </span>
-                            </div>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              /* Simple Grid (no categories) */
-              <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                  {allScreenshots.map((src, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setCurrentIndex(i)
-                        setViewMode("slideshow")
-                      }}
-                      className={`relative aspect-video rounded-lg overflow-hidden border hover:border-blue-500 transition-colors group ${
-                        theme === "dark" ? "border-gray-700" : "border-gray-300"
-                      }`}
-                    >
-                      <Image
-                        src={src}
-                        alt={`Screenshot ${i + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+          <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-6 sm:py-6">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {allScreenshots.map((src, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => {
+                    setCurrentIndex(index)
+                    setViewMode("single")
+                  }}
+                  className="relative aspect-video overflow-hidden border border-[var(--border)] bg-[var(--surface-secondary)] transition-opacity hover:opacity-90"
+                >
+                  <Image
+                    src={src}
+                    alt={`${title} screenshot ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -43,7 +43,7 @@ export async function chatWithPinocchio(messages: { role: string; content: strin
         role: "model",
         parts: [
           {
-            text: "I understand. I'll answer as Jan Miko (Pinoccchiooo) and help with projects, experience, and contact details.",
+            text: "I understand. I'll answer as Jan Miko A. Guevarra and help with projects, experience, and contact details.",
           },
         ],
       },

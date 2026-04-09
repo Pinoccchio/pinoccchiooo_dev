@@ -7,6 +7,7 @@ import { useTheme } from "./theme-provider"
 export function GitHubCalendar() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [CalendarComponent, setCalendarComponent] = useState<any>(null)
+  const [viewportWidth, setViewportWidth] = useState(0)
   const { theme } = useTheme()
   const username = "Pinoccchio" // Your GitHub username
 
@@ -16,6 +17,19 @@ export function GitHubCalendar() {
       setCalendarComponent(() => module.default)
       setIsLoaded(true)
     })
+  }, [])
+
+  useEffect(() => {
+    const updateViewportWidth = () => {
+      setViewportWidth(window.innerWidth)
+    }
+
+    updateViewportWidth()
+    window.addEventListener("resize", updateViewportWidth)
+
+    return () => {
+      window.removeEventListener("resize", updateViewportWidth)
+    }
   }, [])
 
   // Show a loading state until client-side rendering is complete
@@ -33,9 +47,18 @@ export function GitHubCalendar() {
     dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
   }
 
+  const calendarSizing =
+    viewportWidth >= 1280
+      ? { blockSize: 14, blockMargin: 4, fontSize: 14 }
+      : viewportWidth >= 1024
+        ? { blockSize: 13, blockMargin: 4, fontSize: 13 }
+        : viewportWidth >= 768
+          ? { blockSize: 11, blockMargin: 4, fontSize: 12 }
+          : { blockSize: 10, blockMargin: 3, fontSize: 11 }
+
   return (
     <div className="overflow-x-auto py-2">
-      <div className="min-w-[320px] sm:min-w-[500px] md:min-w-[700px] lg:min-w-0">
+      <div className="min-w-[320px] w-full">
         <CalendarComponent
           username={username}
           colorScheme={theme === "dark" ? "dark" : "light"}
@@ -46,9 +69,9 @@ export function GitHubCalendar() {
           hideColorLegend
           hideMonthLabels={false}
           className="w-full"
-          blockSize={10}
-          blockMargin={4}
-          fontSize={12}
+          blockSize={calendarSizing.blockSize}
+          blockMargin={calendarSizing.blockMargin}
+          fontSize={calendarSizing.fontSize}
         />
       </div>
       <div className="text-center mt-4 text-sm pinocchio-text">

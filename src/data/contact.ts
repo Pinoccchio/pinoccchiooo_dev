@@ -6,7 +6,8 @@
 export const CONTACT = {
   name: {
     full: "Jan Miko A. Guevarra",
-    display: "Pinoccchiooo",
+    display: "Jan Miko A. Guevarra",
+    alias: "Pinoccchiooo",
   },
   location: {
     city: "Digos City",
@@ -18,10 +19,19 @@ export const CONTACT = {
   email: "janmikoguevarra@gmail.com",
   social: {
     facebook: "https://www.facebook.com/phoebe.finley.96",
+    facebookDev: "https://www.facebook.com/phoebe.finley.96",
+    facebookPersonal: "https://www.facebook.com/Renbards619",
     github: "github.com/Pinoccchio",
     githubFull: "https://github.com/Pinoccchio",
+    instagram: "instagram.com/itsjexxejs_/",
+    instagramFull: "https://www.instagram.com/itsjexxejs_/",
+    linkedin: "linkedin.com/in/jan-miko-guevarra-894088294",
+    linkedinFull: "https://linkedin.com/in/jan-miko-guevarra-894088294",
     portfolio: "pinoccchiooo.dev",
     portfolioFull: "https://pinoccchiooo.dev",
+  },
+  assets: {
+    resume: "/resume/RESUME_DEV_Jan_Miko_Guevarra.pdf",
   },
   education: {
     school: "Cor Jesu College",

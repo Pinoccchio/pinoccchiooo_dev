@@ -64,23 +64,6 @@ export const projects: Project[] = [
     screenshotCategories: incloudScreenshots
   },
   {
-    id: "learnsmart-platform",
-    title: "LearnSmart Educational Platform",
-    description: "Comprehensive AI-powered educational platform implementing 4 evidence-based study techniques: Active Recall (flashcards with SM-2), Pomodoro (focus tracking), Feynman (teach to learn), and Retrieval Practice (adaptive questions).",
-    icon: "🎓",
-    category: "hybrid",
-    engagementType: "Freelance",
-    sector: "Education",
-    platformSummary: "Web + Mobile",
-    impactTags: ["AI-enabled", "Analytics", "Private"],
-    techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Provider", "Chart.js", "PDF Processing"],
-    status: "Active Development",
-    date: "Aug-Oct 2025",
-    isPrivate: true,
-    isFeatured: true,
-    details: "Web: Admin/instructor platform | Mobile: Student app | 15+ database tables with analytics"
-  },
-  {
     id: "rribn-system",
     title: "RRIBN Military Management System",
     description: "Army Reserve Reservist Integrated Behavioral Network for Philippine Army Reserve units. Features 4-role RBAC (Super Admin, Admin, Staff, Reservist), company management, training records, PDF reports, and QR identification.",
@@ -97,27 +80,6 @@ export const projects: Project[] = [
     isFeatured: true,
     details: "Web: Personnel management | Mobile: Reservist app (private) | Government-grade security"
   },
-  {
-    id: "lawbot-platform",
-    title: "LawBot - Cybercrime Reporting Platform",
-    description: "AI-powered cybercrime reporting for Philippines with 67+ crime types across 10 categories. Features AI evidence suggestions, credibility meter, pattern detection, and case management for PNP officers.",
-    icon: "⚖️",
-    category: "hybrid",
-    engagementType: "Client",
-    sector: "Government",
-    platformSummary: "Web + Mobile",
-    impactTags: ["Government", "AI-enabled", "Production"],
-    techStack: ["Next.js 15", "React 18", "Flutter", "TypeScript", "Supabase", "Firebase", "Gemini 2.0", "Provider", "Vite"],
-    mobileVideoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
-    videoUrl: "https://drive.google.com/file/d/1RI2vOHHE83skJAbINl0fJ0z9cTaPDRr7/view?usp=sharing",
-    demoUrl: "https://drive.google.com/file/d/1Qy48z_Ve36DWUHewRYai2nDU8IiCrrr0/view?usp=sharing",
-    status: "Production",
-    date: "Jun-Sep 2025",
-    isPrivate: false,
-    isFeatured: true,
-    details: "Mobile: Citizen reporting | Web: PNP officer dashboard | Alternative: React/Vite version"
-  },
-
   // ==================== AI & ML PROJECTS ====================
   {
     id: "mci-detection-system",
@@ -376,22 +338,6 @@ export const projects: Project[] = [
     details: "Real client: Municipality of Asuncion, Davao del Norte | 4-role RBAC | AI ensemble ranking | PDS wizard | Training certificates",
     screenshotCategories: jobsyncScreenshots
   },
-  {
-    id: "nfc-card",
-    title: "NFC Card Website",
-    description: "NFC card management and digital business card platform with theme support.",
-    icon: "📇",
-    category: "web",
-    engagementType: "Freelance",
-    sector: "Business",
-    platformSummary: "Web App",
-    impactTags: ["Completed", "Identity", "Platform"],
-    techStack: ["Next.js 14", "React 18", "TypeScript", "Supabase", "Radix UI", "Tailwind CSS"],
-    status: "Completed",
-    date: "Apr 2025",
-    isPrivate: false
-  },
-
   // ==================== MOBILE APPLICATIONS ====================
   {
     id: "yummify",

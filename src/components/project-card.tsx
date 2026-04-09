@@ -83,6 +83,38 @@ export function ProjectCard({
     return url
   }
 
+  const getVideoThumbnail = (url: string) => {
+    if (!url) return null
+
+    if (url.includes("drive.google.com")) {
+      let fileId = ""
+      if (url.includes("/file/d/")) {
+        fileId = url.split("/file/d/")[1].split("/")[0]
+      } else if (url.includes("open?id=")) {
+        fileId = url.split("open?id=")[1].split("&")[0]
+      }
+
+      if (fileId) {
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
+      }
+    }
+
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      let videoId = ""
+      if (url.includes("watch?v=")) {
+        videoId = url.split("watch?v=")[1].split("&")[0]
+      } else if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0]
+      }
+
+      if (videoId) {
+        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
+      }
+    }
+
+    return null
+  }
+
   const openVideoInNewTab = (url: string) => {
     const formattedUrl = formatGoogleDriveLink(url)
     window.open(formattedUrl, "_blank", "noopener,noreferrer")
@@ -116,6 +148,14 @@ export function ProjectCard({
     { label: "Web Video", url: webVideoLink },
     { label: "Mobile Video", url: mobileVideoLink },
   ].filter(item => item.url)
+  const videoPreviews = mediaLinks
+    .map(item => ({
+      ...item,
+      thumbnail: getVideoThumbnail(item.url!),
+    }))
+    .filter(item => item.thumbnail)
+  const hasVideoPreviews = videoPreviews.length > 0
+  const fallbackMediaLinks = mediaLinks.filter(item => !getVideoThumbnail(item.url!))
   const actionClassName =
     "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)]"
 
@@ -204,13 +244,55 @@ export function ProjectCard({
         </div>
       )}
 
-      {mediaLinks.length > 0 && (
+      {hasVideoPreviews && (
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+            Video Walkthroughs
+          </div>
+          <div className={`grid gap-2 ${videoPreviews.length === 1 ? "grid-cols-1" : "sm:grid-cols-2"}`}>
+            {videoPreviews.map(link => (
+              <button
+                key={link.label}
+                type="button"
+                onClick={() => openVideoInNewTab(link.url!)}
+                className="group relative aspect-video overflow-hidden border border-[var(--border)] bg-[var(--surface-primary)] transition-colors hover:bg-[var(--surface-tertiary)]"
+              >
+                <Image
+                  src={link.thumbnail!}
+                  alt={`${title} ${link.label}`}
+                  fill
+                  className="object-cover transition-opacity duration-200 group-hover:opacity-90"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/28" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-11 w-11 items-center justify-center border border-white/80 bg-white/90 text-gray-900 transition-transform duration-200 group-hover:scale-105">
+                    <Play size={18} fill="currentColor" className="ml-0.5" />
+                  </div>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-black/80 via-black/45 to-transparent px-3 py-2 text-left text-white">
+                  <span className="text-xs font-semibold uppercase tracking-[0.08em]">
+                    {link.label}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] text-white/88">
+                    <ExternalLink size={11} />
+                    Open
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {fallbackMediaLinks.length > 0 && (
         <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>
           <div className="flex flex-wrap gap-2">
-            {mediaLinks.map(link => (
+            {fallbackMediaLinks.map(link => (
               <button
                 key={link.label}
                 type="button"
@@ -273,7 +355,7 @@ export function ProjectCard({
                 Mobile Demo
               </a>
             )}
-            {!mediaLinks.length && webVideoLink && (
+            {!hasVideoPreviews && webVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(webVideoLink)}
                 className={actionClassName}
@@ -282,7 +364,7 @@ export function ProjectCard({
                 Web Video
               </button>
             )}
-            {!mediaLinks.length && mobileVideoLink && (
+            {!hasVideoPreviews && mobileVideoLink && (
               <button
                 onClick={() => openVideoInNewTab(mobileVideoLink)}
                 className={actionClassName}
@@ -316,7 +398,7 @@ export function ProjectCard({
                 Demo
               </a>
             )}
-            {!mediaLinks.length && videoLink && (
+            {!hasVideoPreviews && videoLink && (
               <button
                 onClick={() => openVideoInNewTab(videoLink)}
                 className={actionClassName}

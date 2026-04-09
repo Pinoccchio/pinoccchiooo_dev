@@ -75,13 +75,13 @@ const profileActions = [
   {
     label: "Facebook (Dev)",
     href: CONTACT.social.facebookDev,
-    icon: MapPin,
+    icon: Facebook,
     primary: false,
   },
   {
     label: "Facebook (Personal)",
     href: CONTACT.social.facebookPersonal,
-    icon: MapPin,
+    icon: Facebook,
     primary: false,
   },
   {
@@ -157,8 +157,8 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mt-10 grid items-stretch gap-8 lg:grid-cols-[minmax(0,1fr)_392px]">
-          <div className="flex h-full flex-col gap-8">
+        <div className="mt-12 grid items-stretch gap-10 lg:grid-cols-5 lg:gap-12">
+          <div className="flex h-full flex-col gap-8 lg:col-span-3">
             <section className="section-card p-5 sm:p-6">
               <h2 className="section-title">About</h2>
               <AboutSection />
@@ -185,7 +185,7 @@ export default function Home() {
                       {(showAllTech ? group.items : group.items.slice(0, 5)).map(item => (
                         <span
                           key={item}
-                          className="inline-flex min-h-10 items-center border border-[var(--border)] bg-[var(--surface-secondary)] px-3.5 py-2 leading-none"
+                          className="inline-flex min-h-10 items-center border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-2 leading-none rounded-full shadow-sm text-sm"
                         >
                           {item}
                         </span>
@@ -198,10 +198,10 @@ export default function Home() {
 
           </div>
 
-          <div className="flex h-full flex-col gap-8">
+          <div className="flex h-full flex-col gap-8 lg:col-span-2">
             <section className="section-card p-5 sm:p-6">
               <ProfileCard />
-              <div className="mt-4 bg-[var(--accent)] text-white px-4 py-3 text-sm font-semibold">
+              <div className="mt-5 bg-[var(--accent)] text-white px-5 py-4 rounded-xl shadow-md text-[0.95rem] font-medium leading-relaxed">
                 Building plain, useful software with web, mobile, and AI.
               </div>
             </section>
@@ -213,9 +213,9 @@ export default function Home() {
                   <div key={`${item.title}-${item.year}`} className="experience-item">
                     <div className="experience-marker-wrap">
                       <div
-                        className={`experience-marker ${
+                        className={`experience-marker rounded-full ${
                           item.active
-                            ? "bg-black border-black dark:bg-white dark:border-white"
+                            ? "bg-[var(--accent)] border-[var(--accent)]"
                             : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
                         }`}
                       ></div>
@@ -327,7 +327,7 @@ export default function Home() {
               <div className="mt-3 space-y-2">
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="flex items-start gap-3 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
+                  className="flex items-start gap-3 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
                 >
                   <Mail size={16} className="mt-0.5 shrink-0" />
                   <span className="min-w-0">
@@ -339,7 +339,7 @@ export default function Home() {
                   href={CONTACT.assets.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
+                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
                 >
                   <span className="inline-flex items-center gap-2">
                     <FileText size={16} />
@@ -357,7 +357,7 @@ export default function Home() {
                   href={CONTACT.social.linkedinFull}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
+                  className="flex items-center gap-3 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
                 >
                   <Linkedin size={16} />
                   LinkedIn
@@ -390,7 +390,7 @@ export default function Home() {
                   href={CONTACT.social.facebookDev}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
+                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
                 >
                   <span className="inline-flex items-center gap-2">
                     <Facebook size={16} />
@@ -402,7 +402,7 @@ export default function Home() {
                   href={CONTACT.social.facebookPersonal}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
+                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
                 >
                   <span className="inline-flex items-center gap-2">
                     <Facebook size={16} />

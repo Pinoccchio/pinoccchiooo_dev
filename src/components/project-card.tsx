@@ -157,7 +157,7 @@ export function ProjectCard({
   const hasVideoPreviews = videoPreviews.length > 0
   const fallbackMediaLinks = mediaLinks.filter(item => !getVideoThumbnail(item.url!))
   const actionClassName =
-    "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)]"
+    "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-1.5 rounded-full shadow-sm text-xs font-semibold text-[var(--text-secondary)] transition-all hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)] hover:shadow-md"
 
   return (
     <div className="flex flex-col h-full">
@@ -200,7 +200,7 @@ export function ProjectCard({
 
       {/* Media Preview */}
       {allScreenshots.length > 0 && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
           <div className="mb-2 flex items-center justify-between gap-3">
             <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
               Screenshots
@@ -219,7 +219,7 @@ export function ProjectCard({
                 key={i}
                 type="button"
                 onClick={() => openModal(i)}
-                className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--border)] transition-colors duration-200 group bg-[var(--surface-primary)]"
+                className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--border)] transition-colors duration-200 group bg-[var(--surface-primary)] rounded-xl shadow-sm"
               >
                 <Image
                   src={src}
@@ -245,7 +245,7 @@ export function ProjectCard({
       )}
 
       {hasVideoPreviews && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>
@@ -255,7 +255,7 @@ export function ProjectCard({
                 key={link.label}
                 type="button"
                 onClick={() => openVideoInNewTab(link.url!)}
-                className="group relative aspect-video overflow-hidden border border-[var(--border)] bg-[var(--surface-primary)] transition-colors hover:bg-[var(--surface-tertiary)]"
+                className="group relative aspect-video overflow-hidden border border-[var(--border)] bg-[var(--surface-primary)] transition-colors hover:bg-[var(--surface-tertiary)] rounded-xl shadow-sm"
               >
                 <Image
                   src={link.thumbnail!}
@@ -287,7 +287,7 @@ export function ProjectCard({
       )}
 
       {fallbackMediaLinks.length > 0 && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-3">
+        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>

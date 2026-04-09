@@ -121,7 +121,7 @@ export default function Home() {
           <div className="space-y-4">
             <div>
               <h1 className="pinocchio-name text-4xl sm:text-[2.9rem] leading-none">{CONTACT.name.full}</h1>
-              <div className="mt-3 flex items-center gap-2 text-[15px] text-[var(--text-secondary)]">
+              <div className="mt-3 flex items-center justify-center md:justify-start gap-2 text-[15px] text-[var(--text-secondary)]">
                 <MapPin size={16} />
                 {CONTACT.location.city}, {CONTACT.location.country}
               </div>
@@ -130,7 +130,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3">
               {headerActions.map(action => {
                 const Icon = action.icon
                 const className = action.primary ? "btn btn-primary justify-start" : "btn btn-secondary justify-start"
@@ -152,7 +152,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="self-start">
+          <div className="self-center md:self-start">
             <div className="badge badge-accent">Web, Mobile, AI</div>
           </div>
         </section>

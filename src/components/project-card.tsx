@@ -229,7 +229,7 @@ export function ProjectCard({
                   sizes="(max-width: 640px) 25vw, 120px"
                 />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center bg-black/10">
-                  <div className="border border-white/80 bg-white/90 px-2 py-1 text-[11px] font-medium text-gray-900">
+                  <div className="border border-white/80 bg-white/90 px-3 py-1.5 rounded-full text-[11px] font-semibold text-gray-900 shadow-sm">
                     Open
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export function ProjectCard({
                 />
                 <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/28" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-11 w-11 items-center justify-center border border-white/80 bg-white/90 text-gray-900 transition-transform duration-200 group-hover:scale-105">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/80 bg-white/90 text-gray-900 shadow-md transition-transform duration-200 group-hover:scale-110">
                     <Play size={18} fill="currentColor" className="ml-0.5" />
                   </div>
                 </div>

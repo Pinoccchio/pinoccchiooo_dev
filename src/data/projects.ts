@@ -48,7 +48,7 @@ export const projects: Project[] = [
   {
     id: "incloud-system",
     title: "InCloud System",
-    description: "Complete cloud-based inventory management system for J.A's Food Trading, a frozen food distributor. Features multi-tier pricing, real-time sync, AI analytics, Excel import/export, QR codes, and alert systems.",
+    description: "Cloud inventory system for J.A's Food Trading.",
     icon: "📦",
     category: "hybrid",
     engagementType: "Client",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
   {
     id: "mci-detection-system",
     title: "MCI Detection System",
-    description: "Full-stack medical AI application for early Alzheimer's detection through hippocampal MRI analysis. Achieves 80.77% accuracy using Gradient Boosting on 26 volumetric features extracted from 1,213 NIfTI brain scans.",
+    description: "AI medical app for early Alzheimer's screening.",
     icon: "🧠",
     category: "ai-ml",
     engagementType: "Freelance",
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     date: "Jan-Jun 2026",
     isPrivate: true,
     isFeatured: true,
-    details: "Freelance project (₱45K) | ML Backend + Web Dashboard | HIPAA-compliant patient management",
+    details: "ML Backend + Web Dashboard | HIPAA-compliant patient management",
     // Categorized screenshots for organized gallery display
     screenshotCategories: [
       {
@@ -230,7 +230,7 @@ export const projects: Project[] = [
   {
     id: "uav-flood-assessment",
     title: "UAV Flood Assessment System",
-    description: "AI-powered road passability classification for Philippine disaster response using EfficientNet-B0 CNN. Achieves 78.4% accuracy on US flood data with ~2-3s processing. Features 3-class classification (Passable, Limited, Impassable), interactive Leaflet maps, vehicle recommendations, and safety-enhanced predictions for NDRRMC/DPWH/LGU-DRRMO command centers.",
+    description: "Flood road passability checker for disaster response.",
     icon: "🛸",
     category: "ai-ml",
     engagementType: "Academic",
@@ -248,7 +248,7 @@ export const projects: Project[] = [
   {
     id: "fyllens",
     title: "Fyllens - Plant Health Detection",
-    description: "AI-powered Flutter app for plant nutrient deficiency and disease identification. Uses 4 TensorFlow Lite models for Rice, Corn, Okra, and Cucumber analysis with Google Gemini AI for enhanced diagnosis. Features real-time camera scanning, AI chat assistant, scan history tracking, comprehensive plant library with offline support, and detailed treatment recommendations.",
+    description: "Plant health app for nutrient and disease checks.",
     icon: "🌿",
     category: "ai-ml",
     engagementType: "Academic",
@@ -266,7 +266,7 @@ export const projects: Project[] = [
   {
     id: "aezzy-grammar",
     title: "A'ezzy Grammar Correction",
-    description: "AI-powered grammar correction and text improvement tool. Uses Gemini 2.5 Flash Lite to detect and fix grammar, spelling, punctuation, and style issues with detailed explanations. Built as a research project for CASAP Grade 11 students.",
+    description: "AI grammar and writing correction tool.",
     icon: "📝",
     category: "ai-ml",
     engagementType: "Academic",
@@ -286,7 +286,7 @@ export const projects: Project[] = [
   {
     id: "healthcard-go",
     title: "HealthCardGo",
-    description: "Production-grade Healthcare Appointment Management and Disease Surveillance System for Panabo City Health Office. Features 5-stage appointment workflow, SARIMA time-series forecasting, Leaflet geographic heatmaps, and real-time Supabase subscriptions across 41+ barangays.",
+    description: "Healthcare appointment and surveillance system.",
     icon: "🏥",
     category: "web",
     engagementType: "Client",
@@ -305,7 +305,7 @@ export const projects: Project[] = [
   {
     id: "jobsync",
     title: "JobSync",
-    description: "AI-powered Job Matching and Applicant Ranking System for Municipality of Asuncion. Features intelligent applicant ranking using Gemini 1.5 Pro with 3 ensemble scoring algorithms, multi-role RBAC (Admin/HR/PESO/Applicant), comprehensive PDS management, training program enrollment, and certificate generation.",
+    description: "AI job matching and applicant ranking system.",
     icon: "💼",
     category: "web",
     engagementType: "Client",

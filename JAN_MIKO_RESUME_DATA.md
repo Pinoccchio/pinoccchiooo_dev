@@ -46,11 +46,11 @@ Technical journey evolved from mastering Flutter for cross-platform development 
 ### Full-Stack Developer & Hybrid System Architect — Freelance
 **Period:** 2022–Present
 
-Delivered 40+ comprehensive projects across e-commerce, education, government, healthcare, and legal tech domains, including 4 major hybrid systems (web + mobile). Built InCloud for J.A's Food Trading (production e-commerce), RRIBN for Philippine Army Reserve (government system), LawBot for PNP (67+ crime types), and LearnSmart (AI educational platform). Specializing in Next.js 15, React 19, Flutter 3.x, with Supabase and Firebase backends.
+Delivered 40+ comprehensive projects across e-commerce, education, government, healthcare, and legal tech domains, including 4 major hybrid systems (web + mobile). Built InCloud for J.A's Food Trading (production e-commerce), LawBot for PNP (67+ crime types), and LearnSmart (AI educational platform). Specializing in Next.js 15, React 19, Flutter 3.x, with Supabase and Firebase backends.
 
 **Key Achievements:**
 - Built production inventory system for J.A's Food Trading (actual frozen food business in Manila) with real-time multi-tier pricing and AI analytics
-- Created RRIBN military personnel management for Philippine Army Reserve units with 4-role RBAC, training records, and government-grade security
+- Engineered multiple comprehensive dashboards and administrative panels with advanced RBAC systems and detailed reporting modules.
 - Developed LawBot cybercrime reporting platform with 67+ crime types for Philippines PNP featuring AI evidence suggestions and pattern detection
 - Designed LearnSmart educational platform with 4 evidence-based study techniques and comprehensive analytics
 
@@ -128,7 +128,7 @@ Specialized in cross-platform application development with 20+ Flutter projects 
 - **Excel Import/Export** — Business data handling (InCloud)
 - **ARIMA / SARIMA** — Time-series forecasting (HealthCardGo)
 - **ONNX / NIfTI** — Medical imaging data formats (MCI Detection)
-- **Firebase FCM** — Push notifications (RRIBN)
+- **Firebase FCM** — Push notifications
 
 ### Development Tools
 - **Git / GitHub** — Version control (43 public repositories)
@@ -518,7 +518,7 @@ With 40+ projects demonstrating real-world impact — from production e-commerce
 ## 10. Notable Achievements
 
 - **Production E-commerce System:** Built InCloud for J.A's Food Trading (actual frozen food distributor in Manila) with real-time multi-tier pricing and AI analytics
-- **Government Military System:** Created RRIBN for Philippine Army Reserve with 4-role RBAC and government-grade security
+
 - **National Cybercrime Platform:** Developed LawBot with 67+ crime types for Philippines PNP, 20–40x performance optimization via Gemini prompt caching
 - **AI Educational Platform:** Designed LearnSmart with 4 evidence-based study techniques (Active Recall, Pomodoro, Feynman, Retrieval Practice)
 - **Medical AI (Freelance ₱45K):** MCI Detection System with 80.77% accuracy for early Alzheimer's detection via hippocampal MRI analysis

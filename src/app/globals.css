@@ -164,6 +164,17 @@ h1, h2, h3, .display-text, .stat-value {
   background: #000000;
 }
 
+.dark .btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.dark .btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
 .btn-secondary {
   background: #ffffff;
   color: var(--text-primary);

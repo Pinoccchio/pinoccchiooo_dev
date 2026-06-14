@@ -49,16 +49,18 @@ export function GitHubCalendar() {
 
   const calendarSizing =
     viewportWidth >= 1280
-      ? { blockSize: 14, blockMargin: 4, fontSize: 14 }
+      ? { blockSize: 17, blockMargin: 4, fontSize: 14 }
       : viewportWidth >= 1024
-        ? { blockSize: 13, blockMargin: 4, fontSize: 13 }
+        ? { blockSize: 16, blockMargin: 4, fontSize: 13 }
         : viewportWidth >= 768
-          ? { blockSize: 11, blockMargin: 4, fontSize: 12 }
-          : { blockSize: 10, blockMargin: 3, fontSize: 11 }
+          ? { blockSize: 12, blockMargin: 4, fontSize: 12 }
+          : viewportWidth >= 480
+            ? { blockSize: 9, blockMargin: 3, fontSize: 10 }
+            : { blockSize: 8, blockMargin: 2, fontSize: 9 }
 
   return (
-    <div className="overflow-x-auto py-2">
-      <div className="min-w-[320px] w-full">
+    <div className="overflow-x-auto pt-2 pb-1">
+      <div className="min-w-[280px] sm:min-w-[320px] w-full">
         <CalendarComponent
           username={username}
           colorScheme={theme === "dark" ? "dark" : "light"}
@@ -74,7 +76,7 @@ export function GitHubCalendar() {
           fontSize={calendarSizing.fontSize}
         />
       </div>
-      <div className="text-center mt-4 text-sm pinocchio-text">
+      <div className="mt-2 text-center text-xs sm:text-sm pinocchio-text">
         <a
           href={`https://github.com/${username}`}
           target="_blank"

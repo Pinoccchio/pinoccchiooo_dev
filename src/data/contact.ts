@@ -36,8 +36,8 @@ export const CONTACT = {
   education: {
     school: "Cor Jesu College",
     degree: "BS Computer Science",
-    expectedGraduation: "2026",
-    formatted: "BS Computer Science at Cor Jesu College (Expected 2026)",
+    expectedGraduation: "2027",
+    formatted: "BS Computer Science at Cor Jesu College (Expected 2027)",
   },
 } as const
 

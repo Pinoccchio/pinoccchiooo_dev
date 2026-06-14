@@ -2,13 +2,21 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ChevronRight, Facebook, FileText, Github, Instagram, Linkedin, Mail, MapPin } from "lucide-react"
+import {
+  ChevronRight,
+  Facebook,
+  FileText,
+  Github,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+} from "lucide-react"
 import { AboutSection } from "@/components/about-section"
 import { AnimatedProfile } from "@/components/animated-profile"
 import { ChatBot } from "@/components/chat-bot"
 import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
-import { ProfileCard } from "@/components/profile-card"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { CONTACT } from "@/data/contact"
 import { getCategoryLabel, getFilteredProjects, type Project } from "@/data/projects"
@@ -23,8 +31,12 @@ const projectFilters: Array<{ value: "all" | Project["category"]; label: string 
 
 const techGroups = [
   { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Flutter", "Tailwind CSS"] },
-  { title: "Backend", items: ["Node.js", "Python", "Java", "Firebase", "Supabase", "REST APIs"] },
-  { title: "AI & Tools", items: ["Gemini", "OpenAI", "MediaPipe", "PyTorch", "Jupyter", "GitHub"] },
+  { title: "Backend", items: ["Node.js", "NestJS", "Python", "Java", "REST APIs", "Webhooks"] },
+  { title: "Database & Backend Services", items: ["PostgreSQL", "Supabase", "Firebase", "Firestore", "Neon", "Cloudflare D1"] },
+  { title: "Mobile & App Development", items: ["Flutter", "React Native", "Expo", "Android", "iOS", "App Store Connect", "Google Play Console"] },
+  { title: "AI & Machine Learning", items: ["OpenAI", "Gemini", "Claude", "MediaPipe", "PyTorch", "CNN Models", "Jupyter Notebook"] },
+  { title: "Cloud, Hosting & Storage", items: ["Vercel", "Render", "Cloudflare Workers", "Cloudflare R2", "AWS RDS"] },
+  { title: "Tools & Workflow", items: ["Git", "GitHub", "Docker", "Postman", "Figma", "Xcode", "Android Studio", "VS Code", "Cursor"] },
 ]
 
 const experienceItems = [
@@ -44,10 +56,10 @@ const experienceItems = [
     subtitle: "Flutter delivery across Android, iOS, Web, Windows, Linux, and macOS",
     year: "2022-2024",
   },
-  { title: "BS Computer Science", subtitle: "Cor Jesu College", year: "Expected 2026" },
+  { title: "BS Computer Science", subtitle: "Cor Jesu College", year: "Expected 2027" },
 ]
 
-const profileActions = [
+const heroActions = [
   {
     label: "Send Email",
     href: `mailto:${CONTACT.email}`,
@@ -58,7 +70,7 @@ const profileActions = [
     label: "Resume",
     href: CONTACT.assets.resume,
     icon: FileText,
-    primary: true,
+    primary: false,
   },
   {
     label: "GitHub",
@@ -66,35 +78,13 @@ const profileActions = [
     icon: Github,
     primary: false,
   },
-  {
-    label: "LinkedIn",
-    href: CONTACT.social.linkedinFull,
-    icon: Linkedin,
-    primary: false,
-  },
-  {
-    label: "Facebook (Dev)",
-    href: CONTACT.social.facebookDev,
-    icon: Facebook,
-    primary: false,
-  },
-  {
-    label: "Facebook (Personal)",
-    href: CONTACT.social.facebookPersonal,
-    icon: Facebook,
-    primary: false,
-  },
-  {
-    label: "Instagram",
-    href: CONTACT.social.instagramFull,
-    icon: Instagram,
-    primary: false,
-  },
 ] as const
 
-const headerActions = profileActions.filter(action =>
-  action.label === "Send Email" || action.label === "GitHub" || action.label === "Facebook (Dev)"
-)
+const socialLinks = [
+  { label: "LinkedIn", href: CONTACT.social.linkedinFull, icon: Linkedin },
+  { label: "Facebook", href: CONTACT.social.facebookDev, icon: Facebook },
+  { label: "Instagram", href: CONTACT.social.instagramFull, icon: Instagram },
+] as const
 
 export default function Home() {
   const [projectFilter, setProjectFilter] = useState<(typeof projectFilters)[number]["value"]>("all")
@@ -106,34 +96,33 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="flex justify-end mb-3">
+      <div className="portfolio-shell">
+        <div className="portfolio-topbar">
           <ThemeToggle />
         </div>
 
-        <section className="profile-row">
-          <div className="relative h-[170px] w-[170px] overflow-hidden avatar-border">
+        <section className="portfolio-hero">
+          <div className="portfolio-avatar">
             <div className="absolute inset-0 flex items-center justify-center">
               <AnimatedProfile />
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <h1 className="pinocchio-name text-4xl sm:text-[2.9rem] leading-none">{CONTACT.name.full}</h1>
-              <div className="mt-3 flex items-center justify-center md:justify-start gap-2 text-[15px] text-[var(--text-secondary)]">
-                <MapPin size={16} />
-                {CONTACT.location.city}, {CONTACT.location.country}
-              </div>
-              <div className="mt-3 text-[1.05rem] text-[var(--text-primary)]">
-                AI & Full-Stack Developer
-              </div>
+          <div className="portfolio-hero-main">
+            <div className="portfolio-name-row">
+              <h1 className="portfolio-name">{CONTACT.name.full}</h1>
             </div>
 
-            <div className="flex flex-wrap justify-center md:justify-start gap-3">
-              {headerActions.map(action => {
+            <div className="portfolio-location">
+              <MapPin size={15} />
+              <span>{CONTACT.location.city}, {CONTACT.location.country}</span>
+            </div>
+
+            <p className="portfolio-role-line">Software Developer</p>
+
+            <div className="portfolio-action-row">
+              {heroActions.map(action => {
                 const Icon = action.icon
-                const className = action.primary ? "btn btn-primary justify-start" : "btn btn-secondary justify-start"
                 const isExternal = !action.href.startsWith("mailto:")
 
                 return (
@@ -142,144 +131,159 @@ export default function Home() {
                     href={action.href}
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className={className}
+                    className={action.primary ? "clean-btn clean-btn-primary" : "clean-btn"}
                   >
-                    <Icon size={16} />
-                    {action.label === "Facebook (Dev)" ? "Facebook" : action.label}
+                    <Icon size={15} />
+                    {action.label}
                   </a>
                 )
               })}
-            </div>
-          </div>
 
-          <div className="self-center md:self-start">
-            <div className="badge badge-accent">Web, Mobile, AI</div>
+            </div>
           </div>
         </section>
 
-        <div className="mt-12 grid items-stretch gap-10 lg:grid-cols-5 lg:gap-12">
-          <div className="flex h-full flex-col gap-8 lg:col-span-3">
-            <section className="section-card p-5 sm:p-6">
-              <h2 className="section-title">About</h2>
-              <AboutSection />
-            </section>
+        <div className="portfolio-pair-grid mt-4">
+          <section className="clean-section">
+            <h2 className="clean-section-title">About</h2>
+            <AboutSection />
+          </section>
 
-            <section className="section-card flex min-h-[440px] flex-1 flex-col p-5 sm:p-6">
-              <div className="flex items-center justify-between">
-                <h2 className="section-title">Tech Stack</h2>
-                <button
-                  type="button"
-                  onClick={() => setShowAllTech(current => !current)}
-                  className="btn btn-ghost !px-0 !py-0 !border-0"
-                >
-                  {showAllTech ? "Show Less" : "View All"}
-                  <ChevronRight size={16} />
-                </button>
-              </div>
+          <section className="clean-section">
+            <h2 className="clean-section-title">Contact</h2>
+            <div className="contact-stack">
+              <a href={`mailto:${CONTACT.email}`} className="contact-link-row">
+                <span className="inline-flex items-center gap-3">
+                  <Mail size={15} />
+                <span>Email</span>
+              </span>
+              <ChevronRight size={15} />
+            </a>
 
-              <div className="mt-6 flex-1 space-y-8">
-                {techGroups.map(group => (
-                  <div key={group.title}>
-                    <h3 className="text-[1.1rem] font-semibold text-[var(--text-primary)]">{group.title}</h3>
-                    <div className="mt-4 flex flex-wrap gap-2.5 pl-3 sm:pl-4 text-[1rem] text-[var(--text-primary)]">
-                      {(showAllTech ? group.items : group.items.slice(0, 5)).map(item => (
-                        <span
-                          key={item}
-                          className="inline-flex min-h-10 items-center border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-2 leading-none rounded-full shadow-sm text-sm"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+            <a href={CONTACT.social.githubFull} target="_blank" rel="noopener noreferrer" className="contact-link-row">
+              <span className="inline-flex items-center gap-3">
+                <Github size={15} />
+                <span>GitHub</span>
+              </span>
+              <ChevronRight size={15} />
+            </a>
 
-          </div>
+            {socialLinks.map(item => {
+              const Icon = item.icon
 
-          <div className="flex h-full flex-col gap-8 lg:col-span-2">
-            <section className="section-card p-5 sm:p-6">
-              <ProfileCard />
-              <div className="mt-5 bg-[var(--accent)] text-white px-5 py-4 rounded-xl shadow-md text-[0.95rem] font-medium leading-relaxed">
-                Building plain, useful software with web, mobile, and AI.
-              </div>
-            </section>
-
-            <section className="section-card p-5 sm:p-6">
-              <h2 className="section-title">Experience</h2>
-              <div className="mt-6 experience-list">
-                {experienceItems.map(item => (
-                  <div key={`${item.title}-${item.year}`} className="experience-item">
-                    <div className="experience-marker-wrap">
-                      <div
-                        className={`experience-marker rounded-full ${
-                          item.active
-                            ? "bg-[var(--accent)] border-[var(--accent)]"
-                            : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
-                        }`}
-                      ></div>
-                    </div>
-                    <div className="experience-copy">
-                      <div className="experience-row">
-                        <div className="experience-title">{item.title}</div>
-                        <div className="experience-year-chip">{item.year}</div>
-                      </div>
-                      <div className="experience-subtitle">{item.subtitle}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
+              return (
+                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="contact-link-row">
+                  <span className="inline-flex items-center gap-3">
+                    <Icon size={15} />
+                    <span>{item.label}</span>
+                  </span>
+                  <ChevronRight size={15} />
+                </a>
+              )
+              })}
+            </div>
+          </section>
         </div>
 
-        <section className="section-card mt-8 p-5 sm:p-6">
-          <h2 className="section-title">GitHub</h2>
+        <section className="clean-section mt-4">
+          <h2 className="clean-section-title">Experience</h2>
+          <div className="mt-5 experience-list">
+            {experienceItems.map(item => (
+              <div key={`${item.title}-${item.year}`} className="experience-item">
+                <div className="experience-marker-wrap">
+                  <div
+                    className={`experience-marker rounded-full ${
+                      item.active
+                        ? "bg-[var(--text-primary)] border-[var(--text-primary)]"
+                        : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
+                    }`}
+                  ></div>
+                </div>
+                <div className="experience-copy">
+                  <div className="experience-row">
+                    <div className="experience-title">{item.title}</div>
+                    <div className="experience-year-chip">{item.year}</div>
+                  </div>
+                  <div className="experience-subtitle">{item.subtitle}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="clean-section mt-4">
+          <div className="clean-section-header">
+            <h2 className="clean-section-title">Tech Stack</h2>
+            <button
+              type="button"
+              onClick={() => setShowAllTech(current => !current)}
+              className="clean-inline-button"
+            >
+              {showAllTech ? "Show Less" : "View All"}
+              <ChevronRight size={15} />
+            </button>
+          </div>
+
+          <div className="tech-stack-groups">
+            {techGroups.map(group => (
+              <div key={group.title} className="tech-stack-group">
+                <h3 className="tech-stack-title">{group.title}</h3>
+                <div className="tech-stack-items">
+                  {(showAllTech ? group.items : group.items.slice(0, 6)).map(item => (
+                    <span key={item} className="tech-stack-item">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="clean-section clean-section-github mt-4">
+          <h2 className="clean-section-title">GitHub</h2>
           <div className="mt-4">
             <GitHubCalendar />
           </div>
         </section>
 
-        <section className="section-card mt-8 p-5 sm:p-6">
-          <div className="flex flex-col gap-5">
-            <div className="flex items-start justify-between gap-4">
-              <h2 className="section-title">Recent Projects</h2>
-              <button
-                type="button"
-                onClick={() => setShowAllProjects(current => !current)}
-                className="btn btn-ghost !px-0 !py-0 !border-0 shrink-0"
-              >
-                {showAllProjects ? "Show Less" : "View All"}
-                <ChevronRight size={16} />
-              </button>
-            </div>
-
-            <div className="flex flex-wrap gap-2.5">
-              {projectFilters.map(filter => (
-                <button
-                  key={filter.value}
-                  type="button"
-                  onClick={() => {
-                    setProjectFilter(filter.value)
-                    setShowAllProjects(false)
-                  }}
-                  className={`filter-chip ${projectFilter === filter.value ? "filter-chip-active" : ""}`}
-                >
-                  {filter.label}
-                </button>
-              ))}
-            </div>
+        <section className="clean-section mt-4">
+          <div className="clean-section-header">
+            <h2 className="clean-section-title">Recent Projects</h2>
+            <button
+              type="button"
+              onClick={() => setShowAllProjects(current => !current)}
+              className="clean-inline-button"
+            >
+              {showAllProjects ? "Show Less" : "View All"}
+              <ChevronRight size={15} />
+            </button>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="mt-5 flex flex-wrap gap-2.5">
+            {projectFilters.map(filter => (
+              <button
+                key={filter.value}
+                type="button"
+                onClick={() => {
+                  setProjectFilter(filter.value)
+                  setShowAllProjects(false)
+                }}
+                className={`filter-chip ${projectFilter === filter.value ? "filter-chip-active" : ""}`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
             {visibleProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.28, delay: index * 0.04 }}
+                transition={{ duration: 0.25, delay: index * 0.04 }}
                 className="project-card p-5 sm:p-6"
               >
                 <ProjectCard
@@ -304,114 +308,6 @@ export default function Home() {
                 />
               </motion.div>
             ))}
-          </div>
-
-          {filteredProjects.length > 4 && !showAllProjects && (
-            <div className="mt-4 text-xs text-[var(--text-muted)]">
-              Showing 4 of {filteredProjects.length} projects
-            </div>
-          )}
-        </section>
-
-        <section className="section-card mt-8 p-5 sm:p-6">
-          <div className="grid gap-6 lg:grid-cols-4">
-            <div>
-              <h2 className="text-[1.35rem] font-semibold text-[var(--text-primary)]">Contact</h2>
-              <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
-                Reach me through the channels I actively use for work, collaborations, and project discussions.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-[var(--text-primary)]">Primary</h3>
-              <div className="mt-3 space-y-2">
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="flex items-start gap-3 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
-                >
-                  <Mail size={16} className="mt-0.5 shrink-0" />
-                  <span className="min-w-0">
-                    <span className="block font-medium text-[var(--text-primary)]">Email</span>
-                    <span className="mt-1 block break-all text-xs text-[var(--text-secondary)]">{CONTACT.email}</span>
-                  </span>
-                </a>
-                <a
-                  href={CONTACT.assets.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <FileText size={16} />
-                    Resume
-                  </span>
-                  <ChevronRight size={16} className="text-[var(--text-secondary)]" />
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-[var(--text-primary)]">Social Links</h3>
-              <div className="mt-3 space-y-2">
-                <a
-                  href={CONTACT.social.linkedinFull}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
-                >
-                  <Linkedin size={16} />
-                  LinkedIn
-                </a>
-                <a
-                  href={CONTACT.social.githubFull}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
-                >
-                  <Github size={16} />
-                  GitHub
-                </a>
-                <a
-                  href={CONTACT.social.instagramFull}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 text-sm text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-secondary)]"
-                >
-                  <Instagram size={16} />
-                  Instagram
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-[var(--text-primary)]">Facebook</h3>
-              <div className="mt-3 space-y-2">
-                <a
-                  href={CONTACT.social.facebookDev}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Facebook size={16} />
-                    Dev Account
-                  </span>
-                  <ChevronRight size={16} className="text-[var(--text-secondary)]" />
-                </a>
-                <a
-                  href={CONTACT.social.facebookPersonal}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between border border-[var(--border)] bg-[var(--surface-primary)] px-4 py-3 rounded-2xl text-sm text-[var(--text-primary)] transition-all hover:bg-[var(--surface-secondary)] hover:shadow-sm"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Facebook size={16} />
-                    Personal Account
-                  </span>
-                  <ChevronRight size={16} className="text-[var(--text-secondary)]" />
-                </a>
-              </div>
-            </div>
           </div>
         </section>
       </div>

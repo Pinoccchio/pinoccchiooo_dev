@@ -1,15 +1,8 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Public_Sans } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/react"
-
-const publicSans = Public_Sans({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-})
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -114,7 +107,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${publicSans.variable}`}>
+      <body>
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>

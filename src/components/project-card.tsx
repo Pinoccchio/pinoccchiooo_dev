@@ -157,15 +157,15 @@ export function ProjectCard({
   const hasVideoPreviews = videoPreviews.length > 0
   const fallbackMediaLinks = mediaLinks.filter(item => !getVideoThumbnail(item.url!))
   const actionClassName =
-    "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-3 py-1.5 rounded-full shadow-sm text-xs font-semibold text-[var(--text-secondary)] transition-all hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)] hover:shadow-md"
+    "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-2.5 py-1.5 rounded-full shadow-sm text-[11px] sm:text-xs font-semibold text-[var(--text-secondary)] transition-all hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)] hover:shadow-md"
 
   return (
     <div className="flex flex-col h-full">
       {/* Header Row: Icon + Title/Status */}
-      <div className="flex items-start gap-3 mb-3">
+      <div className="mb-3 flex items-start gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-[1.1rem] sm:text-[1.2rem] font-semibold text-[var(--text-primary)] leading-8 break-words">{title}</h3>
+            <h3 className="text-[1rem] sm:text-[1.15rem] font-semibold text-[var(--text-primary)] leading-7 break-words">{title}</h3>
           </div>
 
         </div>
@@ -182,11 +182,11 @@ export function ProjectCard({
       )}
 
       {/* Description - Full width, no truncation */}
-      <p className="pinocchio-text text-[0.96rem] leading-8 mb-2">{description}</p>
+      <p className="pinocchio-text mb-2 text-[0.86rem] leading-7 sm:text-[0.94rem] sm:leading-8">{description}</p>
 
       {/* Details */}
       {details && (
-        <p className="text-xs text-[var(--text-muted)] mb-4 italic leading-6">
+        <p className="mb-4 text-[11px] sm:text-xs text-[var(--text-muted)] italic leading-5 sm:leading-6">
           {details}
         </p>
       )}
@@ -200,7 +200,7 @@ export function ProjectCard({
 
       {/* Media Preview */}
       {allScreenshots.length > 0 && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
+        <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-secondary)] p-3 sm:p-4">
           <div className="mb-2 flex items-center justify-between gap-3">
             <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
               Screenshots
@@ -245,7 +245,7 @@ export function ProjectCard({
       )}
 
       {hasVideoPreviews && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
+        <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-secondary)] p-3 sm:p-4">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>
@@ -287,7 +287,7 @@ export function ProjectCard({
       )}
 
       {fallbackMediaLinks.length > 0 && (
-        <div className="mb-4 border border-[var(--border)] bg-[var(--surface-secondary)] p-4 rounded-2xl">
+        <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-secondary)] p-3 sm:p-4">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>

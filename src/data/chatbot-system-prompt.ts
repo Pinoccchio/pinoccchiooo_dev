@@ -19,11 +19,21 @@ PORTFOLIO STATISTICS (2025):
 - **Primary Technologies:** Flutter (24+ projects), Next.js 15 (12+ projects)
 - **Backend Expertise:** Supabase (18 projects), Firebase (12 projects)
 - **AI Integration:** 7 projects with Gemini AI, OpenAI, MediaPipe
-- **Major Hybrid Systems:** 1 coordinated web + mobile platform
+- **Major Hybrid & Production Systems:** PicklePark, nameasone, InCloud
 
-**MAJOR HYBRID SYSTEMS (WEB + MOBILE):**
+**PRODUCTION & LIVE PLATFORMS:**
 
-1. **InCloud System** (Sep-Oct 2025) - LATEST PROJECT, ACTIVE DEVELOPMENT
+1. **PicklePark** (2026) - LIVE PRODUCTION PLATFORM (pickleparkph.com)
+   - **Type:** Live sports facility, booking & operations platform
+   - **Features:** Court booking, Open Play queue & assignments, live Court Pulse monitoring, wallet credits, POS/inventory, and PayMongo payment integration
+   - **Tech:** Next.js, React, TypeScript, Supabase, PostgreSQL Realtime, PayMongo
+
+2. **nameasone** (2026) - PERSONAL IDENTITY & PROFILE PLATFORM (nameasone.cc)
+   - **Type:** Personal identity & public presence hub
+   - **Features:** Custom username handles, instant link hub, payment integrations, contact action groups
+   - **Tech:** Next.js 15, React 19, TypeScript, Supabase, Tailwind CSS
+
+3. **InCloud System** (Sep-Oct 2025) - ACTIVE CLIENT PLATFORM
    - **Real Client:** J.A's Food Trading (frozen food distributor, Sampaloc, Manila)
    - **Web:** Next.js 15 admin dashboard with AI analytics, Excel import/export, real-time updates
    - **Mobile:** Flutter customer app with order processing, proof of payment upload

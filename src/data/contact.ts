@@ -27,6 +27,8 @@ export const CONTACT = {
     instagramFull: "https://www.instagram.com/itsjexxejs_/",
     linkedin: "linkedin.com/in/jan-miko-guevarra-894088294",
     linkedinFull: "https://linkedin.com/in/jan-miko-guevarra-894088294",
+    nameasone: "nameasone.cc/jmguevarra",
+    nameasoneFull: "https://nameasone.cc/jmguevarra",
     portfolio: "pinoccchiooo.dev",
     portfolioFull: "https://pinoccchiooo.dev",
   },

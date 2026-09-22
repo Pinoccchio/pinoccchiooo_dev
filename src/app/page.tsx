@@ -7,6 +7,7 @@ import {
   Facebook,
   FileText,
   Github,
+  Globe,
   Instagram,
   Linkedin,
   Mail,
@@ -36,15 +37,20 @@ const techGroups = [
   { title: "Mobile & App Development", items: ["Flutter", "React Native", "Expo", "Android", "iOS", "App Store Connect", "Google Play Console"] },
   { title: "AI & Machine Learning", items: ["OpenAI", "Gemini", "Claude", "MediaPipe", "PyTorch", "CNN Models", "Jupyter Notebook"] },
   { title: "Cloud, Hosting & Storage", items: ["Vercel", "Render", "Cloudflare Workers", "Cloudflare R2", "AWS RDS"] },
-  { title: "Tools & Workflow", items: ["Git", "GitHub", "Docker", "Postman", "Figma", "Xcode", "Android Studio", "VS Code", "Cursor"] },
+  { title: "Tools & Workflow", items: ["Git", "GitHub", "Vitest", "Docker", "Postman", "Figma", "Xcode", "Android Studio", "VS Code", "Cursor"] },
 ]
 
 const experienceItems = [
   {
+    title: "Full-Stack Software Developer Intern",
+    subtitle: "JohnV MEDIA — primary developer for PicklePark and PesoJar production platforms",
+    year: "Jul-Aug 2026",
+    active: true,
+  },
+  {
     title: "Full-Stack Developer for Web, Mobile, and AI Projects",
     subtitle: "Freelance client projects across government, healthcare, education, and business",
     year: "2022-Present",
-    active: true,
   },
   {
     title: "AI Integration Specialist",
@@ -67,6 +73,12 @@ const heroActions = [
     primary: true,
   },
   {
+    label: "nameasone",
+    href: CONTACT.social.nameasoneFull,
+    icon: Globe,
+    primary: false,
+  },
+  {
     label: "Resume",
     href: CONTACT.assets.resume,
     icon: FileText,
@@ -81,6 +93,7 @@ const heroActions = [
 ] as const
 
 const socialLinks = [
+  { label: "nameasone", href: CONTACT.social.nameasoneFull, icon: Globe },
   { label: "LinkedIn", href: CONTACT.social.linkedinFull, icon: Linkedin },
   { label: "Facebook", href: CONTACT.social.facebookDev, icon: Facebook },
   { label: "Instagram", href: CONTACT.social.instagramFull, icon: Instagram },

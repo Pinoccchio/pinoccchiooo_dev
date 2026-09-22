@@ -43,6 +43,19 @@ Technical journey evolved from mastering Flutter for cross-platform development 
 
 ## 4. Professional Experience
 
+### Full-Stack Software Developer Intern — JohnV MEDIA
+**Period:** July 2026–August 2026
+**Completed hours:** 162
+
+Served as primary developer for PicklePark and PesoJar during a supervised practicum. Designed, implemented, tested, debugged, documented, and supported delivery of mobile, web, backend, database, payment, and business-operations features.
+
+**Key Achievements:**
+- Built and improved PicklePark court booking, Open Play queue and assignment workflows, Court Pulse monitoring, player operations, payments, POS/inventory, administration, and reporting
+- Implemented PesoJar local-first Flutter workflows, synchronization, authentication, Stripe subscriptions, Cloudflare Worker/D1/R2 services, protected web administration, and release verification
+- Worked independently across existing codebases while communicating progress, constraints, and delivery status with the team
+
+---
+
 ### Full-Stack Developer & Hybrid System Architect — Freelance
 **Period:** 2022–Present
 
@@ -163,6 +176,42 @@ Specialized in cross-platform application development with 20+ Flutter projects 
 
 ---
 
+#### PicklePark
+- **Category:** Responsive Web Operations Platform
+- **Status:** Completed; live in production
+- **Date:** Jun–Aug 2026
+- **Context:** JohnV MEDIA client work; primary developer
+- **Demo:** https://www.pickleparkph.com/
+- **Description:** Live sports and facility platform covering court booking, Open Play queues and court assignments, Court Pulse monitoring, tournaments, credits and payment workflows, POS/inventory, player operations, administration, and reporting.
+- **Tech Stack:** Next.js, React, TypeScript, Supabase, PostgreSQL, Realtime, PayMongo, Vitest
+- **Visibility:** Private code; public production site
+
+---
+
+#### PesoJar V2
+- **Category:** Flutter App + Web Admin + API
+- **Status:** Active Development
+- **Date:** May 2026–Present
+- **Context:** JohnV MEDIA client work; primary developer
+- **Demo:** https://app.pesojar.com/
+- **Description:** Local-first personal finance SaaS with secure synchronization, authentication, Stripe subscription billing, protected administration, attachments, and deployment workflows.
+- **Tech Stack:** Flutter, Dart, Next.js, TypeScript, Cloudflare Workers, D1, R2, Better Auth, Stripe
+- **Visibility:** Private
+
+---
+
+#### NomoQR
+- **Category:** Multi-Tenant Restaurant SaaS
+- **Status:** Active Development
+- **Date:** Sep 2026–Present
+- **Context:** JohnV MEDIA client work; primary developer
+- **Demo:** https://app.nomoqr.com/
+- **Description:** QR guest ordering and staff operations system for orders, kitchen preparation, service handoff, billing and receipts, inventory, menus, tables, staff, and browser-connected printing.
+- **Tech Stack:** Next.js 16, React 19, TypeScript, Supabase, PostgreSQL, Realtime, RLS, Vitest
+- **Visibility:** Private
+
+---
+
 #### InCloud System
 - **Icon:** 📦
 - **Category:** Hybrid (Web + Mobile)
@@ -184,8 +233,8 @@ Specialized in cross-platform application development with 20+ Flutter projects 
 #### HealthCardGo
 - **Icon:** 🏥
 - **Category:** Web
-- **Status:** Active Development
-- **Date:** Nov 2025 – Present
+- **Status:** Completed
+- **Date:** 2025–2026
 - **Client:** City Health Office of Panabo City, Davao del Norte
 - **Description:** Production-grade Healthcare Appointment Management and Disease Surveillance System. Features 5-stage appointment workflow, SARIMA time-series forecasting, Leaflet geographic heatmaps, and real-time Supabase subscriptions across 41+ barangays.
 - **Key Features:** 5-role RBAC, SARIMA forecasting, real-time notifications, geographic disease surveillance across 41+ barangays
@@ -197,8 +246,8 @@ Specialized in cross-platform application development with 20+ Flutter projects 
 #### JobSync
 - **Icon:** 💼
 - **Category:** Web
-- **Status:** Active Development
-- **Date:** Feb 2026 – Present
+- **Status:** Completed
+- **Date:** 2026
 - **Client:** Municipality of Asuncion, Davao del Norte
 - **Description:** AI-powered Job Matching and Applicant Ranking System. Features intelligent applicant ranking using Gemini 1.5 Pro with 3 ensemble scoring algorithms, multi-role RBAC (Admin/HR/PESO/Applicant), comprehensive PDS management, training program enrollment, and certificate generation.
 - **Key Features:** 4-role RBAC, AI ensemble ranking, PDS wizard, training certificates
@@ -253,7 +302,7 @@ Specialized in cross-platform application development with 20+ Flutter projects 
 #### MCI Detection System
 - **Icon:** 🧠
 - **Category:** AI/ML — Medical
-- **Status:** Active Development
+- **Status:** Completed
 - **Date:** Jan–Jun 2026
 - **Description:** Full-stack medical AI application for early Alzheimer's/MCI detection through hippocampal MRI analysis. Achieves 80.77% accuracy using Gradient Boosting on 26 volumetric features extracted from 1,213 NIfTI brain scans.
 - **Key Features:** HIPAA-compliant patient management, ML backend, role-based dashboards (Admin, Clinician, Researcher), PDF report generation, analytics dashboard
@@ -529,4 +578,4 @@ With 40+ projects demonstrating real-world impact — from production e-commerce
 ---
 
 *Data extracted from portfolio: https://pinoccchiooo.dev*
-*Last updated: March 2026*
+*Last updated: September 2026*

@@ -38,13 +38,54 @@ export interface Project {
   date: string
   isPrivate: boolean
   isFeatured?: boolean
+  featuredRank?: number
   details?: string
   screenshots?: string[]     // Simple array of screenshot paths
   screenshotCategories?: ScreenshotCategory[]  // Categorized screenshots with titles
 }
 
 export const projects: Project[] = [
-  // ==================== HYBRID SYSTEMS (4 Major Platforms) ====================
+  // ==================== PRODUCTION & CLIENT PLATFORMS ====================
+  {
+    id: "picklepark",
+    title: "PicklePark",
+    description: "Live operations platform for court bookings, Open Play, tournaments, payments, and facility administration.",
+    icon: "🏓",
+    category: "hybrid",
+    engagementType: "Client",
+    sector: "Business",
+    platformSummary: "Responsive Web Platform",
+    impactTags: ["Production", "Real-time", "Payments"],
+    techStack: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Realtime", "PayMongo", "Vitest"],
+    demoUrl: "https://www.pickleparkph.com/",
+    status: "Production",
+    date: "Jun-Aug 2026",
+    isPrivate: true,
+    isFeatured: true,
+    featuredRank: 1,
+    details: "Primary developer work at JohnV MEDIA | Booking and Open Play operations | Court Pulse | Credits and payment workflows | Tournament and admin tools"
+  },
+  {
+    id: "nameasone",
+    title: "nameasone",
+    description: "Personal identity and unified public presence platform with custom handles, link hub, payments, and instant contact actions.",
+    icon: "🌐",
+    category: "web",
+    engagementType: "Personal",
+    sector: "Consumer",
+    platformSummary: "Web Platform & Identity Hub",
+    impactTags: ["Production", "Identity", "Live Platform"],
+    techStack: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL"],
+    demoUrl: "https://nameasone.cc/",
+    status: "Production",
+    date: "2026",
+    isPrivate: false,
+    isFeatured: true,
+    featuredRank: 2,
+    details: "Personal identity & handle reservation system | Action groups for socials, contact, and payments | Live public profiles at nameasone.cc"
+  },
+
+  // ==================== HYBRID SYSTEMS ====================
   {
     id: "incloud-system",
     title: "InCloud System",
@@ -76,7 +117,7 @@ export const projects: Project[] = [
     impactTags: ["Healthcare", "Private", "AI-enabled"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "Supabase", "Tailwind CSS", "NIfTI"],
     // No GitHub link - showcased via screenshots only (private freelance project)
-    status: "Active Development",
+    status: "Completed",
     date: "Jan-Jun 2026",
     isPrivate: true,
     isFeatured: true,
@@ -295,8 +336,8 @@ export const projects: Project[] = [
     impactTags: ["Client Work", "Healthcare", "Forecasting"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "TanStack Query", "Chart.js", "Leaflet", "ARIMA", "Tailwind CSS"],
     // No githubUrl - private project showcased via screenshots only
-    status: "Active Development",
-    date: "Nov 2025 - Present",
+    status: "Completed",
+    date: "2025-2026",
     isPrivate: true,
     isFeatured: true,
     details: "Real client: City Health Office of Panabo City, Davao del Norte | 5-role RBAC | SARIMA forecasting | Real-time notifications",
@@ -314,8 +355,8 @@ export const projects: Project[] = [
     impactTags: ["Client Work", "Government", "AI-enabled"],
     techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Gemini AI", "Recharts", "PDF Processing", "Tailwind CSS"],
     // No githubUrl - private project showcased via screenshots only
-    status: "Active Development",
-    date: "Feb 2026 - Present",
+    status: "Completed",
+    date: "2026",
     isPrivate: true,
     isFeatured: true,
     details: "Real client: Municipality of Asuncion, Davao del Norte | 4-role RBAC | AI ensemble ranking | PDS wizard | Training certificates",
@@ -479,6 +520,9 @@ export const getSortedProjects = () => {
   return [...projects].sort((a, b) => {
     const featuredDelta = Number(Boolean(b.isFeatured)) - Number(Boolean(a.isFeatured))
     if (featuredDelta !== 0) return featuredDelta
+
+    const featuredRankDelta = (a.featuredRank ?? Number.MAX_SAFE_INTEGER) - (b.featuredRank ?? Number.MAX_SAFE_INTEGER)
+    if (featuredRankDelta !== 0) return featuredRankDelta
 
     const statusDelta = statusPriority[a.status] - statusPriority[b.status]
     if (statusDelta !== 0) return statusDelta

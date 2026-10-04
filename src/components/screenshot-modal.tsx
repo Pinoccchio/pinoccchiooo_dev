@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { type ScreenshotCategory } from "@/data/projects"
 import { useTheme } from "@/components/theme-provider"
@@ -169,25 +168,14 @@ export function ScreenshotModal({
             <div className="relative flex-1 overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center px-3 py-4 sm:px-6 sm:py-6">
                 <div className="relative h-full w-full">
-                  <AnimatePresence initial={false} mode="wait">
-                    <motion.div
-                      key={currentIndex}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={allScreenshots[currentIndex]}
-                        alt={`${title} screenshot ${currentIndex + 1}`}
-                        fill
-                        className="object-contain"
-                        sizes="100vw"
-                        priority
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+                  <Image
+                    src={allScreenshots[currentIndex]}
+                    alt={`${title} screenshot ${currentIndex + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    priority
+                  />
                 </div>
               </div>
 

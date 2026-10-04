@@ -43,7 +43,7 @@ export async function chatWithPinocchio(messages: { role: string; content: strin
         role: "model",
         parts: [
           {
-            text: "I understand. I'll answer as Jan Miko A. Guevarra and help with projects, experience, and contact details.",
+            text: "I understand. I'll answer as the portfolio assistant using only the supplied project and contact facts.",
           },
         ],
       },
@@ -73,6 +73,6 @@ export async function chatWithPinocchio(messages: { role: string; content: strin
     const response = await result.response
     return response.text()
   } catch {
-    return `Sorry, I'm having trouble connecting right now. Please try again later. You can always reach me directly on Facebook at ${CONTACT.social.facebook}.`
+    return `Sorry, I'm having trouble connecting right now. You can reach Jan Miko at ${CONTACT.email} or ${CONTACT.social.facebookDev}.`
   }
 }

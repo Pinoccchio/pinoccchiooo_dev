@@ -7,4 +7,4 @@ Disallow: /admin
 Disallow: /admin/*
 
 # Sitemap
-Sitemap: https://pinoccchiooo.dev/sitemap.xml
+Sitemap: https://pinoccchiooo-dev.vercel.app/sitemap.xml

@@ -16,9 +16,9 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pinoccchiooo.dev"),
+  metadataBase: new URL("https://pinoccchiooo-dev.vercel.app"),
   title: {
-    default: "Jan Miko A. Guevarra | AI, Software, Web & App Developer",
+    default: "Jan Miko A. Guevarra | Full-Stack Software Developer",
     template: "%s | Jan Miko A. Guevarra",
   },
   description:
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "Jan Miko A. Guevarra",
     "Pinoccchiooo",
   ],
-  authors: [{ name: "Jan Miko A. Guevarra", url: "https://pinoccchiooo.dev" }],
+  authors: [{ name: "Jan Miko A. Guevarra", url: "https://pinoccchiooo-dev.vercel.app" }],
   creator: "Jan Miko A. Guevarra",
   publisher: "Jan Miko A. Guevarra",
   robots: {
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://pinoccchiooo.dev",
+    url: "https://pinoccchiooo-dev.vercel.app",
     siteName: "Jan Miko A. Guevarra - Portfolio",
-    title: "Jan Miko A. Guevarra | AI, Software, Web & App Developer",
+    title: "Jan Miko A. Guevarra | Full-Stack Software Developer",
     description:
       "Software developer building web, mobile, and AI-supported applications through client and freelance projects.",
     images: [
@@ -64,13 +64,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Jan Miko A. Guevarra - AI, Software, Web & App Developer Portfolio",
+        alt: "Jan Miko A. Guevarra - Full-Stack Software Developer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jan Miko A. Guevarra | AI, Software, Web & App Developer",
+    title: "Jan Miko A. Guevarra | Full-Stack Software Developer",
     description:
       "Software developer building web, mobile, and AI-supported applications through client and freelance projects.",
     images: ["/og-image.png"],
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
   },
   manifest: "/favicon_io/site.webmanifest",
   alternates: {
-    canonical: "https://pinoccchiooo.dev",
+    canonical: "https://pinoccchiooo-dev.vercel.app",
   },
 }
 

@@ -20,7 +20,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: `Hi there! I'm ${CONTACT.name.full}. How can I help you today?`,
+      content: `Hi! I'm an AI assistant for ${CONTACT.name.full}'s portfolio. Ask about his projects or contact details.`,
     },
   ])
   const [input, setInput] = useState("")
@@ -102,7 +102,7 @@ export function ChatBot() {
       {!isOpen && (
         <button onClick={toggleChat} className={launcherClassName} aria-label="Open chat">
           <MessageSquareText size={18} />
-          Ask Jan Miko
+          Ask about Jan Miko
         </button>
       )}
 

@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import {
   ChevronRight,
+  ArrowDown,
   Facebook,
   FileText,
   Github,
@@ -19,6 +21,7 @@ import { ChatBot } from "@/components/chat-bot"
 import { GitHubCalendar } from "@/components/github-calendar"
 import { ProjectCard } from "@/components/project-card"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { TechLogo } from "@/components/tech-logo"
 import { CONTACT } from "@/data/contact"
 import { getCategoryLabel, getFilteredProjects, type Project } from "@/data/projects"
 
@@ -52,30 +55,19 @@ const experienceItems = [
     subtitle: "Freelance client projects across government, healthcare, education, and business",
     year: "2022-Present",
   },
-  {
-    title: "AI Integration Specialist",
-    subtitle: "Gemini, OpenAI, and MediaPipe across production-style workflows",
-    year: "2024-Present",
-  },
-  {
-    title: "Multi-platform Developer",
-    subtitle: "Flutter delivery across Android, iOS, Web, Windows, Linux, and macOS",
-    year: "2022-2024",
-  },
-  { title: "BS Computer Science", subtitle: "Cor Jesu College", year: "Expected 2027" },
 ]
 
 const heroActions = [
   {
-    label: "Send Email",
-    href: `mailto:${CONTACT.email}`,
-    icon: Mail,
+    label: "View Projects",
+    href: "#projects",
+    icon: ArrowDown,
     primary: true,
   },
   {
-    label: "nameasone",
-    href: CONTACT.social.nameasoneFull,
-    icon: Globe,
+    label: "Email Me",
+    href: `mailto:${CONTACT.email}`,
+    icon: Mail,
     primary: false,
   },
   {
@@ -85,9 +77,9 @@ const heroActions = [
     primary: false,
   },
   {
-    label: "GitHub",
-    href: CONTACT.social.githubFull,
-    icon: Github,
+    label: "nameasone",
+    href: CONTACT.social.nameasoneFull,
+    icon: Globe,
     primary: false,
   },
 ] as const
@@ -131,12 +123,13 @@ export default function Home() {
               <span>{CONTACT.location.city}, {CONTACT.location.country}</span>
             </div>
 
-            <p className="portfolio-role-line">Software Developer</p>
+            <p className="portfolio-role-line">Full-Stack Software Developer | AI-Powered Applications</p>
+            <p className="portfolio-hero-summary">I turn complex workflows into practical apps, dashboards, and platforms people can use every day.</p>
 
             <div className="portfolio-action-row">
               {heroActions.map(action => {
                 const Icon = action.icon
-                const isExternal = !action.href.startsWith("mailto:")
+                const isExternal = action.href.startsWith("http") || action.href.startsWith("/")
 
                 return (
                   <a
@@ -146,7 +139,11 @@ export default function Home() {
                     rel={isExternal ? "noopener noreferrer" : undefined}
                     className={action.primary ? "clean-btn clean-btn-primary" : "clean-btn"}
                   >
-                    <Icon size={15} />
+                    {action.label === "nameasone" ? (
+                      <Image src="/nameasone-n-mark.svg" alt="" width={15} height={15} />
+                    ) : (
+                      <Icon size={15} />
+                    )}
                     {action.label}
                   </a>
                 )
@@ -156,113 +153,9 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="portfolio-pair-grid mt-4">
-          <section className="clean-section">
-            <h2 className="clean-section-title">About</h2>
-            <AboutSection />
-          </section>
-
-          <section className="clean-section">
-            <h2 className="clean-section-title">Contact</h2>
-            <div className="contact-stack">
-              <a href={`mailto:${CONTACT.email}`} className="contact-link-row">
-                <span className="inline-flex items-center gap-3">
-                  <Mail size={15} />
-                <span>Email</span>
-              </span>
-              <ChevronRight size={15} />
-            </a>
-
-            <a href={CONTACT.social.githubFull} target="_blank" rel="noopener noreferrer" className="contact-link-row">
-              <span className="inline-flex items-center gap-3">
-                <Github size={15} />
-                <span>GitHub</span>
-              </span>
-              <ChevronRight size={15} />
-            </a>
-
-            {socialLinks.map(item => {
-              const Icon = item.icon
-
-              return (
-                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="contact-link-row">
-                  <span className="inline-flex items-center gap-3">
-                    <Icon size={15} />
-                    <span>{item.label}</span>
-                  </span>
-                  <ChevronRight size={15} />
-                </a>
-              )
-              })}
-            </div>
-          </section>
-        </div>
-
-        <section className="clean-section mt-4">
-          <h2 className="clean-section-title">Experience</h2>
-          <div className="mt-5 experience-list">
-            {experienceItems.map(item => (
-              <div key={`${item.title}-${item.year}`} className="experience-item">
-                <div className="experience-marker-wrap">
-                  <div
-                    className={`experience-marker rounded-full ${
-                      item.active
-                        ? "bg-[var(--text-primary)] border-[var(--text-primary)]"
-                        : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
-                    }`}
-                  ></div>
-                </div>
-                <div className="experience-copy">
-                  <div className="experience-row">
-                    <div className="experience-title">{item.title}</div>
-                    <div className="experience-year-chip">{item.year}</div>
-                  </div>
-                  <div className="experience-subtitle">{item.subtitle}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="clean-section mt-4">
+        <section id="projects" className="clean-section mt-4">
           <div className="clean-section-header">
-            <h2 className="clean-section-title">Tech Stack</h2>
-            <button
-              type="button"
-              onClick={() => setShowAllTech(current => !current)}
-              className="clean-inline-button"
-            >
-              {showAllTech ? "Show Less" : "View All"}
-              <ChevronRight size={15} />
-            </button>
-          </div>
-
-          <div className="tech-stack-groups">
-            {techGroups.map(group => (
-              <div key={group.title} className="tech-stack-group">
-                <h3 className="tech-stack-title">{group.title}</h3>
-                <div className="tech-stack-items">
-                  {(showAllTech ? group.items : group.items.slice(0, 6)).map(item => (
-                    <span key={item} className="tech-stack-item">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="clean-section clean-section-github mt-4">
-          <h2 className="clean-section-title">GitHub</h2>
-          <div className="mt-4">
-            <GitHubCalendar />
-          </div>
-        </section>
-
-        <section className="clean-section mt-4">
-          <div className="clean-section-header">
-            <h2 className="clean-section-title">Recent Projects</h2>
+            <h2 className="clean-section-title">Selected Work</h2>
             <button
               type="button"
               onClick={() => setShowAllProjects(current => !current)}
@@ -303,6 +196,8 @@ export default function Home() {
                   title={project.title}
                   description={project.description}
                   demoLink={project.demoUrl}
+                  thumbnailSrc={project.thumbnail}
+                  thumbnailLogo={project.thumbnailLogo}
                   videoLink={project.videoUrl}
                   webDemoLink={project.webDemoUrl}
                   mobileDemoLink={project.mobileDemoUrl}
@@ -322,6 +217,127 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </section>
+        <div className="portfolio-pair-grid mt-4">
+          <section className="clean-section">
+            <h2 className="clean-section-title">About</h2>
+            <AboutSection />
+          </section>
+
+          <section className="clean-section">
+            <h2 className="clean-section-title">Contact</h2>
+            <div className="contact-stack">
+              <a href={`mailto:${CONTACT.email}`} className="contact-link-row">
+                <span className="inline-flex items-center gap-3">
+                  <Mail size={15} />
+                <span>Email</span>
+              </span>
+              <ChevronRight size={15} />
+            </a>
+
+            <a href={CONTACT.social.githubFull} target="_blank" rel="noopener noreferrer" className="contact-link-row">
+              <span className="inline-flex items-center gap-3">
+                <Github size={15} />
+                <span>GitHub</span>
+              </span>
+              <ChevronRight size={15} />
+            </a>
+
+            {socialLinks.map(item => {
+              const Icon = item.icon
+
+              return (
+                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="contact-link-row">
+                  <span className="inline-flex items-center gap-3">
+                    {item.label === "nameasone" ? (
+                      <Image src="/nameasone-n-mark.svg" alt="" width={15} height={15} />
+                    ) : (
+                      <Icon size={15} />
+                    )}
+                    <span>{item.label}</span>
+                  </span>
+                  <ChevronRight size={15} />
+                </a>
+              )
+              })}
+            </div>
+          </section>
+        </div>
+
+        <section className="clean-section mt-4">
+          <h2 className="clean-section-title">Experience</h2>
+          <div className="mt-5 experience-list">
+            {experienceItems.map(item => (
+              <div key={`${item.title}-${item.year}`} className="experience-item">
+                <div className="experience-marker-wrap">
+                  <div
+                    className={`experience-marker rounded-full ${
+                      item.active
+                        ? "bg-[var(--text-primary)] border-[var(--text-primary)]"
+                        : "border-[var(--border)] bg-white dark:bg-[var(--surface-primary)]"
+                    }`}
+                  ></div>
+                </div>
+                <div className="experience-copy">
+                  <div className="experience-row">
+                    <div className="experience-title">{item.title}</div>
+                    <div className="experience-year-chip">{item.year}</div>
+                  </div>
+                  <div className="experience-subtitle">{item.subtitle}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="clean-section mt-4">
+          <h2 className="clean-section-title">Education</h2>
+          <p className="mt-3 text-sm text-[var(--text-primary)]">BS Computer Science, Cor Jesu College · Expected 2027</p>
+        </section>
+
+        <section className="clean-section mt-4">
+          <div className="clean-section-header">
+            <h2 className="clean-section-title">Tech Stack</h2>
+            <button
+              type="button"
+              onClick={() => setShowAllTech(current => !current)}
+              className="clean-inline-button"
+            >
+              {showAllTech ? "Show Less" : "View All"}
+              <ChevronRight size={15} />
+            </button>
+          </div>
+
+          <div className="tech-stack-groups">
+            {techGroups.map(group => (
+              <div key={group.title} className="tech-stack-group">
+                <h3 className="tech-stack-title">{group.title}</h3>
+                <div className="tech-stack-items">
+                  {(showAllTech ? group.items : group.items.slice(0, 6)).map(item => (
+                    <span key={item} className="tech-stack-item">
+                      <TechLogo name={item} />
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="clean-section clean-section-github mt-4">
+          <h2 className="clean-section-title">GitHub</h2>
+          <div className="mt-4">
+            <GitHubCalendar />
+          </div>
+        </section>
+
+        <section className="clean-section portfolio-closing mt-4">
+          <div>
+            <h2 className="clean-section-title">Let&apos;s work together</h2>
+            <p>Hiring for a developer or building a product? Tell me what you need and I’ll get back to you by email.</p>
+          </div>
+          <a href={`mailto:${CONTACT.email}`} className="clean-btn clean-btn-primary"><Mail size={15} /> Email Me</a>
         </section>
       </div>
 

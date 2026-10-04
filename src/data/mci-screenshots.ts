@@ -41,7 +41,7 @@ export const mciScreenshots: ScreenshotCategory[] = [
   },
   {
     title: "Patient Management",
-    description: "HIPAA-compliant patient records and information management",
+    description: "Patient records and information management",
     screenshots: [
       "/repo_screenshots/mci/Screenshots/Screenshot 2026-02-27 215514.png", // Patients list
       "/repo_screenshots/mci/Screenshots/Screenshot 2026-02-27 215531.png", // Add new patient form

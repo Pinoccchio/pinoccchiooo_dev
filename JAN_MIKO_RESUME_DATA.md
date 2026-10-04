@@ -13,7 +13,7 @@
 | Location    | Digos City, Philippines 8002                                         |
 | Phone       | 09514575745                                                          |
 | Email       | janmikoguevarra@gmail.com                                            |
-| Facebook    | https://www.facebook.com/phoebe.finley.96 *(primary contact)*       |
+| Facebook    | https://www.facebook.com/Renbards619 *(primary contact)*            |
 | GitHub      | https://github.com/Pinoccchio (43 public repos)                      |
 | LinkedIn    | https://www.linkedin.com/in/jan-miko-guevarra-894088294              |
 | Portfolio   | https://pinoccchiooo.dev                                             |

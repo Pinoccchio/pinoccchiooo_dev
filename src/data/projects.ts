@@ -28,6 +28,8 @@ export interface Project {
   impactTags?: string[]
   techStack: string[]
   demoUrl?: string
+  thumbnail?: string
+  thumbnailLogo?: string
   videoUrl?: string
   // Hybrid system-specific links
   webDemoUrl?: string        // Web demo link
@@ -58,17 +60,19 @@ export const projects: Project[] = [
     impactTags: ["Production", "Real-time", "Payments"],
     techStack: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Realtime", "PayMongo", "Vitest"],
     demoUrl: "https://www.pickleparkph.com/",
+    thumbnail: "/picklepark-thumbnail.png",
+    thumbnailLogo: "/picklepark-logo.png",
     status: "Production",
     date: "Jun-Aug 2026",
     isPrivate: true,
     isFeatured: true,
     featuredRank: 1,
-    details: "Primary developer work at JohnV MEDIA | Booking and Open Play operations | Court Pulse | Credits and payment workflows | Tournament and admin tools"
+    details: "At JohnV MEDIA, worked as a primary developer on booking and Open Play operations, Court Pulse, credits, payment workflows, and tournament/admin tools. The public site shows the customer-facing platform."
   },
   {
     id: "nameasone",
     title: "nameasone",
-    description: "Personal identity and unified public presence platform with custom handles, link hub, payments, and instant contact actions.",
+    description: "Personal identity platform with custom handles, grouped links, contact actions, and owner-provided payment details.",
     icon: "🌐",
     category: "web",
     engagementType: "Personal",
@@ -77,12 +81,14 @@ export const projects: Project[] = [
     impactTags: ["Production", "Identity", "Live Platform"],
     techStack: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL"],
     demoUrl: "https://nameasone.cc/",
+    thumbnail: "/nameasone-thumbnail.png",
+    thumbnailLogo: "/nameasone-n-mark.svg",
     status: "Production",
     date: "2026",
     isPrivate: false,
     isFeatured: true,
     featuredRank: 2,
-    details: "Personal identity & handle reservation system | Action groups for socials, contact, and payments | Live public profiles at nameasone.cc"
+    details: "Built the public profile and handle experience | Grouped social and contact actions | Payment details let visitors pay directly through the owner's provider"
   },
 
   // ==================== HYBRID SYSTEMS ====================
@@ -101,7 +107,7 @@ export const projects: Project[] = [
     date: "Sep-Oct 2025",
     isPrivate: false,
     isFeatured: true,
-    details: "Web: Next.js admin dashboard | Mobile: Flutter customer app | Real client: J.A's Food Trading",
+    details: "For J.A's Food Trading, built a Next.js inventory admin dashboard and Flutter customer app to support stock and order workflows. Project screens are available in the gallery; public deployment is not claimed.",
     screenshotCategories: incloudScreenshots
   },
   // ==================== AI & ML PROJECTS ====================
@@ -121,7 +127,7 @@ export const projects: Project[] = [
     date: "Jan-Jun 2026",
     isPrivate: true,
     isFeatured: true,
-    details: "ML Backend + Web Dashboard | HIPAA-compliant patient management",
+    details: "ML backend and web dashboard | Patient record management workflow",
     // Categorized screenshots for organized gallery display
     screenshotCategories: [
       {
@@ -165,7 +171,7 @@ export const projects: Project[] = [
       },
       {
         title: "Patient Management",
-        description: "HIPAA-compliant patient records and information",
+        description: "Patient records and information management",
         screenshots: [
           "/repo_screenshots/mci/Screenshots/Screenshot 2026-02-27 215514.png",
           "/repo_screenshots/mci/Screenshots/Screenshot 2026-02-27 215531.png",
@@ -340,7 +346,7 @@ export const projects: Project[] = [
     date: "2025-2026",
     isPrivate: true,
     isFeatured: true,
-    details: "Real client: City Health Office of Panabo City, Davao del Norte | 5-role RBAC | SARIMA forecasting | Real-time notifications",
+    details: "For the City Health Office of Panabo City, worked on appointment and surveillance workflows with five user roles, forecasting, and real-time notifications. Project screens are available in the gallery.",
     screenshotCategories: healthcardScreenshots
   },
   {

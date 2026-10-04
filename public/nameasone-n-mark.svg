@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title">
+  <title id="title">NameAsOne n mark</title>
+  <rect width="100" height="100" rx="8" fill="#fff"/>
+  <path d="M22 82V20H43V38C49 29 58 24 68 24C81 24 87 33 87 48V82H65V51C65 43 62 39 56 39C48 39 43 46 43 57V82Z" fill="#171717"/>
+  <path d="M22 82V64H29C37 64 43 71 43 82Z" fill="#0675C4"/>
+</svg>

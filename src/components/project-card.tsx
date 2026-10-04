@@ -12,6 +12,8 @@ interface ProjectCardProps {
   description: string
   githubLink?: string
   demoLink?: string
+  thumbnailSrc?: string
+  thumbnailLogo?: string
   demoText?: string
   videoLink?: string
   videoLinkText?: string
@@ -38,6 +40,8 @@ export function ProjectCard({
   description,
   githubLink,
   demoLink,
+  thumbnailSrc,
+  thumbnailLogo,
   videoLink,
   videoLinkText = "Watch Demo",
   webGithubLink,
@@ -49,8 +53,6 @@ export function ProjectCard({
   categoryLabel,
   platformSummary,
   engagementType,
-  sector,
-  impactTags,
   techStack,
   details,
   screenshots,
@@ -64,6 +66,7 @@ export function ProjectCard({
   const allScreenshots = screenshotCategories
     ? screenshotCategories.flatMap(cat => cat.screenshots)
     : screenshots || []
+  const thumbnail = allScreenshots[0]
 
   const formatGoogleDriveLink = (url: string) => {
     if (!url) return ""
@@ -87,16 +90,8 @@ export function ProjectCard({
     if (!url) return null
 
     if (url.includes("drive.google.com")) {
-      let fileId = ""
-      if (url.includes("/file/d/")) {
-        fileId = url.split("/file/d/")[1].split("/")[0]
-      } else if (url.includes("open?id=")) {
-        fileId = url.split("open?id=")[1].split("&")[0]
-      }
-
-      if (fileId) {
-        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`
-      }
+      // Drive thumbnail endpoints can show broken images even when the video link works.
+      return null
     }
 
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
@@ -140,9 +135,10 @@ export function ProjectCard({
   const maxThumbnails = 4
   const hasMoreScreenshots = allScreenshots.length > maxThumbnails
   const categoryCount = screenshotCategories?.length || 0
-  const metadataTags = Array.from(
-    new Set([platformSummary, engagementType, sector, categoryLabel, ...(impactTags || [])].filter(Boolean) as string[])
-  )
+  const metadataLine = [
+    platformSummary || categoryLabel,
+    engagementType ? `${engagementType} project` : null,
+  ].filter(Boolean).join(" · ")
   const mediaLinks = [
     { label: "Demo Video", url: videoLink },
     { label: "Web Video", url: webVideoLink },
@@ -156,29 +152,87 @@ export function ProjectCard({
     .filter(item => item.thumbnail)
   const hasVideoPreviews = videoPreviews.length > 0
   const fallbackMediaLinks = mediaLinks.filter(item => !getVideoThumbnail(item.url!))
+  const coverVideo = !thumbnail ? (fallbackMediaLinks[0] || videoPreviews[0]) : null
   const actionClassName =
     "inline-flex items-center gap-1.5 border border-[var(--border)] bg-[var(--surface-secondary)] px-2.5 py-1.5 rounded-full shadow-sm text-[11px] sm:text-xs font-semibold text-[var(--text-secondary)] transition-all hover:bg-[var(--surface-tertiary)] hover:text-[var(--text-primary)] hover:shadow-md"
 
   return (
     <div className="flex flex-col h-full">
+      {thumbnailSrc && demoLink ? (
+        <a
+          href={demoLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-cover group relative mb-4 block w-full overflow-hidden"
+          aria-label={`Open live ${title} website`}
+        >
+          <Image
+            src={thumbnailSrc}
+            alt={`${title} live website preview`}
+            fill
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+          <span className="project-cover-label">Visit live site <ExternalLink size={13} /></span>
+        </a>
+      ) : thumbnail ? (
+        <button
+          type="button"
+          onClick={() => openModal(0)}
+          className="project-cover group relative mb-4 block w-full overflow-hidden text-left"
+          aria-label={`View ${title} screenshots`}
+        >
+          <Image
+            src={thumbnail}
+            alt={`${title} project preview`}
+            fill
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.025]"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+          <span className="project-cover-label">View screenshots <ExternalLink size={13} /></span>
+        </button>
+      ) : coverVideo ? (
+        <button
+          type="button"
+          onClick={() => openVideoInNewTab(coverVideo.url!)}
+          className="project-cover project-video-cover group relative mb-4 flex w-full flex-col items-start justify-between overflow-hidden p-5 text-left transition-colors hover:border-[var(--accent-border)]"
+          aria-label={`Watch ${title} video walkthrough`}
+        >
+          <span className="project-video-mark" aria-hidden="true"><Play size={20} fill="currentColor" className="ml-0.5" /></span>
+          <span className="flex w-full items-end justify-between gap-2">
+            <span className="text-sm font-semibold text-[var(--text-primary)]">Video walkthrough</span>
+            <ExternalLink size={16} className="text-[var(--text-secondary)]" />
+          </span>
+        </button>
+      ) : (
+        <div className="project-cover project-cover-empty mb-4" aria-label={`${title} project cover`}>
+          <span className="project-cover-wordmark">{title}</span>
+          <span className="project-cover-kind">{platformSummary || categoryLabel || "Project"}</span>
+        </div>
+      )}
       {/* Header Row: Icon + Title/Status */}
       <div className="mb-3 flex items-start gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
+            {thumbnailLogo && (
+              <span className="project-title-logo">
+                <Image
+                  src={thumbnailLogo}
+                  alt=""
+                  width={title === "PicklePark" ? 36 : 24}
+                  height={24}
+                  className="h-6 w-auto max-w-9 object-contain"
+                />
+              </span>
+            )}
             <h3 className="text-[1rem] sm:text-[1.15rem] font-semibold text-[var(--text-primary)] leading-7 break-words">{title}</h3>
           </div>
 
         </div>
       </div>
 
-      {metadataTags.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-1.5">
-          {metadataTags.slice(0, 4).map((tag, index) => (
-            <span key={`${tag}-${index}`} className="badge">
-              {tag}
-            </span>
-          ))}
-        </div>
+      {metadataLine && (
+        <p className="mb-4 text-sm leading-6 text-[var(--text-secondary)]">{metadataLine}</p>
       )}
 
       {/* Description - Full width, no truncation */}
@@ -244,7 +298,7 @@ export function ProjectCard({
         </div>
       )}
 
-      {hasVideoPreviews && (
+      {hasVideoPreviews && !coverVideo && (
         <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-secondary)] p-3 sm:p-4">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
@@ -286,21 +340,26 @@ export function ProjectCard({
         </div>
       )}
 
-      {fallbackMediaLinks.length > 0 && (
+      {fallbackMediaLinks.length > 0 && !coverVideo && (
         <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-secondary)] p-3 sm:p-4">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
             Video Walkthroughs
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid gap-2 sm:grid-cols-2">
             {fallbackMediaLinks.map(link => (
               <button
                 key={link.label}
                 type="button"
                 onClick={() => openVideoInNewTab(link.url!)}
-                className={actionClassName}
+                className="video-cover group flex min-h-28 flex-col items-start justify-between rounded-xl border border-[var(--border)] p-4 text-left transition-colors hover:border-[var(--accent-border)]"
               >
-                <Play size={14} />
-                {link.label}
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-primary)] text-[var(--text-primary)] transition-transform group-hover:scale-105">
+                  <Play size={15} fill="currentColor" className="ml-0.5" />
+                </span>
+                <span className="flex w-full items-center justify-between gap-2 text-xs font-semibold text-[var(--text-primary)]">
+                  {link.label}
+                  <ExternalLink size={13} />
+                </span>
               </button>
             ))}
           </div>
@@ -387,7 +446,7 @@ export function ProjectCard({
                 {getGithubButtonLabel()}
               </a>
             )}
-            {demoLink && (
+            {demoLink && !thumbnailSrc && (
               <a
                 href={demoLink}
                 target="_blank"

@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://pinoccchiooo.dev"
+  const baseUrl = "https://pinoccchiooo-dev.vercel.app"
 
   return [
     {

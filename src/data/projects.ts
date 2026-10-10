@@ -149,6 +149,7 @@ export const projects: Project[] = [
   },
   {
     id: "pay247",
+    caseStudyUrl: "/case-studies/pay247",
     title: "Pay247",
     description: "HighLevel and Xendit payment integration with authenticated setup, checkout mapping, and webhook processing.",
     icon: "🔗",

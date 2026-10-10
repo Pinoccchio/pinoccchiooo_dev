@@ -17,6 +17,9 @@ export function AboutSection() {
         database-driven systems, and AI-powered features that solve actual problems. I focus on building software that
         is not only clean and modern, but also usable, maintainable, and ready for real-world use.
       </p>
+      <p>
+        Open to remote full-time, part-time, and freelance opportunities, preferably with night-shift or flexible schedules.
+      </p>
     </div>
   )
 }

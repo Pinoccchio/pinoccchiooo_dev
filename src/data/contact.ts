@@ -24,15 +24,15 @@ export const CONTACT = {
     githubFull: "https://github.com/Pinoccchio",
     instagram: "instagram.com/itsjexxejs_/",
     instagramFull: "https://www.instagram.com/itsjexxejs_/",
-    linkedin: "linkedin.com/in/jan-miko-guevarra-894088294",
-    linkedinFull: "https://linkedin.com/in/jan-miko-guevarra-894088294",
+    linkedin: "linkedin.com/in/jan-miko-a-guevarra-894088294",
+    linkedinFull: "https://linkedin.com/in/jan-miko-a-guevarra-894088294",
     nameasone: "www.nameasone.cc/jmguevarra",
     nameasoneFull: "https://www.nameasone.cc/jmguevarra",
     portfolio: "pinoccchiooo-dev.vercel.app",
     portfolioFull: "https://pinoccchiooo-dev.vercel.app/",
   },
   assets: {
-    resume: "/resume/Jan_Miko_Guevarra_Master_Resume.pdf?v=227058334591",
+    resume: "/resume/Jan_Miko_Guevarra_Master_Resume.pdf?v=9E4ABEEFC745",
   },
   education: {
     school: "Cor Jesu College, Inc.",

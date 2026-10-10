@@ -27,6 +27,7 @@ export interface Project {
   impactTags?: string[]
   techStack: string[]
   demoUrl?: string
+  caseStudyUrl?: string
   thumbnail?: string
   thumbnailLogo?: string
   videoUrl?: string
@@ -93,6 +94,7 @@ export const projects: Project[] = [
   // ==================== HYBRID SYSTEMS ====================
   {
     id: "incloud-system",
+    caseStudyUrl: "/case-studies/incloud",
     title: "InCloud System",
     description: "Cloud inventory system for J.A's Food Trading.",
     icon: "📦",

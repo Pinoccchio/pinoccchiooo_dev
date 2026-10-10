@@ -5,6 +5,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
+      url: `${baseUrl}/case-studies/incloud`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "monthly",

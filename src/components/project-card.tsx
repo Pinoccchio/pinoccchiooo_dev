@@ -13,6 +13,7 @@ interface ProjectCardProps {
   description: string
   githubLink?: string
   demoLink?: string
+  caseStudyLink?: string
   thumbnailSrc?: string
   thumbnailLogo?: string
   demoText?: string
@@ -42,6 +43,7 @@ export function ProjectCard({
   description,
   githubLink,
   demoLink,
+  caseStudyLink,
   thumbnailSrc,
   thumbnailLogo,
   videoLink,
@@ -381,6 +383,7 @@ export function ProjectCard({
 
       {/* Links - Push to bottom */}
       <div className="flex gap-2 flex-wrap mt-auto pt-3">
+        {caseStudyLink && <a href={caseStudyLink} className={actionClassName}>Read case study <ExternalLink size={14} /></a>}
         {(webGithubLink || mobileGithubLink) ? (
           <>
             {webGithubLink && (

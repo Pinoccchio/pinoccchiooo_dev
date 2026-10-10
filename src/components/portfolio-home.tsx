@@ -202,6 +202,7 @@ export default function PortfolioHome({ initialProjectId }: { initialProjectId?:
                   title={project.title}
                   description={project.description}
                   demoLink={project.demoUrl}
+                  caseStudyLink={project.caseStudyUrl}
                   thumbnailSrc={project.thumbnail}
                   thumbnailLogo={project.thumbnailLogo}
                   videoLink={project.videoUrl}

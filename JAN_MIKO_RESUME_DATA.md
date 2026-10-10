@@ -1,6 +1,6 @@
 # Jan Miko A. Guevarra — Resume Data
 
-> **Purpose:** Comprehensive personal and professional data for AI resume generation. All sections are structured for easy extraction.
+> **Purpose:** Historical project and career reference. For current confirmed facts, use `../documents/career/MASTER_PROFILE.md`; for the current resume draft, use `../documents/career/resumes/Jan_Miko_Guevarra_Master_Resume.docx`. Older experience counts, project metrics, proficiency labels, and deployment claims below need verification before reuse.
 
 ---
 
@@ -16,7 +16,7 @@
 | Facebook    | https://www.facebook.com/Renbards619 *(primary contact)*            |
 | GitHub      | https://github.com/Pinoccchio (43 public repos)                      |
 | LinkedIn    | https://www.linkedin.com/in/jan-miko-guevarra-894088294              |
-| Portfolio   | https://pinoccchiooo.dev                                             |
+| Portfolio   | https://pinoccchiooo-dev.vercel.app/                                 |
 | Instagram   | https://www.instagram.com/jexlevii/                                  |
 | YouTube     | https://www.youtube.com/@pinocchio200                                |
 
@@ -27,7 +27,8 @@
 **Bachelor of Science in Computer Science**
 - Institution: Cor Jesu College, Inc.
 - Location: Digos City, Philippines
-- Expected Graduation: 2026
+- Current Status: Fourth-year Computer Science student
+- Expected Graduation: 2027
 
 ---
 

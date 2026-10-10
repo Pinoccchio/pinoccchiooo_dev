@@ -1,6 +1,5 @@
-// Complete Project Database - All 66 Total Repositories
-// Comprehensive portfolio including hybrid systems, web apps, mobile apps, AI/ML projects, educational tools, and utilities
-// Generated from GitHub repository analysis + COMPLETE_PROJECT_PORTFOLIO_GUIDE.md
+// Selected portfolio projects. Counts are derived from this array.
+// Historical repository totals are not current completed-project counts.
 
 import { aezzyScreenshots } from "./aezzy-screenshots"
 import { fyllensScreenshots } from "./fyllens-screenshots"
@@ -67,7 +66,7 @@ export const projects: Project[] = [
     isPrivate: true,
     isFeatured: true,
     featuredRank: 1,
-    details: "At JohnV MEDIA, worked as a primary developer on booking and Open Play operations, Court Pulse, credits, payment workflows, and tournament/admin tools. The public site shows the customer-facing platform."
+    details: "Served as the sole full-stack developer during the JohnV MEDIA practicum, implementing booking and Open Play operations, Court Pulse, credits, payment workflows, and tournament/admin tools. The public site shows the customer-facing platform."
   },
   {
     id: "nameasone",
@@ -107,8 +106,59 @@ export const projects: Project[] = [
     date: "Sep-Oct 2025",
     isPrivate: false,
     isFeatured: true,
-    details: "For J.A's Food Trading, built a Next.js inventory admin dashboard and Flutter customer app to support stock and order workflows. Project screens are available in the gallery; public deployment is not claimed.",
+    details: "Worked on full-stack implementation for J.A's Food Trading, including the Next.js inventory admin, Flutter customer app, and backend stock and order workflows. Collaborated with another developer on frontend work. Project screens are available in the gallery; public deployment is not claimed.",
     screenshotCategories: incloudScreenshots
+  },
+  {
+    id: "pesojar-v2",
+    title: "PesoJar",
+    description: "Local-first personal finance app with account access, synchronization, and subscription integration.",
+    icon: "💰",
+    category: "hybrid",
+    engagementType: "Client",
+    sector: "Consumer",
+    platformSummary: "Flutter App + Backend + Web Admin",
+    techStack: ["Flutter", "Dart", "SQLite", "Cloudflare Workers", "Cloudflare D1", "Cloudflare R2", "Better Auth", "Stripe", "Next.js"],
+    demoUrl: "https://pesojar.com/",
+    thumbnail: "/pesojar-thumbnail.jpg",
+    status: "Active Development",
+    date: "2026",
+    isPrivate: true,
+    details: "Handled full-stack development for mobile finance workflows, local-first storage and synchronization, authentication, subscription integration, and protected administration. Account access and sync are backed by Cloudflare services."
+  },
+  {
+    id: "nomoqr",
+    title: "NomoQR",
+    description: "Restaurant QR ordering and staff operations for menus, kitchen handoff, billing, and receipts.",
+    icon: "🍽️",
+    category: "web",
+    engagementType: "Client",
+    sector: "Business",
+    platformSummary: "Guest Ordering + Staff Dashboard",
+    techStack: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Realtime"],
+    demoUrl: "https://www.nomoqr.com/",
+    thumbnail: "/nomoqr-thumbnail.jpg",
+    status: "Active Development",
+    date: "2026",
+    isPrivate: true,
+    details: "Developing account-free table QR ordering and real-time restaurant workflows for kitchen handoff, menus, tables, staff, inventory, billing, and receipts. Server routes and PostgreSQL functions validate guest operations and prices."
+  },
+  {
+    id: "pay247",
+    title: "Pay247",
+    description: "HighLevel and Xendit payment integration with authenticated setup, checkout mapping, and webhook processing.",
+    icon: "🔗",
+    category: "web",
+    engagementType: "Client",
+    sector: "Business",
+    platformSummary: "Payment Integration · Test Pilot",
+    techStack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "HighLevel API", "Xendit", "OAuth", "Webhooks"],
+    demoUrl: "https://pay247.vercel.app/",
+    thumbnail: "/pay247-thumbnail.jpg",
+    status: "Active Development",
+    date: "2026",
+    isPrivate: true,
+    details: "Implemented OAuth-based merchant setup, checkout mapping, provider verification, and payment webhook synchronization. A documented sandbox checkout reached HighLevel Paid through native Xendit callbacks; concurrency handling prevents duplicate confirmation. This is a test-mode pilot, not a live-payment rollout."
   },
   // ==================== AI & ML PROJECTS ====================
   {
@@ -377,6 +427,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Spoonacular API", "Firebase", "Provider"],
     videoUrl: "https://drive.google.com/file/d/1SNMK_7fW5-mlBQF8jLWPcTClgxBi2MdK/view?usp=sharing",
+    thumbnail: "/yummify-video.jpg",
     status: "Completed",
     date: "Jun 2025",
     isPrivate: false
@@ -389,6 +440,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Camera", "TensorFlow Lite"],
     videoUrl: "https://drive.google.com/file/d/1RF9ZJQC7ewUPSobTj41g_OIASBd27lzI/view?usp=sharing",
+    thumbnail: "/snake-buddy-video.jpg",
     status: "Completed",
     date: "Apr-Jun 2025",
     isPrivate: false
@@ -401,6 +453,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "ML Kit OCR", "Riverpod", "SQLite"],
     videoUrl: "https://drive.google.com/file/d/125EuRkh_k2smk1mhN1Or74CMc875aTwR/view?usp=sharing",
+    thumbnail: "/better-bites-video.jpg",
     status: "Completed",
     date: "Jun 2025",
     isPrivate: false
@@ -413,6 +466,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Supabase", "Provider", "Image Processing"],
     videoUrl: "https://drive.google.com/file/d/1k9x9oGSP-PO0DNTonA7s-wmJOaeAhdu9/view?usp=sharing",
+    thumbnail: "/scan-my-soil-video.jpg",
     status: "Completed",
     date: "Mar-Apr 2025",
     isPrivate: false
@@ -425,6 +479,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Android Native", "MediaPipe", "Java", "Kotlin", "ML"],
     videoUrl: "https://drive.google.com/file/d/1jvLiSPp5QttF01L2UbvV-qE1o254Jc9n/view?usp=sharing",
+    thumbnail: "/talk-to-hand-video.jpg",
     status: "Completed",
     date: "May 2024",
     isPrivate: false
@@ -437,6 +492,7 @@ export const projects: Project[] = [
     category: "ai-ml",
     techStack: ["Flutter", "Dart", "Gemini AI", "Speech-to-Text", "Text-to-Speech"],
     videoUrl: "https://drive.google.com/file/d/1k-uS8cehsSWc2Gq22VUX_2AcUE-QxsmT/view?usp=sharing",
+    thumbnail: "/envirospeak-video.jpg",
     status: "Completed",
     date: "2025",
     isPrivate: false
@@ -449,6 +505,7 @@ export const projects: Project[] = [
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase", "GetX", "Google Maps", "Hive", "Charts"],
     videoUrl: "https://drive.google.com/file/d/1jvdjkWWiDaeVf8jWFT36e7i2ZfIUfS2C/view?usp=sharing",
+    thumbnail: "/econaga-video.jpg",
     status: "Completed",
     date: "Sep 2024-Mar 2025",
     isPrivate: false
@@ -461,18 +518,20 @@ export const projects: Project[] = [
     category: "mobile",
     techStack: ["Android", "QR Codes", "Database"],
     videoUrl: "https://drive.google.com/file/d/1aPWLWykOcmT3baCXQsODnHdzD9BBmy8D/view?usp=sharing",
+    thumbnail: "/qr-attendance-video.jpg",
     status: "Completed",
     date: "2024",
     isPrivate: false
   },
   {
     id: "siena-talk",
-    title: "SienaTalk V1",
+    title: "SienaTalk",
     description: "Student counselor booking platform with messaging, voice recordings, and admin oversight of interactions.",
     icon: "💬",
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase", "Supabase", "Audio Recording", "Provider"],
     videoUrl: "https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing",
+    thumbnail: "/siena-talk-video.jpg",
     status: "Completed",
     date: "Apr 2025",
     isPrivate: false
@@ -485,6 +544,7 @@ export const projects: Project[] = [
     category: "mobile",
     techStack: ["Flutter", "Dart", "Firebase"],
     videoUrl: "https://drive.google.com/file/d/1k-IPOKgWFu4_3lmtRL3_POEPyifrwL0e/view?usp=sharing",
+    thumbnail: "/eatease-video.jpg",
     status: "Completed",
     date: "Nov-Dec 2024",
     isPrivate: false

@@ -32,13 +32,13 @@ export const CONTACT = {
     portfolioFull: "https://pinoccchiooo-dev.vercel.app/",
   },
   assets: {
-    resume: "/resume/Jan_Miko_Guevarra_Full_Stack_Software_Developer_Detailed_Resume.pdf",
+    resume: "/resume/Jan_Miko_Guevarra_Master_Resume.pdf",
   },
   education: {
-    school: "Cor Jesu College",
+    school: "Cor Jesu College, Inc.",
     degree: "BS Computer Science",
     expectedGraduation: "2027",
-    formatted: "BS Computer Science at Cor Jesu College (Expected 2027)",
+    formatted: "BS Computer Science, Cor Jesu College, Inc. · Fourth-year student · Expected 2027",
   },
 } as const
 

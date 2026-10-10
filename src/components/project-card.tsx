@@ -198,8 +198,17 @@ export function ProjectCard({
           className="project-cover project-video-cover group relative mb-4 flex w-full flex-col items-start justify-between overflow-hidden p-5 text-left transition-colors hover:border-[var(--accent-border)]"
           aria-label={`Watch ${title} video walkthrough`}
         >
-          <span className="project-video-mark" aria-hidden="true"><Play size={20} fill="currentColor" className="ml-0.5" /></span>
-          <span className="flex w-full items-end justify-between gap-2">
+          {thumbnailSrc && (
+            <Image
+              src={thumbnailSrc}
+              alt={`${title} app screen from the video walkthrough`}
+              fill
+              className="object-contain p-3"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          )}
+          <span className="project-video-mark relative z-10" aria-hidden="true"><Play size={20} fill="currentColor" className="ml-0.5" /></span>
+          <span className="relative z-10 flex w-full items-end justify-between gap-2 rounded-lg bg-black/75 px-3 py-2 text-white">
             <span className="text-sm font-semibold text-[var(--text-primary)]">Video walkthrough</span>
             <ExternalLink size={16} className="text-[var(--text-secondary)]" />
           </span>

@@ -45,15 +45,20 @@ const techGroups = [
 
 const experienceItems = [
   {
-    title: "Full-Stack Software Developer Intern",
-    subtitle: "JohnV MEDIA — primary developer for PicklePark and PesoJar production platforms",
-    year: "Jul-Aug 2026",
+    title: "Independent Product Developer",
+    subtitle: "Built and maintain NameAsOne, with public profiles, custom handles, contact actions, and profile editing",
+    year: "2026-Present",
     active: true,
   },
   {
-    title: "Full-Stack Developer for Web, Mobile, and AI Projects",
-    subtitle: "Freelance client projects across government, healthcare, education, and business",
-    year: "2022-Present",
+    title: "Full-Stack Software Developer Intern",
+    subtitle: "JohnV MEDIA — sole full-stack developer for PicklePark and PesoJar during a supervised practicum",
+    year: "Jul-Aug 2026",
+  },
+  {
+    title: "Freelance Full-Stack Developer",
+    subtitle: "Started client work during college, building web, mobile, backend, and AI integration features across business, healthcare, and education projects",
+    year: "During college-Present",
   },
 ]
 
@@ -292,7 +297,7 @@ export default function Home() {
 
         <section className="clean-section mt-4">
           <h2 className="clean-section-title">Education</h2>
-          <p className="mt-3 text-sm text-[var(--text-primary)]">BS Computer Science, Cor Jesu College · Expected 2027</p>
+          <p className="mt-3 text-sm text-[var(--text-primary)]">{CONTACT.education.formatted}</p>
         </section>
 
         <section className="clean-section mt-4">

@@ -50,6 +50,7 @@ export const projects: Project[] = [
   // ==================== PRODUCTION & CLIENT PLATFORMS ====================
   {
     id: "picklepark",
+    caseStudyUrl: "/case-studies/picklepark",
     title: "PicklePark",
     description: "Live operations platform for court bookings, Open Play, tournaments, payments, and facility administration.",
     icon: "🏓",

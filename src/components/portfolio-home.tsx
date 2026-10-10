@@ -217,7 +217,11 @@ export default function PortfolioHome({ initialProjectId }: { initialProjectId?:
                   impactTags={project.impactTags}
                   techStack={project.techStack}
                   details={project.details}
-                  screenshots={project.screenshots}
+                  screenshots={project.screenshots ?? (
+                    project.id === initialProjectId && project.videoUrl && project.thumbnail
+                      ? [project.thumbnail]
+                      : undefined
+                  )}
                   screenshotCategories={project.screenshotCategories}
                 />
               </motion.div>

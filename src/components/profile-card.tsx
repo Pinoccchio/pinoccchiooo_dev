@@ -53,14 +53,14 @@ export function ProfileCard() {
           </div>
           <div className="profile-card-chip">
             <Sparkles size={12} />
-            <span>Since 2022</span>
+            <span>Web &amp; Mobile</span>
           </div>
         </div>
 
         <div className="profile-card-header">
           <div className="profile-card-kicker">Software Developer</div>
           <div className="profile-card-name">{CONTACT.name.full}</div>
-          <div className="profile-card-role">AI & Full-Stack Developer</div>
+          <div className="profile-card-role">Full-Stack Developer · AI Integrations</div>
         </div>
 
         <div className="profile-card-grid">

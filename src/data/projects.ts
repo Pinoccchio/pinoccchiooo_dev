@@ -62,7 +62,7 @@ export const projects: Project[] = [
     thumbnail: "/picklepark-thumbnail.png",
     thumbnailLogo: "/picklepark-logo.png",
     status: "Production",
-    date: "Jun-Aug 2026",
+    date: "2026",
     isPrivate: true,
     isFeatured: true,
     featuredRank: 1,
@@ -103,10 +103,10 @@ export const projects: Project[] = [
     impactTags: ["Client Work", "Inventory", "AI-enabled"],
     techStack: ["Next.js 15", "React 19", "Flutter", "TypeScript", "Supabase", "Gemini AI", "Riverpod", "Turbopack", "Tailwind CSS"],
     status: "Active Development",
-    date: "Sep-Oct 2025",
+    date: "2025",
     isPrivate: false,
     isFeatured: true,
-    details: "Worked on full-stack implementation for J.A's Food Trading, including the Next.js inventory admin, Flutter customer app, and backend stock and order workflows. Collaborated with another developer on frontend work. Project screens are available in the gallery; public deployment is not claimed.",
+    details: "Built the full-stack system independently for J.A's Food Trading, including the Next.js inventory admin, Flutter customer app, and backend stock and order workflows. Owned frontend, backend, and application integration. Project screens are available in the gallery.",
     screenshotCategories: incloudScreenshots
   },
   {
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     status: "Active Development",
     date: "2026",
     isPrivate: true,
-    details: "Developing account-free table QR ordering and real-time restaurant workflows for kitchen handoff, menus, tables, staff, inventory, billing, and receipts. Server routes and PostgreSQL functions validate guest operations and prices."
+    details: "Developing account-free table QR ordering and real-time restaurant workflows for kitchen handoff, menus, tables, staff, inventory, billing, and receipts. Implemented server routes and PostgreSQL functions to validate guest operations and prices; collaborated with a frontend contributor."
   },
   {
     id: "pay247",
@@ -164,7 +164,7 @@ export const projects: Project[] = [
   {
     id: "mci-detection-system",
     title: "MCI Detection System",
-    description: "AI medical app for early Alzheimer's screening.",
+    description: "Research application combining MRI processing, model inference, and a web dashboard.",
     icon: "🧠",
     category: "ai-ml",
     engagementType: "Freelance",
@@ -174,10 +174,10 @@ export const projects: Project[] = [
     techStack: ["Next.js 16", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "Supabase", "Tailwind CSS", "NIfTI"],
     // No GitHub link - showcased via screenshots only (private freelance project)
     status: "Completed",
-    date: "Jan-Jun 2026",
+    date: "2026",
     isPrivate: true,
     isFeatured: true,
-    details: "ML backend and web dashboard | Patient record management workflow",
+    details: "Built the web interface and Python/FastAPI backend for MRI/NIfTI processing, model inference, role-based records, and PDF reports in a research prototype.",
     // Categorized screenshots for organized gallery display
     screenshotCategories: [
       {
@@ -336,10 +336,10 @@ export const projects: Project[] = [
     impactTags: ["Disaster Response", "Research", "AI-enabled"],
     techStack: ["Next.js 15", "React 19", "TypeScript", "Python", "FastAPI", "PyTorch", "EfficientNet-B0", "ONNX Runtime", "OpenCV", "Leaflet Maps", "Tailwind CSS"],
     status: "Completed",
-    date: "2025",
+    date: "Year unconfirmed",
     isPrivate: false,
     isFeatured: true,
-    details: "PLM BSEcE Capstone 2025 | Trained on RescueNet + FloodNet (4,892 images) | Safety-enhanced predictions",
+    details: "Academic flood-road assessment research project combining image analysis, a Python/FastAPI backend, and a Next.js interface with map visualization.",
     screenshotCategories: uavScreenshots
   },
   {
@@ -351,13 +351,13 @@ export const projects: Project[] = [
     engagementType: "Academic",
     sector: "Agriculture",
     platformSummary: "Mobile AI App",
-    impactTags: ["TensorFlow Lite", "Offline-ready", "Team Project"],
+    impactTags: ["TensorFlow Lite", "Offline-ready", "AI-enabled"],
     techStack: ["Flutter", "Dart", "TensorFlow Lite", "Gemini AI", "Supabase", "Provider", "GoRouter", "Image Processing"],
     status: "Completed",
     date: "2025",
     isPrivate: false,
     isFeatured: true,
-    details: "APPDEV Final Project | 4 ML models | 6-person team | Jan Miko A. Guevarra - Backend Developer",
+    details: "APPDEV final project covering Flutter application development, backend integration, and plant-image analysis.",
     screenshotCategories: fyllensScreenshots
   },
   {
@@ -412,10 +412,10 @@ export const projects: Project[] = [
     techStack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Gemini AI", "Recharts", "PDF Processing", "Tailwind CSS"],
     // No githubUrl - private project showcased via screenshots only
     status: "Completed",
-    date: "2026",
+    date: "2025-2026",
     isPrivate: true,
     isFeatured: true,
-    details: "Real client: Municipality of Asuncion, Davao del Norte | 4-role RBAC | AI ensemble ranking | PDS wizard | Training certificates",
+    details: "Built applicant-management workflows for the Municipality of Asuncion, Davao del Norte, with role-based access, AI-assisted ranking, applicant records, training certificates, and reporting.",
     screenshotCategories: jobsyncScreenshots
   },
   // ==================== MOBILE APPLICATIONS ====================
@@ -481,7 +481,7 @@ export const projects: Project[] = [
     videoUrl: "https://drive.google.com/file/d/1jvLiSPp5QttF01L2UbvV-qE1o254Jc9n/view?usp=sharing",
     thumbnail: "/talk-to-hand-video.jpg",
     status: "Completed",
-    date: "May 2024",
+    date: "First year of college",
     isPrivate: false
   },
   {
@@ -494,7 +494,7 @@ export const projects: Project[] = [
     videoUrl: "https://drive.google.com/file/d/1k-uS8cehsSWc2Gq22VUX_2AcUE-QxsmT/view?usp=sharing",
     thumbnail: "/envirospeak-video.jpg",
     status: "Completed",
-    date: "2025",
+    date: "Second year of college",
     isPrivate: false
   },
   {
@@ -520,7 +520,7 @@ export const projects: Project[] = [
     videoUrl: "https://drive.google.com/file/d/1aPWLWykOcmT3baCXQsODnHdzD9BBmy8D/view?usp=sharing",
     thumbnail: "/qr-attendance-video.jpg",
     status: "Completed",
-    date: "2024",
+    date: "Grade 12",
     isPrivate: false
   },
   {
@@ -533,7 +533,7 @@ export const projects: Project[] = [
     videoUrl: "https://drive.google.com/file/d/1k79De75llIF5ULTn8tP2_ae9MHIXACnP/view?usp=sharing",
     thumbnail: "/siena-talk-video.jpg",
     status: "Completed",
-    date: "Apr 2025",
+    date: "2024-2025",
     isPrivate: false
   },
   {

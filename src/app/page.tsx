@@ -56,9 +56,9 @@ const experienceItems = [
     year: "Jul-Aug 2026",
   },
   {
-    title: "Freelance Full-Stack Developer",
-    subtitle: "Started client work during college, building web, mobile, backend, and AI integration features across business, healthcare, and education projects",
-    year: "During college-Present",
+    title: "Independent Development",
+    subtitle: "Personal and client projects across web, mobile, backend, and AI integrations; development history recorded from 2024",
+    year: "2024-Present",
   },
 ]
 

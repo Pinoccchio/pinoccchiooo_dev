@@ -32,7 +32,7 @@ export const CONTACT = {
     portfolioFull: "https://pinoccchiooo-dev.vercel.app/",
   },
   assets: {
-    resume: "/resume/Jan_Miko_Guevarra_Master_Resume.pdf",
+    resume: "/resume/Jan_Miko_Guevarra_Master_Resume.pdf?v=227058334591",
   },
   education: {
     school: "Cor Jesu College, Inc.",

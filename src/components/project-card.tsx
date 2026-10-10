@@ -8,6 +8,7 @@ import { ScreenshotModal } from "./screenshot-modal"
 import { type Project, type ScreenshotCategory } from "@/data/projects"
 
 interface ProjectCardProps {
+  openGalleryOnLoad?: boolean
   title: string
   description: string
   githubLink?: string
@@ -36,6 +37,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({
+  openGalleryOnLoad = false,
   title,
   description,
   githubLink,
@@ -59,7 +61,9 @@ export function ProjectCard({
   screenshotCategories,
   type = "web",
 }: ProjectCardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(() => openGalleryOnLoad && Boolean(
+    screenshotCategories?.some(category => category.screenshots.length > 0) || screenshots?.length
+  ))
   const [modalInitialIndex, setModalInitialIndex] = useState(0)
 
   // Get all screenshots (from categories or direct array)

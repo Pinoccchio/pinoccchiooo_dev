@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return { title: "Project not found" }
   const image = project.thumbnail ?? project.screenshotCategories?.[0]?.screenshots[0] ?? project.screenshots?.[0]
   return {
-    title: `${project.title} | Jan Miko A. Guevarra`,
+    title: { absolute: `${project.title} | Jan Miko A. Guevarra` },
     description: project.description,
     alternates: { canonical: `${origin}/projects/${project.id}` },
     openGraph: {
@@ -39,6 +39,7 @@ export default async function ProjectPage({ params }: Props) {
       <p className="mb-6 text-sm text-[var(--text-secondary)]">Project by Jan Miko A. Guevarra</p>
       <article className="project-card p-5 sm:p-6">
         <ProjectCard
+          openGalleryOnLoad
           title={project.title} description={project.description} demoLink={project.demoUrl}
           thumbnailSrc={project.thumbnail} thumbnailLogo={project.thumbnailLogo} videoLink={project.videoUrl}
           webDemoLink={project.webDemoUrl} mobileDemoLink={project.mobileDemoUrl}

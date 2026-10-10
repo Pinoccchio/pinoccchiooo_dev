@@ -1,8 +1,7 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ProjectCard } from "@/components/project-card"
-import { getCategoryLabel, getProjectById, projects } from "@/data/projects"
+import PortfolioHome from "@/components/portfolio-home"
+import { getProjectById, projects } from "@/data/projects"
 
 type Props = { params: Promise<{ id: string }> }
 const origin = "https://pinoccchiooo-dev.vercel.app"
@@ -32,24 +31,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const project = getProjectById((await params).id)
   if (!project) notFound()
-  return (
-    <main className="mx-auto min-h-screen max-w-4xl px-4 py-8 sm:px-6">
-      <Link href="/#projects" className="mb-6 inline-block text-sm text-[var(--text-secondary)] hover:underline">← All portfolio projects</Link>
-      <h1 className="mb-2 text-2xl font-semibold text-[var(--text-primary)] sm:text-3xl">{project.title}</h1>
-      <p className="mb-6 text-sm text-[var(--text-secondary)]">Project by Jan Miko A. Guevarra</p>
-      <article className="project-card p-5 sm:p-6">
-        <ProjectCard
-          openGalleryOnLoad
-          title={project.title} description={project.description} demoLink={project.demoUrl}
-          thumbnailSrc={project.thumbnail} thumbnailLogo={project.thumbnailLogo} videoLink={project.videoUrl}
-          webDemoLink={project.webDemoUrl} mobileDemoLink={project.mobileDemoUrl}
-          webVideoLink={project.webVideoUrl} mobileVideoLink={project.mobileVideoUrl}
-          type={project.category} categoryLabel={getCategoryLabel(project.category)}
-          platformSummary={project.platformSummary} engagementType={project.engagementType}
-          techStack={project.techStack} details={project.details}
-          screenshots={project.screenshots} screenshotCategories={project.screenshotCategories}
-        />
-      </article>
-    </main>
-  )
+  return <PortfolioHome initialProjectId={project.id} />
 }

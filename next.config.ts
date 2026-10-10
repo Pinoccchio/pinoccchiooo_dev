@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
     const liveProjects = [
       { source: "/project-previews/picklepark.html", destination: "https://www.pickleparkph.com/", permanent: false },
       { source: "/project-previews/pay247.html", destination: "https://pay247.vercel.app/", permanent: false },
-      { source: "/projects/aezzy-grammar", destination: "https://aezzy-grammar-corrector.vercel.app/", permanent: false },
     ]
     return [...liveProjects, ...Object.entries(previews).map(([preview, id]) => ({
       source: `/project-previews/${preview}.html`, destination: `/projects/${id}`, permanent: false,

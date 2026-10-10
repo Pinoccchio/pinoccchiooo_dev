@@ -114,6 +114,7 @@ export const projects: Project[] = [
   },
   {
     id: "pesojar-v2",
+    caseStudyUrl: "/case-studies/pesojar",
     title: "PesoJar",
     description: "Local-first personal finance app with account access, synchronization, and subscription integration.",
     icon: "💰",
